@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Repository;
+using Repository.Model;
 
 namespace BookShop.API
 {
@@ -28,6 +30,9 @@ namespace BookShop.API
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddScoped<BookEntities>(s => new BookEntities(Configuration.GetConnectionString("BookEntities")));
+            services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddSingleton<IAdminRepository, AdminRepository>();
             services.AddMvc();
         }
 
@@ -37,7 +42,9 @@ namespace BookShop.API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            app.UseStatusCodePages();
+            app.UseDeveloperExceptionPage();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

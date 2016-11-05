@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository.Model;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace Repository
 {
@@ -27,6 +28,11 @@ namespace Repository
         public IEnumerable<T> SelectAll()
         {
             return _table.ToList();
+        }
+
+        public IEnumerable<T> SelectBy(Expression<Func<T, bool>> predicate)
+        {
+            return _table.Where(predicate).AsEnumerable();
         }
 
         public T SelectByID(object id)

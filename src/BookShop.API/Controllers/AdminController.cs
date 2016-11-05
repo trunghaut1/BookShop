@@ -3,17 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Repository;
+using Repository.Model;
+
+// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BookShop.API.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class AdminController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        IAdminRepository _adminRepo;
+        BookEntities db;
+
+        public AdminController(IAdminRepository adminRepo, BookEntities _db)
         {
-            return new string[] { "value1", "value2" };
+            _adminRepo = adminRepo;
+            db = _db;
+        }
+        // GET: api/values
+        [HttpGet]
+        public IEnumerable<Order> Get()
+        {
+            return db.Order.AsEnumerable();
         }
 
         // GET api/values/5
