@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7d35fa292e9343c0a210bea773bcb226" Name="Diagram1">
+        <EntityTypeShape EntityType="BookModel.Admin" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.Book" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.bookCat" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.bookSubCat" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.Cat" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.Customer" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.Order" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.OrderDetail" Width="1.5" PointX="8.125" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.Publisher" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.Recommend" Width="1.5" PointX="6.125" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.SubCat" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.TimeBased" Width="1.5" PointX="8.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookModel.TimeRule" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="BookModel.FK_Book_Publisher" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_bookCat_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_bookSubCat_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_OrderDetail_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_Recommend_FirstBook" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_Recommend_SecondBook" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_TimeBased_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_bookCat_Cat" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_bookSubCat_SubCat" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_SubCat_Cat" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_Order_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_OrderDetail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="BookModel.FK_TimeBased_TimeRule" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
