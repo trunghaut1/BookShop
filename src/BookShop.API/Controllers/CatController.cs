@@ -11,47 +11,41 @@ using Repository.Model;
 namespace BookShop.API.Controllers
 {
     [Route("api/[controller]")]
-    public class AdminController : Controller
+    public class CatController : Controller
     {
-        IAdminRepository _adminRepo;
+        ICatRepository _catRepo;
 
-        public AdminController(IAdminRepository adminRepo)
+        public CatController(ICatRepository catRepo)
         {
-            _adminRepo = adminRepo;
+            _catRepo = catRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Admin> Get()
+        public IEnumerable<Cat> Get()
         {
-            return _adminRepo.SelectAll();
+            return _catRepo.SelectAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Admin Get(int id)
+        public Cat Get(int id)
         {
-            return _adminRepo.SelectByID(id);
-        }
-
-        [HttpGet("email/{email}")]
-        public Admin Get(string email)
-        {
-            return _adminRepo.SelectByEmail(email);
+            return _catRepo.SelectByID(id);
         }
 
         // POST api/values
         [HttpPost]
-        public Admin Post([FromBody]Admin value)
+        public Cat Post([FromBody]Cat value)
         {
-            if (_adminRepo.Add(value)) return value;
+            if (_catRepo.Add(value)) return value;
             return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public Admin Put(int id, [FromBody]Admin value)
+        public Cat Put(int id, [FromBody]Cat value)
         {
-            if (_adminRepo.Update(value)) return value;
+            if (_catRepo.Update(value)) return value;
             return null;
         }
 
@@ -59,7 +53,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _adminRepo.Delete(id);
+            return _catRepo.Delete(id);
         }
     }
 }

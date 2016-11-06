@@ -14,8 +14,8 @@ namespace Repository
         IEnumerable<T> SelectBy(Expression<Func<T, bool>> predicate);
         T SelectByID(object id);
         T SelectByID(object id1, object id2);
-        int Add(T obj);
-        int Update(T obj);
-        int Delete(object id);
+        bool Add(T obj);
+        bool Update(T obj);
+        bool Delete(object id);
     }
 }

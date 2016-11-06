@@ -7,8 +7,8 @@ using Repository.Model;
 
 namespace Repository
 {
-    public interface IAdminRepository : IGenericRepository<Admin>
+    public interface ICustomerRepository : IGenericRepository<Customer>
     {
-        Admin SelectByEmail(string value);
+        Customer SelectByEmail(string value);
     }
 }

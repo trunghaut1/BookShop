@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Repository.Model;
 using System.Data.Entity;
 using System.Linq.Expressions;
+using System.Data.Entity.Migrations;
 
 namespace Repository
 {
@@ -59,44 +60,46 @@ namespace Repository
             }
         }
 
-        public int Add(T obj)
+        public bool Add(T obj)
         {
             try
             {
                 _table.Add(obj);
-                return _db.SaveChanges();
+                _db.SaveChanges();
+                return true;
             }
             catch
             {
-                return -1;
+                return false;
             }
         }
 
-        public int Update(T obj)
+        public bool Update(T obj)
         {
             try
             {
-                _table.Attach(obj);
-                _db.Entry(obj).State = EntityState.Modified;
-                return _db.SaveChanges();
+                _table.AddOrUpdate(obj);
+                _db.SaveChanges();
+                return true;
             }
             catch
             {
-                return -1;
+                return false;
             }
         }
 
-        public int Delete(object id)
+        public bool Delete(object id)
         {
             try
             {
                 T existing = _table.Find(id);
                 _table.Remove(existing);
-                return _db.SaveChanges();
+                _db.SaveChanges();
+                return true;
             }
             catch
             {
-                return -1;
+                return false;
             }
         }
     }

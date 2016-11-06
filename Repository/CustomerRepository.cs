@@ -7,11 +7,11 @@ using Repository.Model;
 
 namespace Repository
 {
-    public class AdminRepository : GenericRepository<Admin>, IAdminRepository
+    public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
-        public AdminRepository(BookEntities db) : base(db) { }
+        public CustomerRepository(BookEntities db) : base(db) { }
 
-        public Admin SelectByEmail(string value)
+        public Customer SelectByEmail(string value)
         {
             return SelectBy(o => o.Email == value).FirstOrDefault();
         }

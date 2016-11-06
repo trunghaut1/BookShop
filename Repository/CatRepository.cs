@@ -7,8 +7,8 @@ using Repository.Model;
 
 namespace Repository
 {
-    public interface IAdminRepository : IGenericRepository<Admin>
+    public class CatRepository: GenericRepository<Cat>, ICatRepository
     {
-        Admin SelectByEmail(string value);
+        public CatRepository(BookEntities db) : base(db) { }
     }
 }

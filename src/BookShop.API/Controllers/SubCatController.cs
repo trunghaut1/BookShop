@@ -11,47 +11,47 @@ using Repository.Model;
 namespace BookShop.API.Controllers
 {
     [Route("api/[controller]")]
-    public class AdminController : Controller
+    public class SubCatController : Controller
     {
-        IAdminRepository _adminRepo;
+        ISubCatRepository _subCatRepo;
 
-        public AdminController(IAdminRepository adminRepo)
+        public SubCatController(ISubCatRepository subCatRepo)
         {
-            _adminRepo = adminRepo;
+            _subCatRepo = subCatRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Admin> Get()
+        public IEnumerable<SubCat> Get()
         {
-            return _adminRepo.SelectAll();
+            return _subCatRepo.SelectAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Admin Get(int id)
+        public SubCat Get(int id)
         {
-            return _adminRepo.SelectByID(id);
+            return _subCatRepo.SelectByID(id);
         }
 
-        [HttpGet("email/{email}")]
-        public Admin Get(string email)
+        [HttpGet("cat/{id}")]
+        public IEnumerable<SubCat> GetByCat(int id)
         {
-            return _adminRepo.SelectByEmail(email);
+            return _subCatRepo.SelectByCat(1);
         }
 
         // POST api/values
         [HttpPost]
-        public Admin Post([FromBody]Admin value)
+        public SubCat Post([FromBody]SubCat value)
         {
-            if (_adminRepo.Add(value)) return value;
+            if (_subCatRepo.Add(value)) return value;
             return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public Admin Put(int id, [FromBody]Admin value)
+        public SubCat Put(int id, [FromBody]SubCat value)
         {
-            if (_adminRepo.Update(value)) return value;
+            if (_subCatRepo.Update(value)) return value;
             return null;
         }
 
@@ -59,7 +59,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _adminRepo.Delete(id);
+            return _subCatRepo.Delete(id);
         }
     }
 }
