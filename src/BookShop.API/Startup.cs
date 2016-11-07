@@ -35,6 +35,9 @@ namespace BookShop.API
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<ICatRepository, CatRepository>();
             services.AddScoped<ISubCatRepository, SubCatRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IPublisherRepository, PublisherRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
             services.AddMvc();
         }
 

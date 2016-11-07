@@ -9,9 +9,10 @@
 
 namespace Repository.Model
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.ObjectModel;
-    
+
     public partial class Publisher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +25,7 @@ namespace Repository.Model
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ObservableCollection<Book> Book { get; set; }
     }
 }

@@ -11,47 +11,41 @@ using Repository.Model;
 namespace BookShop.API.Controllers
 {
     [Route("api/[controller]")]
-    public class CustomerController : Controller
+    public class PublisherController : Controller
     {
-        ICustomerRepository _cusRepo;
+        IPublisherRepository _pubRepo;
 
-        public CustomerController(ICustomerRepository cusRepo)
+        public PublisherController(IPublisherRepository pubRepo)
         {
-            _cusRepo = cusRepo;
+            _pubRepo = pubRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Customer> Get()
+        public IEnumerable<Publisher> Get()
         {
-            return _cusRepo.SelectAll();
+            return _pubRepo.SelectAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Customer Get(int id)
+        public Publisher Get(int id)
         {
-            return _cusRepo.SelectByID(id);
-        }
-
-        [HttpGet("email/{email}")]
-        public Customer Get(string email)
-        {
-            return _cusRepo.SelectByEmail(email);
+            return _pubRepo.SelectByID(id);
         }
 
         // POST api/values
         [HttpPost]
-        public Customer Post([FromBody]Customer value)
+        public Publisher Post([FromBody]Publisher value)
         {
-            if (_cusRepo.Add(value)) return value;
+            if (_pubRepo.Add(value)) return value;
             return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public Customer Put(int id, [FromBody]Customer value)
+        public Publisher Put(int id, [FromBody]Publisher value)
         {
-            if (_cusRepo.Update(value)) return value;
+            if (_pubRepo.Update(value)) return value;
             return null;
         }
 
@@ -59,7 +53,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _cusRepo.Delete(id);
+            return _pubRepo.Delete(id);
         }
     }
 }
