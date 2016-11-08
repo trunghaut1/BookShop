@@ -32,11 +32,9 @@ namespace BookShop.API
             // Add framework services.
             services.AddScoped<BookEntities>(s => new BookEntities(Configuration.GetConnectionString("BookEntities")));
             services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICatRepository, CatRepository>();
             services.AddScoped<ISubCatRepository, SubCatRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IPublisherRepository, PublisherRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddMvc();
         }

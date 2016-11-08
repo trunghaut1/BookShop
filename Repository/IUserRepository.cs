@@ -7,7 +7,8 @@ using Repository.Model;
 
 namespace Repository
 {
-    public interface IPublisherRepository : IGenericRepository<Publisher>
+    public interface IUserRepository : IGenericRepository<User>
     {
+        User SelectByEmail(string value);
     }
 }

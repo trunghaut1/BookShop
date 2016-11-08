@@ -9,10 +9,9 @@
 
 namespace Repository.Model
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.ObjectModel;
-
+    
     public partial class Book
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,29 +26,21 @@ namespace Repository.Model
     
         public int ID { get; set; }
         public string Name { get; set; }
-        public int PubID { get; set; }
         public string Author { get; set; }
         public string Summary { get; set; }
         public byte[] Image { get; set; }
         public Nullable<int> Price { get; set; }
         public Nullable<int> Quantity { get; set; }
-
-        [JsonIgnore]
-        public virtual Publisher Publisher { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ObservableCollection<bookCat> bookCat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ObservableCollection<bookSubCat> bookSubCat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ObservableCollection<OrderDetail> OrderDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ObservableCollection<Recommend> Recommend { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ObservableCollection<TimeBased> TimeBased { get; set; }
     }
 }

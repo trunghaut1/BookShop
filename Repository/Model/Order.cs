@@ -9,10 +9,9 @@
 
 namespace Repository.Model
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.ObjectModel;
-
+    
     public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,14 +22,12 @@ namespace Repository.Model
     
         public int ID { get; set; }
         public Nullable<System.DateTime> Time { get; set; }
-        public Nullable<int> CustID { get; set; }
         public string Address { get; set; }
-        public Nullable<int> Status { get; set; }
-
-        [JsonIgnore]
-        public virtual Customer Customer { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public int UserID { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ObservableCollection<OrderDetail> OrderDetail { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -9,23 +9,25 @@
 
 namespace Repository.Model
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.ObjectModel;
-
-    public partial class Publisher
+    
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Publisher()
+        public User()
         {
-            this.Book = new ObservableCollection<Book>();
+            this.Order = new ObservableCollection<Order>();
         }
     
         public int ID { get; set; }
+        public string Email { get; set; }
         public string Name { get; set; }
+        public string Pass { get; set; }
+        public string Phone { get; set; }
+        public Nullable<bool> IsAdmin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
-        public virtual ObservableCollection<Book> Book { get; set; }
+        public virtual ObservableCollection<Order> Order { get; set; }
     }
 }

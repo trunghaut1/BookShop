@@ -9,7 +9,6 @@ namespace Repository
 {
     public interface IBookRepository : IGenericRepository<Book>
     {
-        Book SelectByPublisher(int id);
         IEnumerable<Book> SelectByCat(int id);
         IEnumerable<Book> SelectBySubCat(int id);
         IGenericRepository<bookCat> bookCat();

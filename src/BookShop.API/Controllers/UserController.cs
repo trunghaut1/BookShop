@@ -11,41 +11,47 @@ using Repository.Model;
 namespace BookShop.API.Controllers
 {
     [Route("api/[controller]")]
-    public class PublisherController : Controller
+    public class UserController : Controller
     {
-        IPublisherRepository _pubRepo;
+        IUserRepository _uRepo;
 
-        public PublisherController(IPublisherRepository pubRepo)
+        public UserController(IUserRepository uRepo)
         {
-            _pubRepo = pubRepo;
+            _uRepo = uRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Publisher> Get()
+        public IEnumerable<User> Get()
         {
-            return _pubRepo.SelectAll();
+            return _uRepo.SelectAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Publisher Get(int id)
+        public User Get(int id)
         {
-            return _pubRepo.SelectByID(id);
+            return _uRepo.SelectByID(id);
+        }
+
+        [HttpGet("email/{email}")]
+        public User Get(string email)
+        {
+            return _uRepo.SelectByEmail(email);
         }
 
         // POST api/values
         [HttpPost]
-        public Publisher Post([FromBody]Publisher value)
+        public User Post([FromBody]User value)
         {
-            if (_pubRepo.Add(value)) return value;
+            if (_uRepo.Add(value)) return value;
             return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public Publisher Put(int id, [FromBody]Publisher value)
+        public User Put(int id, [FromBody]User value)
         {
-            if (_pubRepo.Update(value)) return value;
+            if (_uRepo.Update(value)) return value;
             return null;
         }
 
@@ -53,7 +59,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _pubRepo.Delete(id);
+            return _uRepo.Delete(id);
         }
     }
 }

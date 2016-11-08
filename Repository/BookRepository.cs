@@ -23,11 +23,6 @@ namespace Repository
             return SelectBy(o => o.bookCat.Any(c => c.CatID == id));
         }
 
-        public Book SelectByPublisher(int id)
-        {
-            return SelectBy(o => o.PubID == id).FirstOrDefault();
-        }
-
         public IEnumerable<Book> SelectBySubCat(int id)
         {
             return SelectBy(o => o.bookSubCat.Any(c => c.SubCatID == id));

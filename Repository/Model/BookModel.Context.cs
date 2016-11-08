@@ -25,18 +25,16 @@ namespace Repository.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Book> Book { get; set; }
         public virtual DbSet<bookCat> bookCat { get; set; }
         public virtual DbSet<bookSubCat> bookSubCat { get; set; }
         public virtual DbSet<Cat> Cat { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
-        public virtual DbSet<Publisher> Publisher { get; set; }
         public virtual DbSet<Recommend> Recommend { get; set; }
         public virtual DbSet<SubCat> SubCat { get; set; }
         public virtual DbSet<TimeBased> TimeBased { get; set; }
         public virtual DbSet<TimeRule> TimeRule { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

@@ -33,12 +33,6 @@ namespace BookShop.API.Controllers
             return _bookRepo.SelectByID(id);
         }
 
-        [HttpGet("publisher/{id}")]
-        public Book GetByPublisher(int id)
-        {
-            return _bookRepo.SelectByPublisher(id);
-        }
-
         [HttpGet("cat/{id}")]
         public IEnumerable<Book> GetByCat(int id)
         {
