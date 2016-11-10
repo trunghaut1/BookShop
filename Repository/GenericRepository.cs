@@ -31,9 +31,9 @@ namespace Repository
             return _table.ToList();
         }
 
-        public IEnumerable<T> SelectBy(Expression<Func<T, bool>> predicate)
+        public IQueryable<T> SelectBy(Expression<Func<T, bool>> predicate)
         {
-            return _table.Where(predicate).AsEnumerable();
+            return _table.Where(predicate);
         }
 
         public T SelectByID(object id)

@@ -9,9 +9,12 @@
 
 namespace Repository.Model
 {
+    using Newtonsoft.Json;
+    using PropertyChanged;
     using System;
     using System.Collections.ObjectModel;
-    
+
+    [ImplementPropertyChanged]
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,6 +31,7 @@ namespace Repository.Model
         public Nullable<bool> IsAdmin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ObservableCollection<Order> Order { get; set; }
     }
 }

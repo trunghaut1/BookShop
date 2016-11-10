@@ -11,7 +11,7 @@ namespace Repository
     public interface IGenericRepository<T> where T : class
     {
         IEnumerable<T> SelectAll();
-        IEnumerable<T> SelectBy(Expression<Func<T, bool>> predicate);
+        IQueryable<T> SelectBy(Expression<Func<T, bool>> predicate);
         T SelectByID(object id);
         T SelectByID(object id1, object id2);
         bool Add(T obj);
