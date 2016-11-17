@@ -1,0 +1,85 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BookShop.Admin.Views"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:vm="clr-namespace:BookShop.Admin.ViewModel"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="BookShop.Admin.Views.UserView"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="panelButton" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 5 0 5">
+            <Button Content="Thêm" Width="100" Margin="0 0 10 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="btnAdd">
+                            <cal:Parameter Value="{Binding ElementName=users}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button Content="Lưu" Width="100" Margin="0 0 10 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="btnUpdate">
+                            <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
+                            <cal:Parameter Value="{Binding SelectedItem.ID, ElementName=users}" />
+                            <cal:Parameter Value="{Binding Text, ElementName=txtName}" />
+                            <cal:Parameter Value="{Binding Text, ElementName=txtEmail}" />
+                            <cal:Parameter Value="{Binding Text, ElementName=txtPass}" />
+                            <cal:Parameter Value="{Binding Text, ElementName=txtPhone}" />
+                            <cal:Parameter Value="{Binding IsChecked, ElementName=chkAdmin}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="btnDelete" Content="Xóa" Width="100" Margin="0 0 10 0"/>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="10 5 50 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Tên:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+            <Label Content="Email:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+            <Label Content="Mật khẩu:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+            <Label Content="Điện thoại:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+            <Label Content="Admin:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+            <TextBox x:Name="txtName" Text="{Binding SelectedItem.Name, ElementName=users, Mode=OneWay}" Grid.Row="0" Grid.Column="1"/>
+            <TextBox x:Name="txtEmail" Text="{Binding SelectedItem.Email, ElementName=users, Mode=OneWay}" Grid.Row="1" Grid.Column="1"/>
+            <TextBox x:Name="txtPass" Text="{Binding SelectedItem.Pass, ElementName=users, Mode=OneWay}" Grid.Row="2" Grid.Column="1"/>
+            <TextBox x:Name="txtPhone" Text="{Binding SelectedItem.Phone, ElementName=users, Mode=OneWay}" Grid.Row="3" Grid.Column="1"/>
+            <CheckBox x:Name="chkAdmin" IsChecked="{Binding SelectedItem.IsAdmin, ElementName=users, Mode=OneWay}" Grid.Row="4" Grid.Column="1"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <dxg:GridControl x:Name="users" ItemsSource="{Binding users}">
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridView" AllowEditing="False"/>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn Binding="{Binding Path=ID}" Header="ID" MinWidth="20" Width="1*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Name}" Header="Tên" MinWidth="50" Width="2*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Email}" Header="Email" MinWidth="50" Width="3*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Pass}" Header="Mật khẩu" MinWidth="50" Width="4*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Phone}" Header="Điện thoại" MinWidth="50" Width="2*"/>
+                    <dxg:GridColumn Binding="{Binding Path=IsAdmin}" Header="Admin" MinWidth="50" Width="1*"/>
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+        </Grid>
+    </Grid>
+</UserControl>
