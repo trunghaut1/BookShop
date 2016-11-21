@@ -41,9 +41,18 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnDelete" Content="Xóa" Width="100" Margin="0 0 10 0"/>
+            <Button Content="Xóa" Width="100" Margin="0 0 10 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="btnDelete">
+                            <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
+                            <cal:Parameter Value="{Binding ElementName=users, Path=SelectedItem.ID}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </StackPanel>
-        <Grid Grid.Row="1" Margin="10 5 50 0">
+        <Grid Grid.Row="1" Margin="10 5 60 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>

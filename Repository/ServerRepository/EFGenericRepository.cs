@@ -8,39 +8,39 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Data.Entity.Migrations;
 
-namespace Repository
+namespace Repository.ServerRepository
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class EFGenericRepository<T> : IEFGenericRepository<T> where T : class
     {
-        protected BookEntities _db { get; set; }
-        protected DbSet<T> _table = null;
+        protected BookEntities db { get; set; }
+        protected DbSet<T> table = null;
 
-        public GenericRepository()
+        public EFGenericRepository()
         {
-            _db = new BookEntities();
-            _table = _db.Set<T>();
+            db = new BookEntities();
+            table = db.Set<T>();
         }
-        public GenericRepository(BookEntities db)
+        public EFGenericRepository(BookEntities db)
         {
-            _db = db;
-            _table = _db.Set<T>();
-        }
-
-        public IEnumerable<T> SelectAll()
-        {
-            return _table.ToList();
+            this.db = db;
+            table = this.db.Set<T>();
         }
 
-        public IQueryable<T> SelectBy(Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> GetAll()
         {
-            return _table.Where(predicate);
+            return table.ToList();
         }
 
-        public T SelectByID(object id)
+        public IQueryable<T> GetBy(Expression<Func<T, bool>> predicate)
+        {
+            return table.Where(predicate);
+        }
+
+        public T GetByID(object id)
         {
             try
             {
-                return _table.Find(id);
+                return table.Find(id);
             }
             catch
             {
@@ -48,11 +48,11 @@ namespace Repository
             }
         }
 
-        public T SelectByID(object id1, object id2)
+        public T GetByID(object id1, object id2)
         {
             try
             {
-                return _table.Find(id1, id2);
+                return table.Find(id1, id2);
             }
             catch
             {
@@ -64,8 +64,8 @@ namespace Repository
         {
             try
             {
-                _table.Add(obj);
-                _db.SaveChanges();
+                table.Add(obj);
+                db.SaveChanges();
                 return true;
             }
             catch
@@ -78,8 +78,8 @@ namespace Repository
         {
             try
             {
-                _table.AddOrUpdate(obj);
-                _db.SaveChanges();
+                table.AddOrUpdate(obj);
+                db.SaveChanges();
                 return true;
             }
             catch
@@ -92,9 +92,9 @@ namespace Repository
         {
             try
             {
-                T existing = _table.Find(id);
-                _table.Remove(existing);
-                _db.SaveChanges();
+                T existing = table.Find(id);
+                table.Remove(existing);
+                db.SaveChanges();
                 return true;
             }
             catch

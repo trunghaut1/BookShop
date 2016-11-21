@@ -13,33 +13,34 @@ using Caliburn.Micro;
 using PropertyChanged;
 using System.Windows.Controls;
 using DevExpress.Xpf.Grid;
+using Repository.ClientRepository;
 
 namespace BookShop.Admin.ViewModels
 {
     [ImplementPropertyChanged]
     public class UserViewModel : Screen
     {
+        private UserRepository userRepo;
         public string message { get; set; }
         public ObservableCollection<User> users { get; set; }
 
         public UserViewModel()
         {
+            userRepo = new UserRepository();
             LoadData();
-        }
-
-        private async Task<ObservableCollection<User>> GetList()
-        {
-            string json = await APIHelper.Get("user");
-            if(!String.IsNullOrEmpty(json))
-            {
-                return new ObservableCollection<User>(JsonHelper.Json2List<User>(json));
-            }
-            return null;
         }
 
         private async void LoadData()
         {
-            users = await GetList();
+            var list = await userRepo.GetAll("user");
+            if (list != null)
+            {
+                users = new ObservableCollection<User>(list);
+            }     
+            else
+            {
+                users = new ObservableCollection<User>();
+            }       
         }
 
         public void btnAdd(GridControl grid)
@@ -49,19 +50,10 @@ namespace BookShop.Admin.ViewModels
         }
         public async void btnUpdate(int index, int? id, string name, string email, string pass, string phone, bool admin)
         {
-            if(id != null)
+            if(id != null) // Update user
             {
-                var value = new User()
-                {
-                    ID = (int)id,
-                    Name = name,
-                    Email = email,
-                    Pass = pass,
-                    Phone = phone,
-                    IsAdmin = admin
-                };
-                string json = await APIHelper.Put($"user/{id}", value);
-                if(!String.IsNullOrEmpty(json))
+                var value = new User(id, name, email, pass, phone, admin);
+                if(await userRepo.Update($"user/{id}", value))
                 {
                     users[index] = value;
                     message = MessageHelper.Get("up");
@@ -71,9 +63,43 @@ namespace BookShop.Admin.ViewModels
                     message = MessageHelper.Get("upErr");
                 }
             }
+            else // Add user
+            {
+                var value = new User(null, name, email, pass, phone, admin);
+                id = await userRepo.Add("user", value);
+                if (id != 0)
+                {
+                    value.ID = (int)id;
+                    users.Add(value);
+                    message = MessageHelper.Get("add");
+                }
+                else
+                {
+                    message = MessageHelper.Get("addErr");
+                }
+            }
+        }
+        public async void btnDelete(int index, int? id)
+        {
+            if(id != null)
+            {
+                if(MessageBox.Show("Xác nhận xóa?", "Xóa", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    bool del = await userRepo.Delete($"user/{id}");
+                    if (del)
+                    {
+                        users.RemoveAt(index);
+                        message = MessageHelper.Get("del");
+                    }
+                    else
+                    {
+                        message = MessageHelper.Get("delErr");
+                    }
+                }
+            }
             else
             {
-
+                message = MessageHelper.Get("delNoti");
             }
         }
     }

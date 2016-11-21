@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Repository;
+using Repository.ServerRepository;
 using Repository.Model;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,9 +13,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class SubCatController : Controller
     {
-        ISubCatRepository _subCatRepo;
+        IEFSubCatRepository _subCatRepo;
 
-        public SubCatController(ISubCatRepository subCatRepo)
+        public SubCatController(IEFSubCatRepository subCatRepo)
         {
             _subCatRepo = subCatRepo;
         }
@@ -23,20 +23,20 @@ namespace BookShop.API.Controllers
         [HttpGet]
         public IEnumerable<SubCat> Get()
         {
-            return _subCatRepo.SelectAll();
+            return _subCatRepo.GetAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public SubCat Get(int id)
         {
-            return _subCatRepo.SelectByID(id);
+            return _subCatRepo.GetByID(id);
         }
 
         [HttpGet("cat/{id}")]
         public IEnumerable<SubCat> GetByCat(int id)
         {
-            return _subCatRepo.SelectByCat(1);
+            return _subCatRepo.GetByCat(1);
         }
 
         // POST api/values

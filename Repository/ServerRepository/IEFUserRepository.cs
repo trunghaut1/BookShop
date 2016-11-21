@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository.Model;
 
-namespace Repository
+namespace Repository.ServerRepository
 {
-    public interface ICatRepository : IGenericRepository<Cat>
+    public interface IEFUserRepository : IEFGenericRepository<User>
     {
-
+        User GetByEmail(string value);
     }
 }

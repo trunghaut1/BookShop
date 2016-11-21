@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Repository;
+using Repository.ServerRepository;
 using Repository.Model;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,37 +13,37 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        IUserRepository _uRepo;
+        IEFUserRepository userRepo;
 
-        public UserController(IUserRepository uRepo)
+        public UserController(IEFUserRepository userRepo)
         {
-            _uRepo = uRepo;
+            this.userRepo = userRepo;
         }
         // GET: api/values
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            return _uRepo.SelectAll();
+            return userRepo.GetAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return _uRepo.SelectByID(id);
+            return userRepo.GetByID(id);
         }
 
         [HttpGet("email/{email}")]
         public User Get(string email)
         {
-            return _uRepo.SelectByEmail(email);
+            return userRepo.GetByEmail(email);
         }
 
         // POST api/values
         [HttpPost]
-        public User Post([FromBody]User value)
+        public int? Post([FromBody]User value)
         {
-            if (_uRepo.Add(value)) return value;
+            if (userRepo.Add(value)) return value.ID;
             return null;
         }
 
@@ -51,7 +51,7 @@ namespace BookShop.API.Controllers
         [HttpPut("{id}")]
         public User Put(int id, [FromBody]User value)
         {
-            if (_uRepo.Update(value)) return value;
+            if (userRepo.Update(value)) return value;
             return null;
         }
 
@@ -59,7 +59,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _uRepo.Delete(id);
+            return userRepo.Delete(id);
         }
     }
 }

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository
+namespace Repository.ServerRepository
 {
-    public interface ISubCatRepository : IGenericRepository<SubCat>
+    public interface IEFSubCatRepository : IEFGenericRepository<SubCat>
     {
-        IEnumerable<SubCat> SelectByCat(int id);
+        IEnumerable<SubCat> GetByCat(int id);
     }
 }

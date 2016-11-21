@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 
-namespace Repository
+namespace Repository.ServerRepository
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IEFGenericRepository<T> where T : class
     {
-        IEnumerable<T> SelectAll();
-        IQueryable<T> SelectBy(Expression<Func<T, bool>> predicate);
-        T SelectByID(object id);
-        T SelectByID(object id1, object id2);
+        IEnumerable<T> GetAll();
+        IQueryable<T> GetBy(Expression<Func<T, bool>> predicate);
+        T GetByID(object id);
+        T GetByID(object id1, object id2);
         bool Add(T obj);
         bool Update(T obj);
         bool Delete(object id);

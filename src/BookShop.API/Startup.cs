@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Repository;
+using Repository.ServerRepository;
 using Repository.Model;
 
 namespace BookShop.API
@@ -31,11 +31,11 @@ namespace BookShop.API
         {
             // Add framework services.
             services.AddScoped<BookEntities>(s => new BookEntities(Configuration.GetConnectionString("BookEntities")));
-            services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ICatRepository, CatRepository>();
-            services.AddScoped<ISubCatRepository, SubCatRepository>();
-            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddSingleton(typeof(IEFGenericRepository<>), typeof(EFGenericRepository<>));
+            services.AddScoped<IEFUserRepository, EFUserRepository>();
+            services.AddScoped<IEFCatRepository, EFCatRepository>();
+            services.AddScoped<IEFSubCatRepository, EFSubCatRepository>();
+            services.AddScoped<IEFBookRepository, EFBookRepository>();
             services.AddMvc();
         }
 
