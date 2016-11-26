@@ -19,6 +19,9 @@ namespace BookShop.Admin {
             container.Singleton<IEventAggregator, EventAggregator>();
             container.PerRequest<MainViewModel>();
             container.PerRequest<UserViewModel>();
+            container.PerRequest<CatViewModel>();
+            container.PerRequest<SubCatViewModel>();
+            container.PerRequest<BookViewModel>();
         }
 
         protected override object GetInstance(Type service, string key) {

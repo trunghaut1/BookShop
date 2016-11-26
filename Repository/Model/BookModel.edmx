@@ -13,7 +13,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="Author" Type="nvarchar" MaxLength="100" />
           <Property Name="Summary" Type="nvarchar" MaxLength="1500" />
-          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Image" Type="varchar(max)" />
           <Property Name="Price" Type="int" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
@@ -344,7 +344,7 @@
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Summary" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Price" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="bookCat" Relationship="Self.FK_bookCat_Book" FromRole="Book" ToRole="bookCat" />

@@ -28,7 +28,7 @@ namespace Repository.Model
         public string Name { get; set; }
         public string Author { get; set; }
         public string Summary { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public Nullable<int> Price { get; set; }
         public Nullable<int> Quantity { get; set; }
     

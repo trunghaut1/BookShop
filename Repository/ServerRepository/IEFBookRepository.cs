@@ -1,4 +1,5 @@
 ﻿using Repository.Model;
+using Repository.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace Repository.ServerRepository
     {
         IEnumerable<Book> GetByCat(int id);
         IEnumerable<Book> GetBySubCat(int id);
-        IEFGenericRepository<bookCat> bookCat();
-        IEFGenericRepository<bookSubCat> bookSubCat();
+        BookPaging GetPage(int pageSize, int page);
     }
 }

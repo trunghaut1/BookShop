@@ -9,7 +9,8 @@ namespace Repository.ClientRepository
 {
     public class GenericRepository<T> where T : class
     {
-        public async Task<int> Add(string url, T obj)
+        public string url { get; set; }
+        public async Task<int> Add(T obj)
         {
             string json = await APIHelper.Post(url, obj);
             if(!string.IsNullOrEmpty(json))
@@ -19,9 +20,9 @@ namespace Repository.ClientRepository
             return 0;
         }
 
-        public async Task<bool> Delete(string url)
+        public async Task<bool> Delete(int id)
         {
-            string json = await APIHelper.Delete(url);
+            string json = await APIHelper.Delete($"{url}/{id}");
             if (!string.IsNullOrEmpty(json))
             {
                 return bool.Parse(json);
@@ -29,7 +30,7 @@ namespace Repository.ClientRepository
             return false;
         }
 
-        public async Task<IEnumerable<T>> GetAll(string url)
+        public async Task<IEnumerable<T>> GetAll()
         {
             string json = await APIHelper.Get(url);
             if (!string.IsNullOrEmpty(json))
@@ -44,9 +45,9 @@ namespace Repository.ClientRepository
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Update(string url, T obj)
+        public async Task<bool> Update(int id, T obj)
         {
-            string json = await APIHelper.Put(url, obj);
+            string json = await APIHelper.Put($"{url}/{id}", obj);
             return !string.IsNullOrEmpty(json) ? true : false;
         }
     }

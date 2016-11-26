@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Repository;
 using Repository.Model;
+using System.Net;
 
 namespace Test
 {
@@ -12,7 +12,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Console.ReadLine();
+            BookEntities db = new BookEntities();
         }
     }
 }

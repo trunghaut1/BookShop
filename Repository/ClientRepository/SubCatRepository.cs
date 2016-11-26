@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Repository.ClientRepository
 {
-    public class UserRepository : GenericRepository<User>
+    public class SubCatRepository : GenericRepository<SubCat>
     {
-        public UserRepository()
+        public SubCatRepository()
         {
-            url = "user";
+            url = "subcat";
         }
     }
 }

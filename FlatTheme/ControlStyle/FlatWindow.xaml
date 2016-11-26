@@ -24,12 +24,12 @@
                                         <ContentPresenter Grid.Row="1" Grid.RowSpan="2" Margin="7"/>
                                         <Rectangle x:Name="HeaderBackground" Height="30" Fill="{DynamicResource MainColor}" VerticalAlignment="Top" Grid.Row="0"/>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" WindowChrome.IsHitTestVisibleInChrome="True" Grid.Row="0">
-                                            <Button Content="0" ToolTip="Ẩn" Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}" Style="{DynamicResource CommandButton}"/>
+                                            <Button Content="0" Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}" Style="{DynamicResource CommandButton}"/>
                                                 <Grid Margin="1,0,1,0">
-                                                <Button x:Name="Restore" ToolTip="Thu nhỏ" Content="2" Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}" Visibility="Collapsed" Style="{DynamicResource CommandButton}"/>
-                                                <Button x:Name="Maximize" ToolTip="Phóng to" Content="1" Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}" Style="{DynamicResource CommandButton}"/>
+                                                <Button x:Name="Restore" Content="2" Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}" Visibility="Collapsed" Style="{DynamicResource CommandButton}"/>
+                                                <Button x:Name="Maximize" Content="1" Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}" Style="{DynamicResource CommandButton}"/>
                                             </Grid>
-                                            <Button Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}" Style="{DynamicResource CommandButton}" Content="r" ToolTip="Thoát"/>
+                                            <Button Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}" Style="{DynamicResource CommandButton}" Content="r"/>
                                         </StackPanel>
                                         <TextBlock x:Name="WindowTitleTextBlock" Grid.Row="0" Text="{TemplateBinding Title}" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"  Margin="8 -1 0 0"  FontSize="16"  Foreground="{DynamicResource BackgroundColor}"/>
                                         <Grid Grid.Row="2">

@@ -21,22 +21,24 @@ namespace BookShop.API.Controllers
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<User> Get()
+        public dynamic Get()
         {
-            return userRepo.GetAll();
+            return userRepo.GetAll().Select(o => new { o.ID, o.Name, o.Email, o.Pass, o.Phone, o.IsAdmin});
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return userRepo.GetByID(id);
+            var value = userRepo.GetByID(id);
+            return new User(value);
         }
 
         [HttpGet("email/{email}")]
         public User Get(string email)
         {
-            return userRepo.GetByEmail(email);
+            var value = userRepo.GetByEmail(email);
+            return new User(value);
         }
 
         // POST api/values
@@ -51,7 +53,7 @@ namespace BookShop.API.Controllers
         [HttpPut("{id}")]
         public User Put(int id, [FromBody]User value)
         {
-            if (userRepo.Update(value)) return value;
+            if (userRepo.Update(value)) return new User(value);
             return null;
         }
 

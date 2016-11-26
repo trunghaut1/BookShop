@@ -13,31 +13,32 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class CatController : Controller
     {
-        IEFCatRepository _catRepo;
+        IEFCatRepository catRepo;
 
         public CatController(IEFCatRepository catRepo)
         {
-            _catRepo = catRepo;
+            this.catRepo = catRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Cat> Get()
+        public dynamic Get()
         {
-            return _catRepo.GetAll();
+            return catRepo.GetAll().Select(o => new { o.ID, o.Name });
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Cat Get(int id)
         {
-            return _catRepo.GetByID(id);
+            var value = catRepo.GetByID(id);
+            return new Cat(value);
         }
 
         // POST api/values
         [HttpPost]
-        public Cat Post([FromBody]Cat value)
+        public int? Post([FromBody]Cat value)
         {
-            if (_catRepo.Add(value)) return value;
+            if (catRepo.Add(value)) return value.ID;
             return null;
         }
 
@@ -45,7 +46,7 @@ namespace BookShop.API.Controllers
         [HttpPut("{id}")]
         public Cat Put(int id, [FromBody]Cat value)
         {
-            if (_catRepo.Update(value)) return value;
+            if (catRepo.Update(value)) return new Cat(value);
             return null;
         }
 
@@ -53,7 +54,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _catRepo.Delete(id);
+            return catRepo.Delete(id);
         }
     }
 }

@@ -13,37 +13,38 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class SubCatController : Controller
     {
-        IEFSubCatRepository _subCatRepo;
+        IEFSubCatRepository subCatRepo;
 
         public SubCatController(IEFSubCatRepository subCatRepo)
         {
-            _subCatRepo = subCatRepo;
+            this.subCatRepo = subCatRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<SubCat> Get()
+        public dynamic Get()
         {
-            return _subCatRepo.GetAll();
+            return subCatRepo.GetAll().Select(o => new { o.ID, o.Name, o.CatID});
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public SubCat Get(int id)
         {
-            return _subCatRepo.GetByID(id);
+            var value = subCatRepo.GetByID(id);
+            return new SubCat(value);
         }
 
         [HttpGet("cat/{id}")]
-        public IEnumerable<SubCat> GetByCat(int id)
+        public dynamic GetByCat(int id)
         {
-            return _subCatRepo.GetByCat(1);
+            return subCatRepo.GetByCat(id).Select(o => new { o.ID, o.Name, o.CatID});
         }
 
         // POST api/values
         [HttpPost]
-        public SubCat Post([FromBody]SubCat value)
+        public int? Post([FromBody]SubCat value)
         {
-            if (_subCatRepo.Add(value)) return value;
+            if (subCatRepo.Add(value)) return value.ID;
             return null;
         }
 
@@ -51,7 +52,7 @@ namespace BookShop.API.Controllers
         [HttpPut("{id}")]
         public SubCat Put(int id, [FromBody]SubCat value)
         {
-            if (_subCatRepo.Update(value)) return value;
+            if (subCatRepo.Update(value)) return new SubCat(value);
             return null;
         }
 
@@ -59,7 +60,7 @@ namespace BookShop.API.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            return _subCatRepo.Delete(id);
+            return subCatRepo.Delete(id);
         }
     }
 }

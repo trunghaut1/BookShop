@@ -8,7 +8,8 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="BookShop - Admin" Height="500" Width="1000" WindowState="Maximized" Style="{StaticResource FlatWindow}" FontSize="15">
+        Language="vi-VN"
+        Title="BookShop - Quản trị" Height="500" Width="1000" WindowState="Maximized" Style="{StaticResource FlatWindow}" FontSize="15">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -17,7 +18,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Menu>
-                <MenuItem x:Name="mnUser" Header="_User" >
+                <MenuItem x:Name="mnUser" Header="_Người dùng" >
                     <MenuItem.Icon>
                         <Viewbox Width="16" Height="16">
                             <Canvas Width="24" Height="24">
@@ -26,14 +27,34 @@
                         </Viewbox>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Sách" >
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="mnBook">
-                                <cal:Parameter Value="{Binding ElementName=ActiveItem}" />
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                <MenuItem Header="_Thể loại">
+                    <MenuItem.Icon>
+                        <Viewbox Width="16" Height="16">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                            </Canvas>
+                        </Viewbox>
+                    </MenuItem.Icon>
+                    <MenuItem x:Name="mnCat" Header="_Thể loại chính">
+                        <MenuItem.Icon>
+                            <Viewbox Width="16" Height="16">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                </Canvas>
+                            </Viewbox>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mnSubCat" Header="_Thể loại con">
+                        <MenuItem.Icon>
+                            <Viewbox Width="16" Height="16">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                </Canvas>
+                            </Viewbox>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="mnBook" Header="_Sách">
                     <MenuItem.Icon>
                         <Viewbox Width="16" Height="16">
                             <Canvas Width="24" Height="24">

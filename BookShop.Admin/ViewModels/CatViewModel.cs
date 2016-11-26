@@ -1,46 +1,43 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using DevExpress.Xpf.Grid;
+using PropertyChanged;
+using Repository.ClientRepository;
+using Repository.Helper;
+using Repository.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Repository.Model;
-using System.Windows.Input;
 using System.Windows;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using Repository.Helper;
-using Caliburn.Micro;
-using PropertyChanged;
-using System.Windows.Controls;
-using DevExpress.Xpf.Grid;
-using Repository.ClientRepository;
 
 namespace BookShop.Admin.ViewModels
 {
     [ImplementPropertyChanged]
-    public class UserViewModel : Screen
+    public class CatViewModel : Screen
     {
-        private UserRepository userRepo;
+        private CatRepository catRepo;
         public string message { get; set; }
-        public ObservableCollection<User> users { get; set; }
+        public ObservableCollection<Cat> cats { get; set; }
 
-        public UserViewModel()
+        public CatViewModel()
         {
-            userRepo = new UserRepository();
+            catRepo = new CatRepository();
             LoadData();
         }
 
         private async void LoadData()
         {
-            var list = await userRepo.GetAll();
+            var list = await catRepo.GetAll();
             if (list != null)
             {
-                users = new ObservableCollection<User>(list);
-            }     
+                cats = new ObservableCollection<Cat>(list);
+            }
             else
             {
-                users = new ObservableCollection<User>();
-            }       
+                cats = new ObservableCollection<Cat>();
+            }
         }
 
         public void btnAdd(GridControl grid)
@@ -48,14 +45,14 @@ namespace BookShop.Admin.ViewModels
             grid.SelectedItem = null;
             message = MessageHelper.Get("+");
         }
-        public async void btnUpdate(int index, int? id, string name, string email, string pass, string phone, bool admin)
+        public async void btnUpdate(int index, int? id, string name)
         {
-            if(id != null) // Update user
+            if (id != null) // Update
             {
-                var value = new User(id, name, email, pass, phone, admin);
-                if(await userRepo.Update((int)id, value))
+                var value = new Cat(id, name);
+                if (await catRepo.Update((int)id, value))
                 {
-                    users[index] = value;
+                    cats[index] = value;
                     message = MessageHelper.Get("up");
                 }
                 else
@@ -63,14 +60,14 @@ namespace BookShop.Admin.ViewModels
                     message = MessageHelper.Get("upErr");
                 }
             }
-            else // Add user
+            else // Add
             {
-                var value = new User(null, name, email, pass, phone, admin);
-                id = await userRepo.Add(value);
+                var value = new Cat(null, name);
+                id = await catRepo.Add(value);
                 if (id != 0)
                 {
                     value.ID = (int)id;
-                    users.Add(value);
+                    cats.Add(value);
                     message = MessageHelper.Get("add");
                 }
                 else
@@ -81,14 +78,14 @@ namespace BookShop.Admin.ViewModels
         }
         public async void btnDelete(int index, int? id)
         {
-            if(id != null)
+            if (id != null)
             {
-                if(MessageBox.Show("Xác nhận xóa?", "Xóa", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Xác nhận xóa?", "Xóa", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    bool del = await userRepo.Delete((int)id);
+                    bool del = await catRepo.Delete((int)id);
                     if (del)
                     {
-                        users.RemoveAt(index);
+                        cats.RemoveAt(index);
                         message = MessageHelper.Get("del");
                     }
                     else
