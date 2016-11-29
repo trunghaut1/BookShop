@@ -74,7 +74,9 @@
     <Compile Include="ClientRepository\GenericRepository.cs" />
     <Compile Include="ClientRepository\SubCatRepository.cs" />
     <Compile Include="ClientRepository\UserRepository.cs" />
+    <Compile Include="Model\bookCatModel.cs" />
     <Compile Include="Model\BooksModel.cs" />
+    <Compile Include="Model\bookSubCatModel.cs" />
     <Compile Include="Model\Paging.cs" />
     <Compile Include="Model\SubCatModel.cs" />
     <Compile Include="Model\CatModel.cs" />

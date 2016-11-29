@@ -13,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <StackPanel x:Name="panelButton" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 5 0 5">
             <Button Content="Thêm" Width="100" Margin="0 0 10 0">
@@ -62,6 +62,18 @@
             <Label Content="Thể loại chính:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"  Margin="0 0 10 0"/>
             <TextBox VerticalAlignment="Center" Grid.Row="0" x:Name="txtName" Text="{Binding SelectedItem.Name, ElementName=subcats, Mode=OneWay}" Grid.Column="1"/>
             <ComboBox IsEditable="True" x:Name="cats" DisplayMemberPath="Name" SelectedValuePath="ID" SelectedValue="{Binding ElementName=subcats, Path=SelectedItem.CatID, Mode=OneWay}" Grid.Column="1" Grid.Row="1" Tag="Thể loại chính" />
+            <Button ToolTip="Thêm thể loại chính" Style="{StaticResource CircleButton}" Width="30" Height="30" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0">
+                <Viewbox Width="15" Height="15">
+                    <Path Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" StrokeThickness="0.5" Stretch="Fill"/>
+                </Viewbox>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="btnCat">
+                            <cal:Parameter Value="{Binding ElementName=cats}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </Grid>
         <Grid Grid.Row="2">
             <dxg:GridControl x:Name="subcats" ItemsSource="{Binding subcats}">

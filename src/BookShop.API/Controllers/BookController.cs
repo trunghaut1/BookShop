@@ -51,6 +51,18 @@ namespace BookShop.API.Controllers
             return bookRepo.GetBySubCat(id);
         }
 
+        [HttpGet("cat")]
+        public dynamic GetbookCat()
+        {
+            return bookRepo.GetbookCat().Select(o => new { o.BookID, o.CatID });
+        }
+
+        [HttpGet("subcat")]
+        public dynamic GetbookSubCat()
+        {
+            return bookRepo.GetbookSubCat().Select(o => new { o.BookID, o.SubCatID });
+        }
+
         // POST api/values
         [HttpPost]
         public Book Post([FromBody]Book value)

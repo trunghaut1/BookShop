@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using BookShop.Admin.Converter;
+using Caliburn.Micro;
 using DevExpress.Xpf.Grid;
 using PropertyChanged;
 using Repository.ClientRepository;
@@ -7,10 +8,14 @@ using Repository.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace BookShop.Admin.ViewModels
 {
@@ -21,6 +26,7 @@ namespace BookShop.Admin.ViewModels
         private CatRepository catRepo;
         public string message { get; set; }
         public ObservableCollection<Cat> cats { get; set; }
+
         public ObservableCollection<SubCat> subcats { get; set; }
 
         public SubCatViewModel()
@@ -108,6 +114,26 @@ namespace BookShop.Admin.ViewModels
             else
             {
                 message = MessageHelper.Get("delNoti");
+            }
+        }
+        public async void btnCat(ComboBox cbo)
+        {
+            IWindowManager manager = new WindowManager();
+            var viewmodel = new BaseViewModel(typeof(CatViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
+            manager.ShowDialog(viewmodel, null, null);
+            if (!viewmodel.IsActive)
+            {
+                var cat = await catRepo.GetAll();
+                if (cat != null)
+                {
+                    cats = new ObservableCollection<Cat>(cat);
+                }
+                foreach (var value in subcats)
+                {
+                    value.Cat = cats.Where(o => o.ID == value.CatID).FirstOrDefault();
+                }
+                var binding = Helper.SetBinding("subcats", "SelectedItem.CatID");
+                BindingOperations.SetBinding(cbo, ComboBox.SelectedValueProperty, binding);
             }
         }
     }

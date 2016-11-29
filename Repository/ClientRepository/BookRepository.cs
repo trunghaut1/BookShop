@@ -25,5 +25,23 @@ namespace Repository.ClientRepository
             }
             return null;
         }
+        public async Task<IEnumerable<bookCat>> GetbookCat()
+        {
+            string json = await APIHelper.Get($"{url}/cat");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2List<bookCat>(json);
+            }
+            return null;
+        }
+        public async Task<IEnumerable<bookSubCat>> GetbookSubCat()
+        {
+            string json = await APIHelper.Get($"{url}/subcat");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2List<bookSubCat>(json);
+            }
+            return null;
+        }
     }
 }

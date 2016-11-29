@@ -11,17 +11,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookShop.Admin.Views
 {
     /// <summary>
-    /// Interaction logic for CatView.xaml
+    /// Interaction logic for BaseView.xaml
     /// </summary>
-    public partial class CatView : UserControl
+    public partial class BaseView : FlatWindow
     {
-        public CatView()
+        public BaseView()
         {
             InitializeComponent();
         }

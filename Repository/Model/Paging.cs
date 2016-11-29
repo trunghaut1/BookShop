@@ -12,6 +12,6 @@ namespace Repository.Model
         public int pageSize { get; set; }
         public int pageIndex { get; set; }
 
-        public int totalPage => (int)Math.Ceiling((decimal)totalItem / pageSize);
+        public int totalPage => pageSize == 0 ? 0 : (int)Math.Ceiling((decimal)totalItem / pageSize);
     }
 }

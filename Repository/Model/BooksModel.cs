@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Model
 {
+    [ImplementPropertyChanged]
     public partial class Book
     {
         public Book(int? id, string name, string author, string sum, string img, int? price, int? quantity)

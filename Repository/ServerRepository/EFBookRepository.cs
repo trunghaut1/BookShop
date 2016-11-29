@@ -50,5 +50,13 @@ namespace Repository.ServerRepository
             };
             return bookPaging;
         }
+        public IEnumerable<bookCat> GetbookCat()
+        {
+            return _bookCat.GetAll();
+        }
+        public IEnumerable<bookSubCat> GetbookSubCat()
+        {
+            return _bookSubCat.GetAll();
+        }
     }
 }

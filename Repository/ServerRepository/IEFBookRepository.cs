@@ -13,5 +13,7 @@ namespace Repository.ServerRepository
         IEnumerable<Book> GetByCat(int id);
         IEnumerable<Book> GetBySubCat(int id);
         BookPaging GetPage(int pageSize, int page);
+        IEnumerable<bookCat> GetbookCat();
+        IEnumerable<bookSubCat> GetbookSubCat();
     }
 }
