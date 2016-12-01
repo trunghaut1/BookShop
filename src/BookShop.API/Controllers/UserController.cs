@@ -51,10 +51,9 @@ namespace BookShop.API.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public User Put(int id, [FromBody]User value)
+        public bool Put(int id, [FromBody]User value)
         {
-            if (userRepo.Update(value)) return new User(value);
-            return null;
+            return userRepo.Update(value);
         }
 
         // DELETE api/values/5

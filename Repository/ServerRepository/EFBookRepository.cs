@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Repository.Model;
 using System.Data.Entity;
 using Repository.ViewModel;
+using System.Data.Entity.Migrations;
 
 namespace Repository.ServerRepository
 {
     public class EFBookRepository : EFGenericRepository<Book>, IEFBookRepository
     {
-        private IEFGenericRepository<bookCat> _bookCat;
-        private IEFGenericRepository<bookSubCat> _bookSubCat;
-        public EFBookRepository(BookEntities db, IEFGenericRepository<bookCat> bookCat, IEFGenericRepository<bookSubCat> bookSubCat) : base(db)
+        protected DbSet<bookCat> bookCat = null;
+        protected DbSet<bookSubCat> bookSubCat = null;
+        public EFBookRepository(BookEntities db) : base(db)
         {
-            _bookCat = bookCat;
-            _bookSubCat = bookSubCat;
+            bookCat = this.db.Set<bookCat>();
+            bookSubCat = this.db.Set<bookSubCat>();
         }
-        public IEFGenericRepository<bookCat> bookCat => _bookCat;
-
-        public IEFGenericRepository<bookSubCat> bookSubCat => _bookSubCat;
 
         public IEnumerable<Book> GetByCat(int id)
         {
@@ -52,11 +47,45 @@ namespace Repository.ServerRepository
         }
         public IEnumerable<bookCat> GetbookCat()
         {
-            return _bookCat.GetAll();
+            return db.bookCat.AsEnumerable();
         }
         public IEnumerable<bookSubCat> GetbookSubCat()
         {
-            return _bookSubCat.GetAll();
+            return db.bookSubCat.AsEnumerable();
+        }
+        public override bool Update(Book obj)
+        {
+            try
+            {
+                Book book = table.Find(obj.ID);
+                table.AddOrUpdate(obj);
+                var catDelete = book.bookCat.Where(o => !obj.bookCat.Any(b => b.CatID == o.CatID)).ToList();
+                var subCatDelete = book.bookSubCat.Where(o => !obj.bookSubCat.Any(b => b.SubCatID == o.SubCatID)).ToList();
+                var catAdd = obj.bookCat.Where(o => book.bookCat.Any(b => b.CatID == o.CatID));
+                var subCatAdd = obj.bookSubCat.Where(o => obj.bookSubCat.Any(b => b.SubCatID == o.SubCatID));
+                foreach(bookCat value in catDelete)
+                {
+                    book.bookCat.Remove(value);
+                }
+                foreach (bookSubCat value in subCatDelete)
+                {
+                    book.bookSubCat.Remove(value);
+                }
+                foreach (bookCat value in catAdd)
+                {
+                    book.bookCat.Add(value);
+                }
+                foreach (bookSubCat value in subCatAdd)
+                {
+                    book.bookSubCat.Add(value);
+                }
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

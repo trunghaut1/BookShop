@@ -20,35 +20,35 @@
             <Menu>
                 <MenuItem x:Name="mnUser" Header="_Người dùng" >
                     <MenuItem.Icon>
-                        <Viewbox Width="16" Height="16">
+                        <Viewbox Width="18" Height="18">
                             <Canvas Width="24" Height="24">
-                                <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                <Path Data="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" Fill="{StaticResource MainColor}" />
                             </Canvas>
                         </Viewbox>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Thể loại">
                     <MenuItem.Icon>
-                        <Viewbox Width="16" Height="16">
+                        <Viewbox Width="18" Height="18">
                             <Canvas Width="24" Height="24">
-                                <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                <Path Data="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" Fill="{StaticResource MainColor}" />
                             </Canvas>
                         </Viewbox>
                     </MenuItem.Icon>
                     <MenuItem x:Name="mnCat" Header="_Thể loại chính">
                         <MenuItem.Icon>
-                            <Viewbox Width="16" Height="16">
+                            <Viewbox Width="18" Height="18">
                                 <Canvas Width="24" Height="24">
-                                    <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                    <Path Data="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" Fill="{StaticResource MainColor}" />
                                 </Canvas>
                             </Viewbox>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem x:Name="mnSubCat" Header="_Thể loại con">
                         <MenuItem.Icon>
-                            <Viewbox Width="16" Height="16">
+                            <Viewbox Width="18" Height="18">
                                 <Canvas Width="24" Height="24">
-                                    <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                    <Path Data="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z" Fill="{StaticResource MainColor}" />
                                 </Canvas>
                             </Viewbox>
                         </MenuItem.Icon>
@@ -56,9 +56,9 @@
                 </MenuItem>
                 <MenuItem x:Name="mnBook" Header="_Sách">
                     <MenuItem.Icon>
-                        <Viewbox Width="16" Height="16">
+                        <Viewbox Width="18" Height="18">
                             <Canvas Width="24" Height="24">
-                                <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource MainColor}" />
+                                <Path Data="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" Fill="{StaticResource MainColor}" />
                             </Canvas>
                         </Viewbox>
                     </MenuItem.Icon>

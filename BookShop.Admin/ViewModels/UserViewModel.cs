@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Repository.Model;
-using System.Windows.Input;
 using System.Windows;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Repository.Helper;
 using Caliburn.Micro;
 using PropertyChanged;
-using System.Windows.Controls;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.WindowsUI;
 using Repository.ClientRepository;
+using DevExpress.Xpf.Core;
 
 namespace BookShop.Admin.ViewModels
 {
@@ -27,33 +22,32 @@ namespace BookShop.Admin.ViewModels
         public UserViewModel()
         {
             userRepo = new UserRepository();
+
+            users = new ObservableCollection<User>();
             LoadData();
         }
 
         private async void LoadData()
         {
-            var list = await userRepo.GetAll();
+            IEnumerable<User> list = await userRepo.GetAll();
             if (list != null)
             {
                 users = new ObservableCollection<User>(list);
-            }     
-            else
-            {
-                users = new ObservableCollection<User>();
             }       
         }
 
-        public void btnAdd(GridControl grid)
+        public void ClearSelected(GridControl grid)
         {
             grid.SelectedItem = null;
             message = MessageHelper.Get("+");
         }
-        public async void btnUpdate(int index, int? id, string name, string email, string pass, string phone, bool admin)
+        public async void AddOrUpdate(int index, int? id, string name, string email, string pass, string phone, bool admin)
         {
-            if(id != null) // Update user
+            if(id != null) // Update
             {
-                var value = new User(id, name, email, pass, phone, admin);
-                if(await userRepo.Update((int)id, value))
+                User value = new User(id, name, email, pass, phone, admin);
+                bool result = await userRepo.Update((int)id, value);
+                if (result)
                 {
                     users[index] = value;
                     message = MessageHelper.Get("up");
@@ -63,9 +57,9 @@ namespace BookShop.Admin.ViewModels
                     message = MessageHelper.Get("upErr");
                 }
             }
-            else // Add user
+            else // Add
             {
-                var value = new User(null, name, email, pass, phone, admin);
+                User value = new User(null, name, email, pass, phone, admin);
                 id = await userRepo.Add(value);
                 if (id != 0)
                 {
@@ -79,11 +73,14 @@ namespace BookShop.Admin.ViewModels
                 }
             }
         }
-        public async void btnDelete(int index, int? id)
+        public async void Delete(int index, int? id)
         {
             if(id != null)
             {
-                if(MessageBox.Show("Xác nhận xóa?", "Xóa", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                "Bạn có muốn xóa giá trị này?", "Xác nhận",
+                MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None,FloatingMode.Window);
+                if (result == MessageBoxResult.Yes)
                 {
                     bool del = await userRepo.Delete((int)id);
                     if (del)

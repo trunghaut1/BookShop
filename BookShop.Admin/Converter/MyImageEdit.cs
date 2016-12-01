@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.IO;
-using DevExpress.Xpf.Editors.Internal;
 using DevExpress.Xpf.Editors;
 using Microsoft.Win32;
 using DevExpress.Xpf.Core.Native;
-using DevExpress.Xpf.Core;
 
 namespace BookShop.Admin.Converter
 {

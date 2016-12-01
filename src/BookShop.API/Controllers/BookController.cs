@@ -65,22 +65,24 @@ namespace BookShop.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public Book Post([FromBody]Book value)
+        public int? Post([FromBody]Book value)
         {
-            if (bookRepo.Add(value)) return value;
-            return value;
+            if (bookRepo.Add(value)) return value.ID;
+            return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public bool Put(int id, [FromBody]Book value)
         {
+            return bookRepo.Update(value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return bookRepo.Delete(id);
         }
     }
 }

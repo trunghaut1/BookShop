@@ -18,7 +18,9 @@
     </ResourceDictionary.MergedDictionaries>
     
     <!-- Áp dụng Style -->
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButton}"/>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButton}">
+        <Setter Property="Height" Value="30"/>
+    </Style>
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource FlatCheckBox}"/>
     <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource FlatRadioButton}"/>
     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource FlatToggleButton}"/>

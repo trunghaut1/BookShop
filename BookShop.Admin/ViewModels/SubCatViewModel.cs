@@ -1,18 +1,15 @@
 ﻿using BookShop.Admin.Converter;
 using Caliburn.Micro;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.WindowsUI;
 using PropertyChanged;
 using Repository.ClientRepository;
 using Repository.Helper;
 using Repository.Model;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Dynamic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -26,49 +23,49 @@ namespace BookShop.Admin.ViewModels
         private CatRepository catRepo;
         public string message { get; set; }
         public ObservableCollection<Cat> cats { get; set; }
-
-        public ObservableCollection<SubCat> subcats { get; set; }
+        public ObservableCollection<SubCat> subCats { get; set; }
 
         public SubCatViewModel()
         {
             catRepo = new CatRepository();
             subCatRepo = new SubCatRepository();
-            LoadData();
-            
+
+            cats = new ObservableCollection<Cat>();
+            subCats = new ObservableCollection<SubCat>();
+            LoadData();  
         }
         private async void LoadData()
         {
-            var cat = await catRepo.GetAll();
-            var list = await subCatRepo.GetAll();
-            if (list != null && cat != null)
+            IEnumerable<Cat> cat = await catRepo.GetAll();
+            IEnumerable<SubCat> subCat = await subCatRepo.GetAll();
+            if (subCat != null)
             {
-                cats = new ObservableCollection<Cat>(cat);
-                subcats = new ObservableCollection<SubCat>(list);
-                foreach(var value in subcats)
+                subCats = new ObservableCollection<SubCat>(subCat);
+                if(cat != null)
+                {
+                    cats = new ObservableCollection<Cat>(cat);
+                }
+                foreach(SubCat value in subCats)
                 {
                     value.Cat = cats.Where(o => o.ID == value.CatID).FirstOrDefault();
                 }
             }
-            else
-            {
-                cats = new ObservableCollection<Cat>();
-                subcats = new ObservableCollection<SubCat>();
-            }
         }
-        public void btnAdd(GridControl grid)
+        public void ClearSelected(GridControl grid)
         {
             grid.SelectedItem = null;
             message = MessageHelper.Get("+");
         }
-        public async void btnUpdate(int index, int? id, string name, int catId)
+        public async void AddOrUpdate(int index, int? id, string name, int catId)
         {
             if (id != null) // Update
             {
-                var value = new SubCat(id, name, catId);
-                if (await subCatRepo.Update((int)id, value))
+                SubCat value = new SubCat(id, name, catId);
+                bool result = await subCatRepo.Update((int)id, value);
+                if (result)
                 {
                     value.Cat = cats.Where(o => o.ID == catId).FirstOrDefault();
-                    subcats[index] = value;
+                    subCats[index] = value;
                     message = MessageHelper.Get("up");
                 }
                 else
@@ -78,13 +75,13 @@ namespace BookShop.Admin.ViewModels
             }
             else // Add
             {
-                var value = new SubCat(null, name, catId);
+                SubCat value = new SubCat(null, name, catId);
                 id = await subCatRepo.Add(value);
                 if (id != 0)
                 {
                     value.ID = (int)id;
                     value.Cat = cats.Where(o => o.ID == catId).FirstOrDefault();
-                    subcats.Add(value);
+                    subCats.Add(value);
                     message = MessageHelper.Get("add");
                 }
                 else
@@ -93,16 +90,19 @@ namespace BookShop.Admin.ViewModels
                 }
             }
         }
-        public async void btnDelete(int index, int? id)
+        public async void Delete(int index, int? id)
         {
             if (id != null)
             {
-                if (MessageBox.Show("Xác nhận xóa?", "Xóa", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                "Bạn có muốn xóa giá trị này?", "Xác nhận",
+                MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
+                if (result == MessageBoxResult.Yes)
                 {
                     bool del = await subCatRepo.Delete((int)id);
                     if (del)
                     {
-                        subcats.RemoveAt(index);
+                        subCats.RemoveAt(index);
                         message = MessageHelper.Get("del");
                     }
                     else
@@ -116,23 +116,23 @@ namespace BookShop.Admin.ViewModels
                 message = MessageHelper.Get("delNoti");
             }
         }
-        public async void btnCat(ComboBox cbo)
+        public async void AddCat(ComboBox cbo)
         {
             IWindowManager manager = new WindowManager();
-            var viewmodel = new BaseViewModel(typeof(CatViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
+            BaseViewModel viewmodel = new BaseViewModel(typeof(CatViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
             manager.ShowDialog(viewmodel, null, null);
             if (!viewmodel.IsActive)
             {
-                var cat = await catRepo.GetAll();
+                IEnumerable<Cat> cat = await catRepo.GetAll();
                 if (cat != null)
                 {
                     cats = new ObservableCollection<Cat>(cat);
                 }
-                foreach (var value in subcats)
+                foreach (SubCat value in subCats)
                 {
                     value.Cat = cats.Where(o => o.ID == value.CatID).FirstOrDefault();
                 }
-                var binding = Helper.SetBinding("subcats", "SelectedItem.CatID");
+                Binding binding = Helper.SetBinding("subCats", "SelectedItem.CatID");
                 BindingOperations.SetBinding(cbo, ComboBox.SelectedValueProperty, binding);
             }
         }

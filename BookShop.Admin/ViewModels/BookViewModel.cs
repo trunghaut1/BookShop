@@ -1,19 +1,20 @@
 ﻿using BookShop.Admin.Converter;
 using Caliburn.Micro;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.WindowsUI;
 using PropertyChanged;
 using Repository.ClientRepository;
 using Repository.Helper;
 using Repository.Model;
+using Repository.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace BookShop.Admin.ViewModels
@@ -31,9 +32,9 @@ namespace BookShop.Admin.ViewModels
         public string message { get; set; }
         public ObservableCollection<Book> books { get; set; }
         public ObservableCollection<Cat> cats { get; set; }
-        public ObservableCollection<SubCat> subcats { get; set; }
-        public ObservableCollection<bookCat> bookcats { get; set; }
-        public ObservableCollection<bookSubCat> booksubcats { get; set; }
+        public ObservableCollection<SubCat> subCats { get; set; }
+        public ObservableCollection<bookCat> bookCats { get; set; }
+        public ObservableCollection<bookSubCat> bookSubCats { get; set; }
         public Paging paging { get; set; }
         public ObservableCollection<int> pageList { get; set; }
 
@@ -44,9 +45,9 @@ namespace BookShop.Admin.ViewModels
             subCatRepo = new SubCatRepository();
             books = new ObservableCollection<Book>();
             cats = new ObservableCollection<Cat>();
-            subcats = new ObservableCollection<SubCat>();
-            bookcats = new ObservableCollection<bookCat>();
-            booksubcats = new ObservableCollection<bookSubCat>();
+            subCats = new ObservableCollection<SubCat>();
+            bookCats = new ObservableCollection<bookCat>();
+            bookSubCats = new ObservableCollection<bookSubCat>();
             paging = new Paging();
             pageList = new ObservableCollection<int>();
             LoadData(true, 1);
@@ -54,47 +55,54 @@ namespace BookShop.Admin.ViewModels
 
         private async void LoadData(bool firstLoad, int page)
         {
-            var book = await bookRepo.GetPage(pageSize, page);
+            BookPaging bookPaging = await bookRepo.GetPage(pageSize, page);
             if(firstLoad)
             {
-                var cat = await catRepo.GetAll();
-                var subcat = await subCatRepo.GetAll();
-                var bookcat = await bookRepo.GetbookCat();
-                var booksubcat = await bookRepo.GetbookSubCat();
+                IEnumerable<Cat> cat = await catRepo.GetAll();
+                IEnumerable<SubCat> subCat = await subCatRepo.GetAll();
+                await GetBookRef();
                 if (cat != null)
                 {
                     cats = new ObservableCollection<Cat>(cat);
                 }
-                if(subcat != null)
+                if(subCat != null)
                 {
-                    subcats = new ObservableCollection<SubCat>(subcat);
-                }
-                if (bookcat != null)
-                {
-                    bookcats = new ObservableCollection<bookCat>(bookcat);
-                }
-                if (booksubcat != null)
-                {
-                    booksubcats = new ObservableCollection<bookSubCat>(booksubcat);
+                    subCats = new ObservableCollection<SubCat>(subCat);
                 }
             }
-            if (book?.book != null)
+            if (bookPaging?.book != null)
             {
-                books = new ObservableCollection<Book>(book.book);
-                foreach(var value in books)
+                ObservableCollection<Book> _books = new ObservableCollection<Book>(bookPaging.book);
+                foreach(Book value in _books)
                 {
-                    var bookCatList = bookcats.Where(o => o.BookID == value.ID);
-                    var bookSubCatList = booksubcats.Where(o => o.BookID == value.ID);
-                    value.bookCat = new ObservableCollection<bookCat>(bookCatList);
-                    value.bookSubCat = new ObservableCollection<bookSubCat>(bookSubCatList);
+                    var bookCatList = bookCats.Where(o => o.BookID == value.ID).Select(o => o.CatID).ToList();
+                    var bookSubCatList = bookSubCats.Where(o => o.BookID == value.ID).Select(o => o.SubCatID).ToList();
+                    var catList = cats.Where(o => bookCatList.Contains(o.ID));
+                    var subCatList = subCats.Where(o => bookSubCatList.Contains(o.ID));
+                    value.catList = new ObservableCollection<Cat>(catList);
+                    value.subCatList = new ObservableCollection<SubCat>(subCatList);
                 }
-                paging = book.paging;
-                var _pageList = new ObservableCollection<int>();
+                books = _books;
+                paging = bookPaging.paging;
+                ObservableCollection<int> _pageList = new ObservableCollection<int>();
                 for (int i = 1; i <= paging.totalPage; i++)
                 {
                     _pageList.Add(i);
                 }
                 pageList = _pageList;
+            }
+        }
+        private async Task GetBookRef()
+        {
+            IEnumerable<bookCat> bookCat = await bookRepo.GetbookCat();
+            IEnumerable<bookSubCat> bookSubCat = await bookRepo.GetbookSubCat();
+            if (bookCat != null)
+            {
+                bookCats = new ObservableCollection<bookCat>(bookCat);
+            }
+            if (bookSubCat != null)
+            {
+                bookSubCats = new ObservableCollection<bookSubCat>(bookSubCat);
             }
         }
         public void ChangePage(int page)
@@ -111,23 +119,19 @@ namespace BookShop.Admin.ViewModels
             {
                 catListBox.SelectedItem = null;
                 subCatListBox.SelectedItem = null;
-                var catID = bookcats.Where(o => o.BookID == book.ID).Select(c => c.CatID).ToList();
-                var subCatID = booksubcats.Where(o => o.BookID == book.ID).Select(c => c.SubCatID).ToList();
-                var catList = cats.Where(o => catID.Contains(o.ID)).ToList();
-                var subCatList = subcats.Where(o => subCatID.Contains(o.ID)).ToList();
-                catNum = catList.Count;
-                subCatNum = subCatList.Count;
-                foreach(var value in catList)
+                catNum = book.catList.Count;
+                subCatNum = book.subCatList.Count;
+                foreach(Cat value in book.catList)
                 {
                     catListBox.SelectedItems.Add(value);
                 }
-                foreach (var value in subCatList)
+                foreach (SubCat value in book.subCatList)
                 {
                     subCatListBox.SelectedItems.Add(value);
                 }
             }
         }
-        public void btnAdd(GridControl grid, ListBoxEdit catListBox, ListBoxEdit SubCatListBox)
+        public void ClearSelected(GridControl grid, ListBoxEdit catListBox, ListBoxEdit SubCatListBox)
         {
             grid.SelectedItem = null;
             catListBox.SelectedItem = null;
@@ -136,26 +140,122 @@ namespace BookShop.Admin.ViewModels
             subCatNum = 0;
             message = MessageHelper.Get("+");
         }
-        public async void btnUpdate(int index, int? id, string name, string author, int price, int quantity, string summary, 
+        public async void AddOrUpdate(int index, int? id, string name, string author, int price, int quantity, string summary, 
             MyImageEdit img, ObservableCollection<object> listCat, ObservableCollection<object> listSubCat)
         {
             var catId = listCat.Cast<Cat>().Select(o => o.ID).ToList();
             var subCatId = listSubCat.Cast<SubCat>().Select(o => o.ID).ToList();
-            var t = img.Source as BitmapFrame;
-            var m = t?.Decoder;
+            var checkImg = img.Source as BitmapFrame;
             if (id != null) // Update
             {
+                Book value = new Book(id, name, author, summary, null, price, quantity);
+                if(checkImg == null)
+                {
+                    byte[] imageByte = Helper.Image2Byte(img.ImagePath);
+                    value.Image = Convert.ToBase64String(imageByte);
+                }
+                else
+                {
+                    string base64 = books.Where(o => o.ID == id).Select(o => o.Image).FirstOrDefault();
+                    value.Image = base64;
+                }
+                ObservableCollection<bookCat> bookCat = new ObservableCollection<bookCat>();
+                ObservableCollection<bookSubCat> bookSubCat = new ObservableCollection<bookSubCat>();
+                foreach (int i in catId)
+                {
+                    bookCat.Add(new bookCat((int)id, i));
+                }
+                foreach (int i in subCatId)
+                {
+                    bookSubCat.Add(new bookSubCat((int)id, i));
+                }
+                value.bookCat = bookCat;
+                value.bookSubCat = bookSubCat;
 
+                bool result = await bookRepo.Update((int)id, value);
+                if(result)
+                {
+                    value.catList = new ObservableCollection<Cat>(listCat.Cast<Cat>());
+                    value.subCatList = new ObservableCollection<SubCat>(listSubCat.Cast<SubCat>());
+                    await GetBookRef();
+                    books[index] = value;
+                    message = MessageHelper.Get("up");
+                }
+                else
+                {
+                    message = MessageHelper.Get("upErr");
+                }
             }
             else // Add
             {
-                var value = new Book(null, name, author, summary, null, price, quantity);
+                Book value = new Book(null, name, author, summary, null, price, quantity);
                 if(img.HasImage)
                 {
-                    var imageByte = Helper.Image2Byte(img.ImagePath);
+                    byte[] imageByte = Helper.Image2Byte(img.ImagePath);
                     value.Image = Convert.ToBase64String(imageByte);
-                    var bookCat = bookcats.Where(o => catId.Contains(o.CatID));
                 }
+                ObservableCollection<bookCat> bookCat = new ObservableCollection<bookCat>();
+                ObservableCollection<bookSubCat> bookSubCat = new ObservableCollection<bookSubCat>();
+                foreach(int i in catId)
+                {
+                    bookCat.Add(new bookCat(0, i));
+                }
+                foreach (int i in subCatId)
+                {
+                    bookSubCat.Add(new bookSubCat(0, i));
+                }
+                value.bookCat = bookCat;
+                value.bookSubCat = bookSubCat;
+
+                id = await bookRepo.Add(value);
+                if (id != 0)
+                {
+                    value.ID = (int)id;
+                    value.catList = new ObservableCollection<Cat>(listCat.Cast<Cat>());
+                    value.subCatList = new ObservableCollection<SubCat>(listSubCat.Cast<SubCat>());
+                    books.Add(value);
+                    foreach(int i in catId)
+                    {
+                        bookCats.Add(new bookCat(value.ID, i));
+                    }
+                    foreach (int i in subCatId)
+                    {
+                        bookSubCats.Add(new bookSubCat(value.ID, i));
+                    }
+                    message = MessageHelper.Get("add");
+                }
+                else
+                {
+                    message = MessageHelper.Get("addErr");
+                }
+            }
+        }
+        public async void Delete(int index, int? id)
+        {
+            if (id != null)
+            {
+                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                "Bạn có muốn xóa giá trị này?", "Xác nhận",
+                MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
+                if (result == MessageBoxResult.Yes)
+                {
+                    bool del = await bookRepo.Delete((int)id);
+                    if (del)
+                    {
+                        books.RemoveAt(index);
+                        bookCats.Remove(o => o.BookID == id);
+                        bookSubCats.Remove(o => o.BookID == id);
+                        message = MessageHelper.Get("del");
+                    }
+                    else
+                    {
+                        message = MessageHelper.Get("delErr");
+                    }
+                }
+            }
+            else
+            {
+                message = MessageHelper.Get("delNoti");
             }
         }
     }

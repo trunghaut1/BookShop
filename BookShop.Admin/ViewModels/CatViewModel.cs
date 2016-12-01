@@ -1,15 +1,12 @@
 ﻿using Caliburn.Micro;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.WindowsUI;
 using PropertyChanged;
 using Repository.ClientRepository;
 using Repository.Helper;
 using Repository.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace BookShop.Admin.ViewModels
@@ -24,6 +21,8 @@ namespace BookShop.Admin.ViewModels
         public CatViewModel()
         {
             catRepo = new CatRepository();
+
+            cats = new ObservableCollection<Cat>();
             LoadData();
         }
 
@@ -34,23 +33,20 @@ namespace BookShop.Admin.ViewModels
             {
                 cats = new ObservableCollection<Cat>(list);
             }
-            else
-            {
-                cats = new ObservableCollection<Cat>();
-            }
         }
 
-        public void btnAdd(GridControl grid)
+        public void ClearSelected(GridControl grid)
         {
             grid.SelectedItem = null;
             message = MessageHelper.Get("+");
         }
-        public async void btnUpdate(int index, int? id, string name)
+        public async void AddOrUpdate(int index, int? id, string name)
         {
             if (id != null) // Update
             {
-                var value = new Cat(id, name);
-                if (await catRepo.Update((int)id, value))
+                Cat value = new Cat(id, name);
+                bool reusult = await catRepo.Update((int)id, value);
+                if (reusult)
                 {
                     cats[index] = value;
                     message = MessageHelper.Get("up");
@@ -62,7 +58,7 @@ namespace BookShop.Admin.ViewModels
             }
             else // Add
             {
-                var value = new Cat(null, name);
+                Cat value = new Cat(null, name);
                 id = await catRepo.Add(value);
                 if (id != 0)
                 {
@@ -76,11 +72,14 @@ namespace BookShop.Admin.ViewModels
                 }
             }
         }
-        public async void btnDelete(int index, int? id)
+        public async void Delete(int index, int? id)
         {
             if (id != null)
             {
-                if (MessageBox.Show("Xác nhận xóa?", "Xóa", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                "Bạn có muốn xóa giá trị này?", "Xác nhận",
+                MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
+                if (result == MessageBoxResult.Yes)
                 {
                     bool del = await catRepo.Delete((int)id);
                     if (del)

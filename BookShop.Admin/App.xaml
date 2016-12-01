@@ -22,6 +22,77 @@
                 <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
             </Style>
 
+            <Style x:Key="CrudButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FlatButton}">
+                <Setter Property="Height" Value="32"/>
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="Margin" Value="0 0 10 0"/>
+            </Style>
+
+            <Style x:Key="AddButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CrudButton}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="24" Height="24">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Fill="{StaticResource BackgroundColor}"/>
+                                    </Canvas>
+                                </Viewbox>
+                                <Label Margin="8 0 0 0" Content="Thêm" Foreground="{StaticResource BackgroundColor}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="UpdateButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CrudButton}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="24" Height="24">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="{StaticResource BackgroundColor}"/>
+                                    </Canvas>
+                                </Viewbox>
+                                <Label Margin="8 0 0 0" Content="Lưu" Foreground="{StaticResource BackgroundColor}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="DeleteButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CrudButton}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="24" Height="24">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Fill="{StaticResource BackgroundColor}"/>
+                                    </Canvas>
+                                </Viewbox>
+                                <Label Margin="8 0 0 0" Content="Xóa" Foreground="{StaticResource BackgroundColor}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AddCirleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource CircleButton}">
+                <Setter Property="Width" Value="30"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Viewbox Width="15" Height="15">
+                                <Path Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Fill="{StaticResource BackgroundColor}" Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" StrokeThickness="0.5" Stretch="Fill"/>
+                            </Viewbox>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
 
     </Application.Resources>

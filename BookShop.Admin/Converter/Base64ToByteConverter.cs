@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace BookShop.Admin.Converter
@@ -14,7 +10,11 @@ namespace BookShop.Admin.Converter
         {
             try
             {
-                return System.Convert.FromBase64String(value.ToString());
+                if(value != null)
+                {
+                    return System.Convert.FromBase64String(value.ToString());
+                }
+                return null;
             }
             catch
             {

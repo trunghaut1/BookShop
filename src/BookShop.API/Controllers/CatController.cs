@@ -44,10 +44,9 @@ namespace BookShop.API.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public Cat Put(int id, [FromBody]Cat value)
+        public bool Put(int id, [FromBody]Cat value)
         {
-            if (catRepo.Update(value)) return new Cat(value);
-            return null;
+            return catRepo.Update(value);
         }
 
         // DELETE api/values/5

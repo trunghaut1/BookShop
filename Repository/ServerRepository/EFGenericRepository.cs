@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Repository.Model;
 using System.Data.Entity;
 using System.Linq.Expressions;
@@ -60,7 +58,7 @@ namespace Repository.ServerRepository
             }
         }
 
-        public bool Add(T obj)
+        public virtual bool Add(T obj)
         {
             try
             {
@@ -74,7 +72,7 @@ namespace Repository.ServerRepository
             }
         }
 
-        public bool Update(T obj)
+        public virtual bool Update(T obj)
         {
             try
             {

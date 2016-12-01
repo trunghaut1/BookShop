@@ -1,8 +1,6 @@
 ﻿using Repository.Helper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Repository.ClientRepository
@@ -48,7 +46,11 @@ namespace Repository.ClientRepository
         public async Task<bool> Update(int id, T obj)
         {
             string json = await APIHelper.Put($"{url}/{id}", obj);
-            return !string.IsNullOrEmpty(json) ? true : false;
+            if (!string.IsNullOrEmpty(json))
+            {
+                return bool.Parse(json);
+            }
+            return false;
         }
     }
 }

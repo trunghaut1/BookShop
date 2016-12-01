@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace BookShop.Admin.Converter
 {

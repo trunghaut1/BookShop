@@ -1,8 +1,8 @@
-namespace BookShop.Admin {
+namespace BookShop.Admin
+{
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using System.Reflection;
     using ViewModels;
 
     public class AppBootstrapper : BootstrapperBase {

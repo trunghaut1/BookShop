@@ -16,33 +16,33 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <StackPanel x:Name="panelButton" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 5 0 5">
-            <Button Content="Thêm" Width="100" Margin="0 0 10 0">
+            <Button Style="{StaticResource AddButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnAdd">
-                            <cal:Parameter Value="{Binding ElementName=subcats}"/>
+                        <cal:ActionMessage MethodName="ClearSelected">
+                            <cal:Parameter Value="{Binding ElementName=subCats}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button Content="Lưu" Width="100" Margin="0 0 10 0">
+            <Button Style="{StaticResource UpdateButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnUpdate">
+                        <cal:ActionMessage MethodName="AddOrUpdate">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
-                            <cal:Parameter Value="{Binding SelectedItem.ID, ElementName=subcats}" />
+                            <cal:Parameter Value="{Binding SelectedItem.ID, ElementName=subCats}" />
                             <cal:Parameter Value="{Binding Text, ElementName=txtName}" />
                             <cal:Parameter Value="{Binding ElementName=cats, Path=SelectedValue}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button Content="Xóa" Width="100" Margin="0 0 10 0">
+            <Button Style="{StaticResource DeleteButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnDelete">
+                        <cal:ActionMessage MethodName="Delete">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
-                            <cal:Parameter Value="{Binding ElementName=subcats, Path=SelectedItem.ID}"/>
+                            <cal:Parameter Value="{Binding ElementName=subCats, Path=SelectedItem.ID}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -60,15 +60,12 @@
             </Grid.ColumnDefinitions>
             <Label Content="Tên:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
             <Label Content="Thể loại chính:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"  Margin="0 0 10 0"/>
-            <TextBox VerticalAlignment="Center" Grid.Row="0" x:Name="txtName" Text="{Binding SelectedItem.Name, ElementName=subcats, Mode=OneWay}" Grid.Column="1"/>
-            <ComboBox IsEditable="True" x:Name="cats" DisplayMemberPath="Name" SelectedValuePath="ID" SelectedValue="{Binding ElementName=subcats, Path=SelectedItem.CatID, Mode=OneWay}" Grid.Column="1" Grid.Row="1" Tag="Thể loại chính" />
-            <Button ToolTip="Thêm thể loại chính" Style="{StaticResource CircleButton}" Width="30" Height="30" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0">
-                <Viewbox Width="15" Height="15">
-                    <Path Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" StrokeThickness="0.5" Stretch="Fill"/>
-                </Viewbox>
+            <TextBox VerticalAlignment="Center" Grid.Row="0" x:Name="txtName" Text="{Binding SelectedItem.Name, ElementName=subCats, Mode=OneWay}" Grid.Column="1"/>
+            <ComboBox IsEditable="True" x:Name="cats" DisplayMemberPath="Name" SelectedValuePath="ID" SelectedValue="{Binding ElementName=subCats, Path=SelectedItem.CatID, Mode=OneWay}" Grid.Column="1" Grid.Row="1" Tag="Thể loại chính" />
+            <Button Style="{StaticResource AddCirleButton}" ToolTip="Thêm thể loại chính" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnCat">
+                        <cal:ActionMessage MethodName="AddCat">
                             <cal:Parameter Value="{Binding ElementName=cats}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
@@ -76,7 +73,7 @@
             </Button>
         </Grid>
         <Grid Grid.Row="2">
-            <dxg:GridControl x:Name="subcats" ItemsSource="{Binding subcats}">
+            <dxg:GridControl x:Name="subCats" ItemsSource="{Binding subCats}">
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridView" AllowEditing="False"/>
                 </dxg:GridControl.View>

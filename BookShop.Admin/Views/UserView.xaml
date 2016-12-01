@@ -16,19 +16,19 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <StackPanel x:Name="panelButton" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 5 0 5">
-            <Button Content="Thêm" Width="100" Margin="0 0 10 0">
+            <Button Style="{StaticResource AddButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnAdd">
+                        <cal:ActionMessage MethodName="ClearSelected">
                             <cal:Parameter Value="{Binding ElementName=users}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button Content="Lưu" Width="100" Margin="0 0 10 0">
+            <Button Style="{StaticResource UpdateButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnUpdate">
+                        <cal:ActionMessage MethodName="AddOrUpdate">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
                             <cal:Parameter Value="{Binding SelectedItem.ID, ElementName=users}" />
                             <cal:Parameter Value="{Binding Text, ElementName=txtName}" />
@@ -40,10 +40,10 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button Content="Xóa" Width="100" Margin="0 0 10 0">
+            <Button Style="{StaticResource DeleteButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="btnDelete">
+                        <cal:ActionMessage MethodName="Delete">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
                             <cal:Parameter Value="{Binding ElementName=users, Path=SelectedItem.ID}"/>
                         </cal:ActionMessage>
