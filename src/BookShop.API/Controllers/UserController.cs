@@ -31,14 +31,14 @@ namespace BookShop.API.Controllers
         public User Get(int id)
         {
             var value = userRepo.GetByID(id);
-            return new User(value);
+            return value != null ? new User(value) : null;
         }
 
         [HttpGet("email/{email}")]
-        public User Get(string email)
+        public User GetByEmail(string email)
         {
             var value = userRepo.GetByEmail(email);
-            return new User(value);
+            return value != null ? new User(value) : null;
         }
 
         // POST api/values

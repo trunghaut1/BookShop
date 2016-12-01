@@ -91,22 +91,24 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Converter\Base64ToByteConverter.cs" />
     <Compile Include="Converter\ExtensionMethods.cs" />
+    <Compile Include="Converter\MaskType.cs" />
     <Compile Include="Converter\MyImageEdit.cs" />
     <Compile Include="Converter\Helper.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Converter\TextBoxMaskBehavior.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\CatViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\SubCatViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="Views\BaseView.xaml.cs">
-      <DependentUpon>BaseView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CatView.xaml.cs">
       <DependentUpon>CatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderView.xaml.cs">
+      <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubCatView.xaml.cs">
       <DependentUpon>SubCatView.xaml</DependentUpon>
@@ -114,10 +116,6 @@
     <Compile Include="Views\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\BaseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\BookView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +136,10 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\OrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SubCatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

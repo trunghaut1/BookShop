@@ -10,7 +10,6 @@ namespace Repository.ServerRepository
         IEnumerable<T> GetAll();
         IQueryable<T> GetBy(Expression<Func<T, bool>> predicate);
         T GetByID(object id);
-        T GetByID(object id1, object id2);
         bool Add(T obj);
         bool Update(T obj);
         bool Delete(object id);

@@ -9,6 +9,7 @@ using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.WindowsUI;
 using Repository.ClientRepository;
 using DevExpress.Xpf.Core;
+using System.Linq;
 
 namespace BookShop.Admin.ViewModels
 {
@@ -77,7 +78,8 @@ namespace BookShop.Admin.ViewModels
         {
             if(id != null)
             {
-                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                var result = WinUIMessageBox.Show(window,
                 "Bạn có muốn xóa giá trị này?", "Xác nhận",
                 MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None,FloatingMode.Window);
                 if (result == MessageBoxResult.Yes)

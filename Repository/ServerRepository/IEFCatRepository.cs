@@ -4,6 +4,5 @@ namespace Repository.ServerRepository
 {
     public interface IEFCatRepository : IEFGenericRepository<Cat>
     {
-
     }
 }

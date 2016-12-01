@@ -5,6 +5,5 @@ namespace Repository.ServerRepository
 {
     public interface IEFSubCatRepository : IEFGenericRepository<SubCat>
     {
-        IEnumerable<SubCat> GetByCat(int id);
     }
 }

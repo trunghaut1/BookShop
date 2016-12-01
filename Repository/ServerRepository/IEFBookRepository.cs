@@ -6,10 +6,6 @@ namespace Repository.ServerRepository
 {
     public interface IEFBookRepository : IEFGenericRepository<Book>
     {
-        IEnumerable<Book> GetByCat(int id);
-        IEnumerable<Book> GetBySubCat(int id);
-        BookPaging GetPage(int pageSize, int page);
-        IEnumerable<bookCat> GetbookCat();
-        IEnumerable<bookSubCat> GetbookSubCat();
+        ListPaging<Book> GetPage(int pageSize, int page);
     }
 }

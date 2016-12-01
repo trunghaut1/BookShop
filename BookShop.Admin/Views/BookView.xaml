@@ -10,7 +10,7 @@
              xmlns:local="clr-namespace:BookShop.Admin.Views"
              xmlns:cv="clr-namespace:BookShop.Admin.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="900">
+             d:DesignHeight="500" d:DesignWidth="900">
     <UserControl.Resources>
         <cv:Base64ToByteConverter x:Key="base64"/>
     </UserControl.Resources>
@@ -49,8 +49,8 @@
                             <cal:Parameter Value="{Binding Text, ElementName=txtQuantity}"/>
                             <cal:Parameter Value="{Binding Text, ElementName=txtSummary}"/>
                             <cal:Parameter Value="{Binding ElementName=img}"/>
-                            <cal:Parameter Value="{Binding ElementName=cats, Path=SelectedItems}"/>
-                            <cal:Parameter Value="{Binding ElementName=subCats, Path=SelectedItems}"/>
+                            <cal:Parameter Value="{Binding ElementName=cats, Path=EditValue}"/>
+                            <cal:Parameter Value="{Binding ElementName=subCats, Path=EditValue}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -58,9 +58,12 @@
             <Button Style="{StaticResource DeleteButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Delete">
+                        <cal:ActionMessage MethodName="t">
+                            <!--
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
-                            <cal:Parameter Value="{Binding ElementName=books, Path=SelectedItem.ID}"/>
+                            <cal:Parameter Value="{Binding ElementName=books, Path=SelectedItem.ID}"/>-->
+                            <cal:Parameter Value="{Binding ElementName=cats}"/>
+                            <cal:Parameter Value="{Binding ElementName=subCats}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -94,8 +97,8 @@
                 <Label Content="Giá:" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 10 0"/>
                 <Label Content="Số lượng:" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 10 0"/>
                 <TextBox x:Name="txtAuthor" Text="{Binding ElementName=books, Path=SelectedItem.Author, Mode=OneWay}" VerticalAlignment="Center" Grid.Column="0"/>
-                <TextBox x:Name="txtPrice" Text="{Binding ElementName=books, Path=SelectedItem.Price, Mode=OneWay}" VerticalAlignment="Center" Grid.Column="2"/>
-                <TextBox x:Name="txtQuantity" Text="{Binding ElementName=books, Path=SelectedItem.Quantity, Mode=OneWay}" VerticalAlignment="Center" Grid.Column="4"/>
+                <TextBox x:Name="txtPrice" Text="{Binding ElementName=books, Path=SelectedItem.Price, Mode=OneWay}" cv:TextBoxMaskBehavior.Mask="Decimal" VerticalAlignment="Center" Grid.Column="2"/>
+                <TextBox x:Name="txtQuantity" Text="{Binding ElementName=books, Path=SelectedItem.Quantity, Mode=OneWay}" cv:TextBoxMaskBehavior.Mask="Decimal" VerticalAlignment="Center" Grid.Column="4"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Margin="0 0 10 0">
@@ -105,15 +108,6 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <dxg:GridControl x:Name="books" ItemsSource="{Binding books}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="CurrentItemChanged">
-                            <cal:ActionMessage MethodName="LoadCat_SubCat">
-                                <cal:Parameter Value="{Binding ElementName=books, Path=CurrentItem}"/>
-                                <cal:Parameter Value="{Binding ElementName=cats}"/>
-                                <cal:Parameter Value="{Binding ElementName=subCats}"/>
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
                     <dxg:GridControl.View>
                         <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridView" AllowEditing="False"/>
                     </dxg:GridControl.View>
@@ -151,34 +145,18 @@
             <StackPanel Grid.Row="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Thể loại chính: "/>
-                    <Label x:Name="catNum"/>
-                    <Button ToolTip="Thêm thể loại chính" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="AddCat">
-                                    <cal:Parameter Value="{Binding ElementName=cats}"/>
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
+                    <Label x:Name="catNum" Content="{Binding ElementName=cats, Path=SelectedItems.Count}"/>
+                    <Button ToolTip="Thêm thể loại chính" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
                 </StackPanel>
-                <dxe:ListBoxEdit x:Name="cats" ItemsSource="{Binding cats}" SelectionMode="Multiple" DisplayMember="Name" Margin="0 10 0 0" MaxHeight="260"/>
+                <dxe:ListBoxEdit x:Name="cats" EditValue="{Binding ElementName=books, Path=SelectedItem.catList, Mode=OneWay}" ItemsSource="{Binding cats}" MaxHeight="260" ValueMember="ID" DisplayMember="Name" SelectionMode="Multiple" Margin="0 10 0 0"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Thể loại con: "/>
-                    <Label x:Name="subCatNum"/>
-                    <Button ToolTip="Thêm thể loại con" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="AddSubCat">
-                                    <cal:Parameter Value="{Binding ElementName=subCats}"/>
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
+                    <Label x:Name="subCatNum" Content="{Binding ElementName=subCats, Path=SelectedItems.Count}"/>
+                    <Button ToolTip="Thêm thể loại con" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
                 </StackPanel>
-                <dxe:ListBoxEdit x:Name="subCats" ItemsSource="{Binding subCats}" SelectionMode="Multiple" DisplayMember="Name" Margin="0 10 0 0" MaxHeight="260"/>
+                <dxe:ListBoxEdit x:Name="subCats" ValueMember="ID" EditValue="{Binding ElementName=books, Path=SelectedItem.subCatList, Mode=OneWay}" ItemsSource="{Binding subCats}" SelectionMode="Multiple" DisplayMember="Name" Margin="0 10 0 0" MaxHeight="260"/>
             </StackPanel>
         </Grid>
     </Grid>

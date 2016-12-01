@@ -41,14 +41,10 @@ namespace BookShop.Admin.ViewModels
             if (subCat != null)
             {
                 subCats = new ObservableCollection<SubCat>(subCat);
-                if(cat != null)
-                {
-                    cats = new ObservableCollection<Cat>(cat);
-                }
-                foreach(SubCat value in subCats)
-                {
-                    value.Cat = cats.Where(o => o.ID == value.CatID).FirstOrDefault();
-                }
+            }
+            if (cat != null)
+            {
+                cats = new ObservableCollection<Cat>(cat);
             }
         }
         public void ClearSelected(GridControl grid)
@@ -94,7 +90,8 @@ namespace BookShop.Admin.ViewModels
         {
             if (id != null)
             {
-                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                var result = WinUIMessageBox.Show(window,
                 "Bạn có muốn xóa giá trị này?", "Xác nhận",
                 MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
                 if (result == MessageBoxResult.Yes)
@@ -119,7 +116,7 @@ namespace BookShop.Admin.ViewModels
         public async void AddCat(ComboBox cbo)
         {
             IWindowManager manager = new WindowManager();
-            BaseViewModel viewmodel = new BaseViewModel(typeof(CatViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
+            MainViewModel viewmodel = new MainViewModel(typeof(CatViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
             manager.ShowDialog(viewmodel, null, null);
             if (!viewmodel.IsActive)
             {

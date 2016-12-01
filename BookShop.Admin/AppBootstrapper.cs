@@ -22,7 +22,7 @@ namespace BookShop.Admin
             container.PerRequest<CatViewModel>();
             container.PerRequest<SubCatViewModel>();
             container.PerRequest<BookViewModel>();
-            container.PerRequest<BaseViewModel>();
+            container.PerRequest<OrderViewModel>();
         }
 
         protected override object GetInstance(Type service, string key) {

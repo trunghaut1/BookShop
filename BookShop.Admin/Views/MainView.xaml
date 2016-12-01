@@ -9,7 +9,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Language="vi-VN"
-        Title="BookShop - Quản trị" Height="500" Width="1000" WindowState="Maximized" Style="{StaticResource FlatWindow}" FontSize="15">
+        Title="BookShop - Quản trị" WindowStartupLocation="CenterScreen" Height="600" Width="1000" WindowState="{Binding windowState}" Style="{StaticResource FlatWindow}" FontSize="15">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -17,7 +17,7 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Menu>
+            <Menu Visibility="{Binding menuVisible}">
                 <MenuItem x:Name="mnUser" Header="_Người dùng" >
                     <MenuItem.Icon>
                         <Viewbox Width="18" Height="18">
@@ -55,6 +55,15 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem x:Name="mnBook" Header="_Sách">
+                    <MenuItem.Icon>
+                        <Viewbox Width="18" Height="18">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" Fill="{StaticResource MainColor}" />
+                            </Canvas>
+                        </Viewbox>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnOrder" Header="_Đơn hàng">
                     <MenuItem.Icon>
                         <Viewbox Width="18" Height="18">
                             <Canvas Width="24" Height="24">

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Repository.ViewModel
 {
-    public class BookPaging
+    public class ListPaging<T> where T : class
     {
-        public IEnumerable<Book> book { get; set; }
+        public IEnumerable<T> list { get; set; }
         public Paging paging { get; set; }
     }
 }

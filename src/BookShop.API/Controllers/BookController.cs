@@ -27,28 +27,19 @@ namespace BookShop.API.Controllers
             return bookRepo.GetAll().Select(o => new { o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity });
         }
         [HttpGet("page/{pageSize}/{page}")]
-        public BookPaging GetPage(int pageSize, int page)
+        public ListPaging<Book> GetPage(int pageSize, int page)
         {
-            return bookRepo.GetPage(pageSize, page);
+            if(pageSize != 0 && page != 0)
+                return bookRepo.GetPage(pageSize, page);
+            return null;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Book Get(int id)
         {
-            return bookRepo.GetByID(id);
-        }
-
-        [HttpGet("cat/{id}")]
-        public IEnumerable<Book> GetByCat(int id)
-        {
-            return bookRepo.GetByCat(id);
-        }
-
-        [HttpGet("subcat/{id}")]
-        public IEnumerable<Book> GetBySubCat(int id)
-        {
-            return bookRepo.GetBySubCat(id);
+            Book value = bookRepo.GetByID(id);
+            return value != null ? new Book(value) : null;
         }
 
         [HttpGet("cat")]

@@ -31,7 +31,7 @@ namespace BookShop.API.Controllers
         public Cat Get(int id)
         {
             var value = catRepo.GetByID(id);
-            return new Cat(value);
+            return value != null ? new Cat(value) : null;
         }
 
         // POST api/values

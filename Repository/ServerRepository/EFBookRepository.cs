@@ -9,49 +9,24 @@ namespace Repository.ServerRepository
 {
     public class EFBookRepository : EFGenericRepository<Book>, IEFBookRepository
     {
-        protected DbSet<bookCat> bookCat = null;
-        protected DbSet<bookSubCat> bookSubCat = null;
-        public EFBookRepository(BookEntities db) : base(db)
-        {
-            bookCat = this.db.Set<bookCat>();
-            bookSubCat = this.db.Set<bookSubCat>();
-        }
+        public EFBookRepository(BookEntities db) : base(db) { }
 
-        public IEnumerable<Book> GetByCat(int id)
+        public ListPaging<Book> GetPage(int pageSize, int page)
         {
-            return GetBy(o => o.bookCat.Any(c => c.CatID == id));
-        }
-
-        public IEnumerable<Book> GetBySubCat(int id)
-        {
-            return GetBy(o => o.bookSubCat.Any(c => c.SubCatID == id));
-        }
-        public BookPaging GetPage(int pageSize, int page)
-        {
-            var paging = new Paging()
+            Paging paging = new Paging()
             {
                 totalItem = table.Count(),
                 pageSize = pageSize,
                 pageIndex = page
             };
-            var book = table.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize)
-                .Select(o => new { o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity}).AsEnumerable()
-                .Select(o => new Book(o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity))
-                .AsEnumerable();
-            var bookPaging = new BookPaging()
+            var book = table.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Book(o));
+            ListPaging<Book> bookPaging = new ListPaging<Book>()
             {
-                book = book,
+                list = book,
                 paging = paging
             };
             return bookPaging;
-        }
-        public IEnumerable<bookCat> GetbookCat()
-        {
-            return db.bookCat.AsEnumerable();
-        }
-        public IEnumerable<bookSubCat> GetbookSubCat()
-        {
-            return db.bookSubCat.AsEnumerable();
         }
         public override bool Update(Book obj)
         {
@@ -61,8 +36,8 @@ namespace Repository.ServerRepository
                 table.AddOrUpdate(obj);
                 var catDelete = book.bookCat.Where(o => !obj.bookCat.Any(b => b.CatID == o.CatID)).ToList();
                 var subCatDelete = book.bookSubCat.Where(o => !obj.bookSubCat.Any(b => b.SubCatID == o.SubCatID)).ToList();
-                var catAdd = obj.bookCat.Where(o => book.bookCat.Any(b => b.CatID == o.CatID));
-                var subCatAdd = obj.bookSubCat.Where(o => obj.bookSubCat.Any(b => b.SubCatID == o.SubCatID));
+                var catAdd = obj.bookCat.Where(o => !book.bookCat.Any(b => b.CatID == o.CatID)).ToList();
+                var subCatAdd = obj.bookSubCat.Where(o => !book.bookSubCat.Any(b => b.SubCatID == o.SubCatID)).ToList();
                 foreach(bookCat value in catDelete)
                 {
                     book.bookCat.Remove(value);

@@ -9,6 +9,7 @@ namespace Repository.Model
         public User(int? id, string name, string email, string pass, string phone, bool? admin)
         {
             this.Order = new ObservableCollection<Order>();
+
             ID = id ?? 0;
             Name = name;
             Email = email;
@@ -19,6 +20,7 @@ namespace Repository.Model
         public User(User value)
         {
             this.Order = new ObservableCollection<Order>();
+
             ID = value.ID;
             Name = value.Name;
             Email = value.Email;

@@ -7,6 +7,7 @@ using Repository.ClientRepository;
 using Repository.Helper;
 using Repository.Model;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 
 namespace BookShop.Admin.ViewModels
@@ -76,7 +77,8 @@ namespace BookShop.Admin.ViewModels
         {
             if (id != null)
             {
-                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                var result = WinUIMessageBox.Show(window,
                 "Bạn có muốn xóa giá trị này?", "Xác nhận",
                 MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
                 if (result == MessageBoxResult.Yes)

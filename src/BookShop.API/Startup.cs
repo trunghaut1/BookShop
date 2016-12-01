@@ -36,6 +36,7 @@ namespace BookShop.API
             services.AddScoped<IEFCatRepository, EFCatRepository>();
             services.AddScoped<IEFSubCatRepository, EFSubCatRepository>();
             services.AddScoped<IEFBookRepository, EFBookRepository>();
+            services.AddScoped<IEFOrderRepository, EFOrderRepository>();
             services.AddMvc();
         }
 
