@@ -38,9 +38,23 @@ namespace Repository.ClientRepository
             return null;
         }
 
-        public T GetByID(object id)
+        public async Task<T> GetByID(object id)
         {
-            throw new NotImplementedException();
+            string json = await APIHelper.Get($"{url}/{id}");
+            if(!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2Object<T>(json);
+            }
+            return null;
+        }
+        public async Task<IEnumerable<T>> GetByName(string name)
+        {
+            string json = await APIHelper.Get($"{url}/name/{name}");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2List<T>(json);
+            }
+            return null;
         }
 
         public async Task<bool> Update(int id, T obj)

@@ -21,7 +21,7 @@ namespace Repository.ServerRepository
                 pageIndex = page
             };
             var order = table.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
-                .Select(o => new Order(o.ID, o.Time, o.Address, o.Status, o.UserID));
+                .Select(o => new Order(o, true));
             ListPaging<Order> bookPaging = new ListPaging<Order>()
             {
                 list = order,

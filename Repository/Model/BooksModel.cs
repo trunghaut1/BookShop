@@ -49,5 +49,23 @@ namespace Repository.Model
             Price = value.Price;
             Quantity = value.Quantity;
         }
+        public Book(Book value, bool noCatSubCat)
+        {
+            this.bookCat = new ObservableCollection<bookCat>();
+            this.bookSubCat = new ObservableCollection<bookSubCat>();
+            this.OrderDetail = new ObservableCollection<OrderDetail>();
+            this.Recommend = new ObservableCollection<Recommend>();
+            this.TimeBased = new ObservableCollection<TimeBased>();
+            this.catList = new ObservableCollection<int>();
+            this.subCatList = new ObservableCollection<int>();
+
+            ID = value.ID;
+            Name = value.Name;
+            Author = value.Author;
+            Summary = value.Summary;
+            Image = value.Image;
+            Price = value.Price;
+            Quantity = value.Quantity;
+        }
     }
 }

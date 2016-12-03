@@ -9,27 +9,103 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="900">
+    <UserControl.Resources>
+        <cv:Base64ToByteConverter x:Key="base64"/>
+        <cv:OrderPriceSum x:Key="orderPriceSum"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.4*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Grid.Row="1" BorderThickness="1 0 0 0" BorderBrush="{StaticResource MainColorLight}" HorizontalAlignment="Right" Grid.RowSpan="2"/>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="2.5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Thời gian:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+            <Label Content="Địa chỉ:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 10 0"/>
+            <TextBox x:Name="txtAddress" Grid.Row="1" Text="{Binding ElementName=orders, Path=SelectedItem.Address, Mode=OneWay}" VerticalAlignment="Center" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Đã giao:" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 10 0"/>
+                <DatePicker x:Name="dpTime" Grid.Column="0" VerticalAlignment="Center"/>
+                <CheckBox x:Name="chkStatus" Grid.Column="2" IsChecked="{Binding ElementName=orders, Path=SelectedItem.Status, Mode=OneWay}" VerticalAlignment="Center"/>
+            </Grid>
+            <GroupBox Header="Khách hàng" Grid.Row="2" Grid.ColumnSpan="2" Margin="20 0 0 5">
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Grid.Resources>
+                        <ControlTemplate x:Key="popupUserTemplate">
+                            <dxg:GridControl x:Name="PART_GridControl" AutoExpandAllGroups="True">
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn Header="ID" Binding="{Binding Path=ID}" Width="1*"/>
+                                    <dxg:GridColumn Header="Tên" Binding="{Binding Path=Name}" Width="2*"/>
+                                    <dxg:GridColumn Header="Email" Binding="{Binding Path=Email}" Width="3*"/>
+                                    <dxg:GridColumn Header="Điện thoại" Binding="{Binding Path=Phone}" Width="2*"/>
+                                </dxg:GridControl.Columns>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView
+                        Name="View"
+                        ShowGroupedColumns="True"
+                        AllowPerPixelScrolling="True"
+                        ScrollAnimationDuration="0"
+                        ShowAutoFilterRow="True"
+                        ShowTotalSummary="True"
+                        IsSynchronizedWithCurrentItem="False">
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </ControlTemplate>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                        <TextBox x:Name="txtSearchUser" Tag="ID hoặc Tên cần tìm" MinWidth="200" IsEnabled="{Binding IsAdd}" cal:Message.Attach="SearchUser"/>
+                        <Button x:Name="btnAddUser" Style="{StaticResource AddCirleButton}" Margin="10 0 0 0" ToolTip="Thêm khách hàng" IsEnabled="{Binding IsAdd}"/>
+                    </StackPanel>
+                    <dxg:LookUpEdit
+                    Grid.Row="1" Grid.Column="0" Name="userSelect" VerticalAlignment="Center"
+                    ShowSizeGrip="True" SelectedIndex="0" AutoPopulateColumns="False"
+                    PopupContentTemplate="{StaticResource popupUserTemplate}" ItemsSource="{Binding users}" 
+                    IsTextEditable="False" DisplayMember="Name" ValueMember="ID" PopupWidth="600" PopupMaxWidth="700"/>
+                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                        <Label Content="Tìm thấy:" VerticalAlignment="Center" Margin="10 0 10 0"/>
+                        <TextBlock Text="{Binding users.Count}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Border Grid.Column="0" Grid.Row="1" BorderThickness="1 0 0 0" BorderBrush="{StaticResource MainColorLight}" HorizontalAlignment="Right" Grid.RowSpan="2" Margin="0 5 0 0"/>
         <StackPanel x:Name="panelButton" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 5 0 5">
             <Button Style="{StaticResource AddButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="ClearSelected">
-                            <cal:Parameter Value="{Binding ElementName=books}"/>
-                            <cal:Parameter Value="{Binding ElementName=cats}"/>
-                            <cal:Parameter Value="{Binding ElementName=subCats}"/>
+                            <cal:Parameter Value="{Binding ElementName=orders}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -39,15 +115,11 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="AddOrUpdate">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
-                            <cal:Parameter Value="{Binding SelectedItem.ID, ElementName=books}" />
-                            <cal:Parameter Value="{Binding Text, ElementName=txtName}"/>
-                            <cal:Parameter Value="{Binding Text, ElementName=txtAuthor}"/>
-                            <cal:Parameter Value="{Binding Text, ElementName=txtPrice}"/>
-                            <cal:Parameter Value="{Binding Text, ElementName=txtQuantity}"/>
-                            <cal:Parameter Value="{Binding Text, ElementName=txtSummary}"/>
-                            <cal:Parameter Value="{Binding ElementName=img}"/>
-                            <cal:Parameter Value="{Binding ElementName=cats, Path=SelectedItems}"/>
-                            <cal:Parameter Value="{Binding ElementName=subCats, Path=SelectedItems}"/>
+                            <cal:Parameter Value="{Binding SelectedItem.ID, ElementName=orders}" />
+                            <cal:Parameter Value="{Binding ElementName=dpTime, Path=SelectedDate}"/>
+                            <cal:Parameter Value="{Binding Text, ElementName=txtAddress}"/>
+                            <cal:Parameter Value="{Binding IsChecked, ElementName=chkStatus}"/>
+                            <cal:Parameter Value="{Binding ElementName=userSelect, Path=SelectedItem}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -57,31 +129,147 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="Delete">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
-                            <cal:Parameter Value="{Binding ElementName=books, Path=SelectedItem.ID}"/>
+                            <cal:Parameter Value="{Binding ElementName=orders, Path=SelectedItem.ID}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
         </StackPanel>
-        <dxg:GridControl x:Name="orders" ItemsSource="{Binding orders}" Grid.Column="0" Grid.Row="2" Margin="0 0 10 0">
-            <dxg:GridControl.View>
-                <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridView" AllowEditing="False"/>
-            </dxg:GridControl.View>
-            <dxg:GridControl.Columns>
-                <dxg:GridColumn Binding="{Binding Path=ID}" Header="ID" MinWidth="20" Width="1*"/>
-                <dxg:GridColumn Binding="{Binding Path=UserID}" Header="Khách hàng" MinWidth="50" Width="2*"/>
-                <dxg:GridColumn Binding="{Binding Path=Time}" Header="Thời gian" MinWidth="50" Width="1*"/>
-                <dxg:GridColumn Binding="{Binding Path=Address}" Header="Địa chỉ" MinWidth="50" Width="3*"/>
-                <dxg:GridColumn Binding="{Binding Path=Status}" Header="Đã giao" MinWidth="50" Width="1*"/>
-            </dxg:GridControl.Columns>
-        </dxg:GridControl>
-        <dxg:GridControl x:Name="orderDetails" ItemsSource="{Binding orderDetails}" Grid.Column="1" Grid.Row="2" Margin="10 0 0 0">
+        <Grid Grid.Column="0" Grid.Row="2" Margin="0 0 10 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <dxg:GridControl x:Name="orders" ItemsSource="{Binding orders}" Grid.Row="0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CurrentItemChanged">
+                        <cal:ActionMessage MethodName="OrderSelectChange">
+                            <cal:Parameter Value="{Binding ElementName=orders, Path=CurrentItem}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridView" AllowEditing="False"/>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn Binding="{Binding Path=ID}" Header="ID" MinWidth="20" Width="1*"/>
+                    <dxg:GridColumn Binding="{Binding Path=User.Name}" Header="Khách hàng" MinWidth="50" Width="2*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Time}" Header="Thời gian" MinWidth="50" Width="1.5*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Address}" Header="Địa chỉ" MinWidth="50" Width="4*"/>
+                    <dxg:GridColumn Binding="{Binding Path=Status}" Header="Đã giao" MinWidth="50" Width="1*"/>
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Label Content="Trang:" Margin="0 0 10 0"/>
+                <ComboBox x:Name="cboChangePage" ItemsSource="{Binding pageList, Mode=OneWay}" SelectedValue="{Binding paging.pageIndex}" Tag="Trang">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <cal:ActionMessage MethodName="ChangePage">
+                                <cal:Parameter Value="{Binding ElementName=cboChangePage, Path=SelectedValue}"/>
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Orientation="Horizontal">
+                <Label FontWeight="Bold" Content="Chi tiết đơn hàng:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"  Margin="10 0 10 0"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding ElementName=orders, Path=SelectedItem.OrderDetail, Mode=OneWay, Converter={StaticResource orderPriceSum}, StringFormat={}{0:C}}"/>
+                <TextBlock Grid.Column="1" Visibility="{Binding orderAddVisible}" Grid.Row="2" VerticalAlignment="Center" Text="{Binding orderDetailSum, StringFormat={}{0:C}}"/>
+            </StackPanel>
+            <GroupBox Header="Sách" Grid.Row="1" Grid.ColumnSpan="2" Margin="20 0 0 5">
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Grid.Resources>
+                        <ControlTemplate x:Key="popupUserTemplate">
+                            <dxg:GridControl x:Name="PART_GridControl" AutoExpandAllGroups="True">
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn Header="Ảnh" Binding="{Binding Path=Image, Converter={StaticResource base64}}" Width="60" FixedWidth="True">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:ImageEditSettings ShowMenu="True" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+                                    <dxg:GridColumn Header="ID" Binding="{Binding Path=ID}" Width="1*"/>
+                                    <dxg:GridColumn Header="Tên" Binding="{Binding Path=Name}" Width="2*"/>
+                                    <dxg:GridColumn Header="Mô tả" Binding="{Binding Path=Summary}" Width="3*"/>
+                                    <dxg:GridColumn Header="Giá" Binding="{Binding Path=Price}" Width="2*"/>
+                                </dxg:GridControl.Columns>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView
+                        Name="View"
+                        ShowGroupedColumns="True"
+                        AllowPerPixelScrolling="True"
+                        ScrollAnimationDuration="0"
+                        ShowAutoFilterRow="True"
+                        ShowTotalSummary="True"
+                        IsSynchronizedWithCurrentItem="False">
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </ControlTemplate>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                        <TextBox x:Name="txtSearchBook" Tag="ID hoặc Tên cần tìm" MinWidth="200" IsEnabled="{Binding IsAdd}" cal:Message.Attach="SearchBook"/>
+                        <Button x:Name="btnAddBook" Style="{StaticResource AddCirleButton}" Margin="10 0 0 0" ToolTip="Thêm sách" IsEnabled="{Binding IsAdd}"/>
+                    </StackPanel>
+                    <dxg:LookUpEdit
+                    Grid.Row="1" Grid.Column="0" Name="bookSelect" VerticalAlignment="Center"
+                    ShowSizeGrip="True" SelectedIndex="0" AutoPopulateColumns="False"
+                    PopupContentTemplate="{StaticResource popupUserTemplate}" ItemsSource="{Binding books}" IsPopupAutoWidth="False"
+                    IsTextEditable="False" DisplayMember="Name" ValueMember="ID" PopupWidth="900"/>
+                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                        <Label Content="Tìm thấy:" VerticalAlignment="Center" Margin="10 0 10 0"/>
+                        <TextBlock Text="{Binding books.Count}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <Label HorizontalAlignment="Right" Grid.Column="0" Grid.Row="2" Content="Số lượng: " Margin="0 0 10 0" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                <TextBox x:Name="txtQuantity" Text="1" VerticalAlignment="Center" MinWidth="100" IsEnabled="{Binding IsAdd}"/>
+                <Button Style="{StaticResource AddCirleButton}" Margin="10 0 0 0" ToolTip="Thêm vào đơn hàng" IsEnabled="{Binding IsAdd}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="AddBookOrder">
+                                <cal:Parameter Value="{Binding ElementName=bookSelect, Path=SelectedItem}"/>
+                                <cal:Parameter Value="{Binding ElementName=txtQuantity, Path=Text}"/>
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnDelBook" Style="{StaticResource DelCirleButton}" Margin="10 0 0 0" ToolTip="Xóa khỏi đơn hàng" IsEnabled="{Binding IsAdd}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="DelBookOrder">
+                                <cal:Parameter Value="{Binding ElementName=orderDetailsAdd, Path=SelectedItem}"/>
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <dxg:GridControl Visibility="{Binding orderUpdateVisible}" x:Name="orderDetails" ItemsSource="{Binding ElementName=orders, Path=SelectedItem.OrderDetail}" Grid.Column="1" Grid.Row="2" Margin="10 0 0 0">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CurrentItemChanged">
-                    <cal:ActionMessage MethodName="LoadCat_SubCat">
-                        <cal:Parameter Value="{Binding ElementName=books, Path=CurrentItem}"/>
-                        <cal:Parameter Value="{Binding ElementName=cats}"/>
-                        <cal:Parameter Value="{Binding ElementName=subCats}"/>
+                    <cal:ActionMessage MethodName="OrderDetailSelectChange">
+                        <cal:Parameter Value="{Binding ElementName=orderDetails, Path=CurrentItem.Book}"/>
                     </cal:ActionMessage>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -89,9 +277,27 @@
                 <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridViewDetail" AllowEditing="False"/>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Binding="{Binding Path=BookID}" Header="Sách" MinWidth="50" Width="2*"/>
-                <dxg:GridColumn Binding="{Binding Path=Price}" Header="Đơn giá" MinWidth="50" Width="1*"/>
+                <dxg:GridColumn Binding="{Binding Path=Book.Name}" Header="Sách" MinWidth="50" Width="3*"/>
+                <dxg:GridColumn Binding="{Binding Path=Price}" Header="Đơn giá" MinWidth="50" Width="1.5*">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="vi-VN" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
                 <dxg:GridColumn Binding="{Binding Path=Quantity}" Header="Số lượng" MinWidth="50" Width="1*"/>
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+        <dxg:GridControl Visibility="{Binding orderAddVisible}" ItemsSource="{Binding orderDetailAdd}" x:Name="orderDetailsAdd" Grid.Column="1" Grid.Row="2" Margin="10 0 0 0">
+            <dxg:GridControl.View>
+                <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridViewDetailAdd" AllowEditing="True"/>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Binding="{Binding Path=Book.Name}" Header="Sách" MinWidth="50" Width="3*"/>
+                <dxg:GridColumn Binding="{Binding Path=Price}" Header="Đơn giá" MinWidth="50" Width="1.5*">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="vi-VN" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Binding="{Binding Path=Quantity, Mode=TwoWay}" Header="Số lượng" MinWidth="50" Width="1*"/>
             </dxg:GridControl.Columns>
         </dxg:GridControl>
     </Grid>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Repository.ServerRepository;
 using Repository.ViewModel;
 using Repository.Model;
+using System.Collections.ObjectModel;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,10 +25,10 @@ namespace BookShop.API.Controllers
         [HttpGet]
         public dynamic Get()
         {
-            return orderRepo.GetAll().Select(o => new { o.ID, o.Time, o.Status, o.UserID, o.Address});
+            return orderRepo.GetAll().Select(o => new { o.ID, o.Time, o.Status, o.UserID, o.Address}); //Old
         }
         [HttpGet("page/{pageSize}/{page}")]
-        public OrderPaging GetPage(int pageSize, int page)
+        public ListPaging<Order> GetPage(int pageSize, int page)
         {
             if(pageSize != 0 && page != 0)
                 return orderRepo.GetPage(pageSize, page);
@@ -44,20 +45,25 @@ namespace BookShop.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public int? Post([FromBody]Order value)
         {
+            value.OrderDetail = new ObservableCollection<OrderDetail>(value.OrderDetail.Select(o => new OrderDetail(o, true)));
+            if (orderRepo.Add(value)) return value.ID;
+            return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public bool Put(int id, [FromBody]Order value)
         {
+            return orderRepo.Update(value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return orderRepo.Delete(id);
         }
     }
 }

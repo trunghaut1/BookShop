@@ -94,6 +94,7 @@
     <Compile Include="Converter\MaskType.cs" />
     <Compile Include="Converter\MyImageEdit.cs" />
     <Compile Include="Converter\Helper.cs" />
+    <Compile Include="Converter\OrderPriceSum.cs" />
     <Compile Include="Converter\TextBoxMaskBehavior.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\CatViewModel.cs" />

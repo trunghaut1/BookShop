@@ -34,12 +34,6 @@ namespace BookShop.API.Controllers
             return value != null ? new SubCat(value) : null;
         }
 
-        [HttpGet("cat/{id}")]
-        public dynamic GetByCat(int id)
-        {
-            return subCatRepo.GetByCat(id).Select(o => new { o.ID, o.Name, o.CatID, Cat = new { o.Cat.ID, o.Cat.Name } });
-        }
-
         // POST api/values
         [HttpPost]
         public int? Post([FromBody]SubCat value)

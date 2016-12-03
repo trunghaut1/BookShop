@@ -9,9 +9,10 @@
 
 namespace Repository.Model
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.ObjectModel;
-    
+
     public partial class OrderDetail
     {
         public int OrderID { get; set; }

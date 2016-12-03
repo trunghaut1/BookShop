@@ -90,17 +90,36 @@ namespace BookShop.Admin.ViewModels
             SubCatListBox.SelectedItem = null;
             message = MessageHelper.Get("+");
         }
+        private ObservableCollection<int> ToListInt(object list)
+        {
+            if(list != null)
+            {
+                if (list.GetType().Equals(typeof(ObservableCollection<int>)))
+                {
+                    return list as ObservableCollection<int>;
+                }
+                else
+                {
+                    var castList = list as IEnumerable<object>;
+                    return castList != null ? new ObservableCollection<int>(castList.Cast<int>()) : null;
+                }
+            }
+            return null;
+        }
         public async void AddOrUpdate(int index, int? id, string name, string author, int price, int quantity, string summary, 
-            MyImageEdit img, ObservableCollection<int> catList, ObservableCollection<int> subCatList)
+            MyImageEdit img, object catList, object subCatList)
         {
             var checkImg = img.Source as BitmapFrame;
             if (id != null) // Update
             {
-                Book value = new Book(id, name, author, summary, null, price, quantity, catList, subCatList);
+                Book value = new Book(id, name, author, summary, null, price, quantity, ToListInt(catList), ToListInt(subCatList));
                 if(checkImg == null)
                 {
-                    byte[] imageByte = Helper.Image2Byte(img.ImagePath);
-                    value.Image = Convert.ToBase64String(imageByte);
+                    if(img.ImagePath != null & img.Source != null)
+                    {
+                        byte[] imageByte = Helper.Image2Byte(img.ImagePath);
+                        value.Image = Convert.ToBase64String(imageByte);
+                    }
                 }
                 else
                 {
@@ -121,12 +140,18 @@ namespace BookShop.Admin.ViewModels
             }
             else // Add
             {
-                Book value = new Book(null, name, author, summary, null, price, quantity, null, null);
+                ObservableCollection<int> cat = ToListInt(catList); 
+                ObservableCollection<int> subCat = ToListInt(subCatList);
+                Book value = new Book(null, name, author, summary, null, price, quantity, cat, subCat);
                 if(img.HasImage)
                 {
                     byte[] imageByte = Helper.Image2Byte(img.ImagePath);
                     value.Image = Convert.ToBase64String(imageByte);
                 }
+                if(cat != null)
+                    value.bookCat = new ObservableCollection<bookCat>(cat.Select(o => new bookCat(0, o)));
+                if(subCat != null)
+                    value.bookSubCat = new ObservableCollection<bookSubCat>(subCat.Select(o => new bookSubCat(0, o)));
 
                 id = await bookRepo.Add(value);
                 if (id != 0)
@@ -145,7 +170,8 @@ namespace BookShop.Admin.ViewModels
         {
             if (id != null)
             {
-                var result = WinUIMessageBox.Show(Application.Current.MainWindow,
+                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                var result = WinUIMessageBox.Show(window,
                 "Bạn có muốn xóa giá trị này?", "Xác nhận",
                 MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
                 if (result == MessageBoxResult.Yes)

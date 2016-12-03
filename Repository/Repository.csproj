@@ -78,6 +78,7 @@
     <Compile Include="Model\bookCatModel.cs" />
     <Compile Include="Model\BooksModel.cs" />
     <Compile Include="Model\bookSubCatModel.cs" />
+    <Compile Include="Model\OrderDetailModel.cs" />
     <Compile Include="Model\OrderModel.cs" />
     <Compile Include="Model\Paging.cs" />
     <Compile Include="Model\SubCatModel.cs" />

@@ -10,7 +10,10 @@ namespace Repository.ServerRepository
     public class EFBookRepository : EFGenericRepository<Book>, IEFBookRepository
     {
         public EFBookRepository(BookEntities db) : base(db) { }
-
+        public IEnumerable<Book> GetByName(string name)
+        {
+            return GetBy(o => o.Name.Contains(name)).AsEnumerable();
+        }
         public ListPaging<Book> GetPage(int pageSize, int page)
         {
             Paging paging = new Paging()
@@ -34,10 +37,10 @@ namespace Repository.ServerRepository
             {
                 Book book = table.Find(obj.ID);
                 table.AddOrUpdate(obj);
-                var catDelete = book.bookCat.Where(o => !obj.bookCat.Any(b => b.CatID == o.CatID)).ToList();
-                var subCatDelete = book.bookSubCat.Where(o => !obj.bookSubCat.Any(b => b.SubCatID == o.SubCatID)).ToList();
-                var catAdd = obj.bookCat.Where(o => !book.bookCat.Any(b => b.CatID == o.CatID)).ToList();
-                var subCatAdd = obj.bookSubCat.Where(o => !book.bookSubCat.Any(b => b.SubCatID == o.SubCatID)).ToList();
+                var catDelete = book.bookCat.Where(o => !obj.catList.Contains(o.CatID)).ToList();
+                var subCatDelete = book.bookSubCat.Where(o => !obj.subCatList.Contains(o.SubCatID)).ToList();
+                var catAdd = obj.catList.Where(o => !book.bookCat.Any(c => c.CatID == o)).ToList();
+                var subCatAdd = obj.subCatList.Where(o => !book.bookSubCat.Any(c => c.SubCatID == o)).ToList();
                 foreach(bookCat value in catDelete)
                 {
                     book.bookCat.Remove(value);
@@ -46,13 +49,13 @@ namespace Repository.ServerRepository
                 {
                     book.bookSubCat.Remove(value);
                 }
-                foreach (bookCat value in catAdd)
+                foreach (int value in catAdd)
                 {
-                    book.bookCat.Add(value);
+                    book.bookCat.Add(new bookCat(obj.ID, value));
                 }
-                foreach (bookSubCat value in subCatAdd)
+                foreach (int value in subCatAdd)
                 {
-                    book.bookSubCat.Add(value);
+                    book.bookSubCat.Add(new bookSubCat(obj.ID, value));
                 }
                 db.SaveChanges();
                 return true;

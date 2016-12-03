@@ -58,12 +58,9 @@
             <Button Style="{StaticResource DeleteButtonStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="t">
-                            <!--
+                        <cal:ActionMessage MethodName="Delete">
                             <cal:Parameter Value="{Binding ElementName=gridView, Path=FocusedRowHandle}"/>
-                            <cal:Parameter Value="{Binding ElementName=books, Path=SelectedItem.ID}"/>-->
-                            <cal:Parameter Value="{Binding ElementName=cats}"/>
-                            <cal:Parameter Value="{Binding ElementName=subCats}"/>
+                            <cal:Parameter Value="{Binding ElementName=books, Path=SelectedItem.ID}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -146,7 +143,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Thể loại chính: "/>
                     <Label x:Name="catNum" Content="{Binding ElementName=cats, Path=SelectedItems.Count}"/>
-                    <Button ToolTip="Thêm thể loại chính" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
+                    <Button x:Name="AddCat" ToolTip="Thêm thể loại chính" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
                 </StackPanel>
                 <dxe:ListBoxEdit x:Name="cats" EditValue="{Binding ElementName=books, Path=SelectedItem.catList, Mode=OneWay}" ItemsSource="{Binding cats}" MaxHeight="260" ValueMember="ID" DisplayMember="Name" SelectionMode="Multiple" Margin="0 10 0 0"/>
             </StackPanel>
@@ -154,7 +151,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Thể loại con: "/>
                     <Label x:Name="subCatNum" Content="{Binding ElementName=subCats, Path=SelectedItems.Count}"/>
-                    <Button ToolTip="Thêm thể loại con" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
+                    <Button x:Name="AddSubCat" ToolTip="Thêm thể loại con" Style="{StaticResource AddCirleButton}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0"/>
                 </StackPanel>
                 <dxe:ListBoxEdit x:Name="subCats" ValueMember="ID" EditValue="{Binding ElementName=books, Path=SelectedItem.subCatList, Mode=OneWay}" ItemsSource="{Binding subCats}" SelectionMode="Multiple" DisplayMember="Name" Margin="0 10 0 0" MaxHeight="260"/>
             </StackPanel>

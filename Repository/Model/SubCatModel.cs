@@ -24,13 +24,5 @@ namespace Repository.Model
 
             Cat = new Cat(value.Cat);
         }
-        public SubCat(SubCat value, bool noCat)
-        {
-            this.bookSubCat = new ObservableCollection<bookSubCat>();
-
-            ID = value.ID;
-            Name = value.Name;
-            CatID = value.CatID;
-        }
     }
 }

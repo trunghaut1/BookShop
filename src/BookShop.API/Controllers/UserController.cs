@@ -40,6 +40,12 @@ namespace BookShop.API.Controllers
             var value = userRepo.GetByEmail(email);
             return value != null ? new User(value) : null;
         }
+        [HttpGet("name/{name}")]
+        public dynamic GetByName(string name)
+        {
+            var value = userRepo.GetByName(name);
+            return value.Select(o => new { o.ID, o.Name, o.Pass, o.Phone, o.Email, o.IsAdmin });
+        }
 
         // POST api/values
         [HttpPost]

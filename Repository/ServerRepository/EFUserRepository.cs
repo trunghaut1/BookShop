@@ -12,5 +12,9 @@ namespace Repository.ServerRepository
         {
             return GetBy(o => o.Email == value).FirstOrDefault();
         }
+        public IEnumerable<User> GetByName(string name)
+        {
+            return GetBy(o => o.Name.Contains(name)).AsEnumerable();
+        }
     }
 }

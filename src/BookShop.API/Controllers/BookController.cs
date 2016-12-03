@@ -26,6 +26,11 @@ namespace BookShop.API.Controllers
         {
             return bookRepo.GetAll().Select(o => new { o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity });
         }
+        [HttpGet("name/{name}")]
+        public dynamic GetByName(string name)
+        {
+            return bookRepo.GetByName(name).Select(o => new { o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity });
+        }
         [HttpGet("page/{pageSize}/{page}")]
         public ListPaging<Book> GetPage(int pageSize, int page)
         {
@@ -40,18 +45,6 @@ namespace BookShop.API.Controllers
         {
             Book value = bookRepo.GetByID(id);
             return value != null ? new Book(value) : null;
-        }
-
-        [HttpGet("cat")]
-        public dynamic GetbookCat()
-        {
-            return bookRepo.GetbookCat().Select(o => new { o.BookID, o.CatID });
-        }
-
-        [HttpGet("subcat")]
-        public dynamic GetbookSubCat()
-        {
-            return bookRepo.GetbookSubCat().Select(o => new { o.BookID, o.SubCatID });
         }
 
         // POST api/values
