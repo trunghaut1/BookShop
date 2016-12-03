@@ -2,6 +2,7 @@
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.WindowsUI;
+using PropertyChanged;
 using Repository.ClientRepository;
 using Repository.Helper;
 using Repository.Model;
@@ -16,6 +17,7 @@ using System.Windows;
 
 namespace BookShop.Admin.ViewModels
 {
+    [ImplementPropertyChanged]
     public class OrderViewModel : Screen
     {
         private int pageSize = 5;
@@ -259,6 +261,28 @@ namespace BookShop.Admin.ViewModels
             else
             {
                 message = MessageHelper.Get("delNoti");
+            }
+        }
+        public void btnAddUser()
+        {
+            IWindowManager manager = new WindowManager();
+            MainViewModel viewmodel = new MainViewModel(typeof(UserViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
+            manager.ShowDialog(viewmodel, null, null);
+            if (!viewmodel.IsActive)
+            {
+                txtSearchUser = null;
+                users.Clear();
+            }
+        }
+        public void btnAddBook()
+        {
+            IWindowManager manager = new WindowManager();
+            MainViewModel viewmodel = new MainViewModel(typeof(BookViewModel), "QUẢN LÝ THỂ LOẠI CHÍNH");
+            manager.ShowDialog(viewmodel, null, null);
+            if (!viewmodel.IsActive)
+            {
+                txtSearchBook = null;
+                books.Clear();
             }
         }
     }

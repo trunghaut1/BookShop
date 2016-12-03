@@ -58,5 +58,15 @@ namespace BookShop.Admin.ViewModels
             loadView("đơn hàng");
             ActivateItem(new OrderViewModel());
         }
+        public void mnRecommend()
+        {
+            loadView("gợi ý");
+            ActivateItem(new RecommendViewModel());
+        }
+        public void mnTimeBased()
+        {
+            loadView("thời gian");
+            ActivateItem(new TimeBasedViewModel());
+        }
     }
 }

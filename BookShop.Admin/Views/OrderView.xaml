@@ -243,7 +243,7 @@
             </GroupBox>
             <Label HorizontalAlignment="Right" Grid.Column="0" Grid.Row="2" Content="Số lượng: " Margin="0 0 10 0" VerticalAlignment="Center"/>
             <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-                <TextBox x:Name="txtQuantity" Text="1" VerticalAlignment="Center" MinWidth="100" IsEnabled="{Binding IsAdd}"/>
+                <TextBox x:Name="txtQuantity" Text="1" VerticalAlignment="Center" cv:TextBoxMaskBehavior.Mask="Decimal" MinWidth="100" IsEnabled="{Binding IsAdd}"/>
                 <Button Style="{StaticResource AddCirleButton}" Margin="10 0 0 0" ToolTip="Thêm vào đơn hàng" IsEnabled="{Binding IsAdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
@@ -297,7 +297,11 @@
                         <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="vi-VN" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn Binding="{Binding Path=Quantity, Mode=TwoWay}" Header="Số lượng" MinWidth="50" Width="1*"/>
+                <dxg:GridColumn Binding="{Binding Path=Quantity, Mode=TwoWay}" Header="Số lượng" MinWidth="50" Width="1*">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:SpinEditSettings MaskType="Numeric"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
             </dxg:GridControl.Columns>
         </dxg:GridControl>
     </Grid>

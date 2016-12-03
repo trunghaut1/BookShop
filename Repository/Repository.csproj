@@ -73,6 +73,7 @@
     <Compile Include="ClientRepository\CatRepository.cs" />
     <Compile Include="ClientRepository\GenericRepository.cs" />
     <Compile Include="ClientRepository\OrderRepository.cs" />
+    <Compile Include="ClientRepository\RecommendRepository.cs" />
     <Compile Include="ClientRepository\SubCatRepository.cs" />
     <Compile Include="ClientRepository\UserRepository.cs" />
     <Compile Include="Model\bookCatModel.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Model\OrderDetailModel.cs" />
     <Compile Include="Model\OrderModel.cs" />
     <Compile Include="Model\Paging.cs" />
+    <Compile Include="Model\RecommendModel.cs" />
     <Compile Include="Model\SubCatModel.cs" />
     <Compile Include="Model\CatModel.cs" />
     <Compile Include="Model\UserModel.cs" />
@@ -90,11 +92,13 @@
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\MessageHelper.cs" />
     <Compile Include="ServerRepository\EFOrderRepository.cs" />
+    <Compile Include="ServerRepository\EFRecommendRepository.cs" />
     <Compile Include="ServerRepository\EFUserRepository.cs" />
     <Compile Include="ServerRepository\IEFBookRepository.cs" />
     <Compile Include="ServerRepository\IEFCatRepository.cs" />
     <Compile Include="ServerRepository\EFGenericRepository.cs" />
     <Compile Include="ServerRepository\IEFOrderRepository.cs" />
+    <Compile Include="ServerRepository\IEFRecommendRepository.cs" />
     <Compile Include="ServerRepository\IEFUserRepository.cs" />
     <Compile Include="ServerRepository\IEFGenericRepository.cs" />
     <Compile Include="ServerRepository\IEFSubCatRepository.cs" />

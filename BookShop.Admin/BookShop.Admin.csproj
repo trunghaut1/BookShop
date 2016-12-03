@@ -100,7 +100,9 @@
     <Compile Include="ViewModels\CatViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\RecommendViewModel.cs" />
     <Compile Include="ViewModels\SubCatViewModel.cs" />
+    <Compile Include="ViewModels\TimeBasedViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
@@ -110,6 +112,9 @@
     </Compile>
     <Compile Include="Views\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecommendView.xaml.cs">
+      <DependentUpon>RecommendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubCatView.xaml.cs">
       <DependentUpon>SubCatView.xaml</DependentUpon>
@@ -138,6 +143,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\OrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecommendView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
