@@ -202,7 +202,11 @@
                                     <dxg:GridColumn Header="ID" Binding="{Binding Path=ID}" Width="1*"/>
                                     <dxg:GridColumn Header="Tên" Binding="{Binding Path=Name}" Width="2*"/>
                                     <dxg:GridColumn Header="Mô tả" Binding="{Binding Path=Summary}" Width="3*"/>
-                                    <dxg:GridColumn Header="Giá" Binding="{Binding Path=Price}" Width="2*"/>
+                                    <dxg:GridColumn Header="Giá" Binding="{Binding Path=Price}" Width="2*">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="vi-VN" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
                                 </dxg:GridControl.Columns>
                                 <dxg:GridControl.View>
                                     <dxg:TableView

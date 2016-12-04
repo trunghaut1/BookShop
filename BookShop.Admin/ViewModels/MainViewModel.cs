@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using PropertyChanged;
+using Repository.Model;
 using System;
 using System.Windows;
 
@@ -26,6 +27,14 @@ namespace BookShop.Admin.ViewModels
             {
                 windowState = WindowState.Maximized;
             } 
+        }
+        public MainViewModel(Book book)
+        {
+            DisplayName = "BookShop - Quản trị";
+            windowState = WindowState.Normal;
+            menuVisible = Visibility.Collapsed;
+            ActivateItem(new RecommendViewModel(book));
+            loadView("quản lý gợi ý sản phẩm");
         }
         public string txtViewTitle { get; set; }
 
@@ -58,15 +67,10 @@ namespace BookShop.Admin.ViewModels
             loadView("đơn hàng");
             ActivateItem(new OrderViewModel());
         }
-        public void mnRecommend()
-        {
-            loadView("gợi ý");
-            ActivateItem(new RecommendViewModel());
-        }
         public void mnTimeBased()
         {
             loadView("thời gian");
-            ActivateItem(new TimeBasedViewModel());
+            ActivateItem(new TimeViewModel());
         }
     }
 }

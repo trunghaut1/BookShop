@@ -27,7 +27,13 @@ namespace BookShop.Admin.ViewModels
         private BookRepository bookRepo;
         private CatRepository catRepo;
         private SubCatRepository subCatRepo;
+        private RecommendRepository recommendRepo;
+        private ObservableCollection<Recommend> recommendList;
         public string message { get; set; }
+        public int bookRecommend { get; set; }
+        public Visibility IsUpdate { get; set; } = Visibility.Visible;
+        public Visibility IsAdd { get; set; } = Visibility.Collapsed;
+        public int bookAddRecommend { get; set; }
         public ObservableCollection<Book> books { get; set; }
         public ObservableCollection<Cat> cats { get; set; }
         public ObservableCollection<SubCat> subCats { get; set; }
@@ -39,9 +45,11 @@ namespace BookShop.Admin.ViewModels
             bookRepo = new BookRepository();
             catRepo = new CatRepository();
             subCatRepo = new SubCatRepository();
+            recommendRepo = new RecommendRepository();
             books = new ObservableCollection<Book>();
             cats = new ObservableCollection<Cat>();
             subCats = new ObservableCollection<SubCat>();
+            recommendList = new ObservableCollection<Recommend>();
             paging = new Paging();
             pageList = new ObservableCollection<int>();
             LoadData(1);
@@ -85,6 +93,9 @@ namespace BookShop.Admin.ViewModels
         }
         public void ClearSelected(GridControl grid, ListBoxEdit catListBox, ListBoxEdit SubCatListBox)
         {
+            IsAdd = Visibility.Visible;
+            IsUpdate = Visibility.Collapsed;
+            bookAddRecommend = 0;
             grid.SelectedItem = null;
             catListBox.SelectedItem = null;
             SubCatListBox.SelectedItem = null;
@@ -152,6 +163,9 @@ namespace BookShop.Admin.ViewModels
                     value.bookCat = new ObservableCollection<bookCat>(cat.Select(o => new bookCat(0, o)));
                 if(subCat != null)
                     value.bookSubCat = new ObservableCollection<bookSubCat>(subCat.Select(o => new bookSubCat(0, o)));
+                if (recommendList.Count() > 0)
+                    value.Recommend = new ObservableCollection<Recommend>(recommendList.Select(o => 
+                    new Recommend(o.FirstBookID, o.SecondBookID)));
 
                 id = await bookRepo.Add(value);
                 if (id != 0)
@@ -211,6 +225,42 @@ namespace BookShop.Admin.ViewModels
             if (!viewmodel.IsActive)
             {
                 await GetCat_SubCat();
+            }
+        }
+        public async void CountRecommend(int? id, TableView grid)
+        {
+            bookRecommend = 0;
+            if(grid.FocusedRowHandle >=0 && id != null)
+            {
+                IsUpdate = Visibility.Visible;
+                IsAdd = Visibility.Collapsed;
+                bookRecommend = await recommendRepo.CountRecommend((int)id);
+            }
+        }
+        public void AddRecommend(TableView grid, int? id, Book book)
+        {
+            if(book == null)
+            {
+                book = new Book();
+                if(recommendList != null)
+                    book.Recommend = recommendList;
+            }
+            IWindowManager manager = new WindowManager();
+            MainViewModel viewmodel = new MainViewModel(book);
+            manager.ShowDialog(viewmodel, null, null);
+            if (!viewmodel.IsActive)
+            {
+                if (id != null)
+                    CountRecommend(id, grid);
+                else
+                {
+                    var recommend = (viewmodel.ActiveItem as RecommendViewModel).book;
+                    bookAddRecommend = recommend.Recommend.Count;
+                    if (bookAddRecommend > 0)
+                    {
+                        recommendList = recommend.Recommend;
+                    }
+                }
             }
         }
     }

@@ -11,7 +11,145 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.Resources>
+        <cv:Base64ToByteConverter x:Key="base64"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="panelButton" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 5 0 5">
+            <Button x:Name="btnUpdate" Style="{StaticResource UpdateButtonStyle}"/>
+            <Button x:Name="btnClose" Style="{StaticResource ExitButtonStyle}"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="{Binding book.Image, Converter={StaticResource base64}}" Margin="5"/>
+            <Grid Grid.Column="1" Margin="10 0 0 0">
+                <Grid.Resources>
+                    <ControlTemplate x:Key="popupBookTemplate">
+                        <dxg:GridControl x:Name="PART_GridControl" AutoExpandAllGroups="True">
+                            <dxg:GridControl.Columns>
+                                <dxg:GridColumn Header="Ảnh" Binding="{Binding Path=Image, Converter={StaticResource base64}}" Width="60" FixedWidth="True">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:ImageEditSettings ShowMenu="True" />
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
+                                <dxg:GridColumn Header="ID" Binding="{Binding Path=ID}" Width="1*"/>
+                                <dxg:GridColumn Header="Tên" Binding="{Binding Path=Name}" Width="2*"/>
+                                <dxg:GridColumn Header="Mô tả" Binding="{Binding Path=Summary}" Width="3*"/>
+                                <dxg:GridColumn Header="Giá" Binding="{Binding Path=Price}" Width="2*">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="vi-VN" />
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
+                            </dxg:GridControl.Columns>
+                            <dxg:GridControl.View>
+                                <dxg:TableView
+                        Name="View"
+                        ShowGroupedColumns="True"
+                        AllowPerPixelScrolling="True"
+                        ScrollAnimationDuration="0"
+                        ShowAutoFilterRow="True"
+                        ShowTotalSummary="True"
+                        IsSynchronizedWithCurrentItem="False">
+                                </dxg:TableView>
+                            </dxg:GridControl.View>
+                        </dxg:GridControl>
+                    </ControlTemplate>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding book.Name}" Grid.Row="0" VerticalAlignment="Center" Margin="10 0 0 0" FontWeight="Bold"/>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="txtSearchBook" Grid.Row="0" Grid.Column="0" Style="{StaticResource FloatingHintTextBox}" TextWrapping="Wrap" VerticalAlignment="Center" Tag="ID hoặc Tên sách cần tìm" cal:Message.Attach="SearchBook"/>
+                    <Button x:Name="btnClearSearch" Grid.Column="1" Grid.Row="0" Style="{StaticResource DelCirleButton}" ToolTip="Xóa tìm kiếm" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0"/>
+                    <dxg:LookUpEdit
+                    Grid.Column="0" Grid.Row="1" Name="bookSelect" VerticalAlignment="Center"
+                    ShowSizeGrip="True" SelectedIndex="0" AutoPopulateColumns="False"
+                    PopupContentTemplate="{StaticResource popupBookTemplate}" ItemsSource="{Binding bookSearch}" IsPopupAutoWidth="False"
+                    IsTextEditable="False" DisplayMember="Name" ValueMember="ID" PopupWidth="900"/>
+                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10 0 0 0">
+                        <Label Content="Tìm thấy: "/>
+                        <TextBlock Text="{Binding bookSearch.Count}" Margin="10 0 0 0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 0 0 0">
+                    <Button Width="100">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="AddBook">
+                                    <cal:Parameter Value="{Binding ElementName=bookSelect, Path=SelectedItem}"/>
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Width="24" Height="24">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Fill="{StaticResource BackgroundColor}"/>
+                                </Canvas>
+                            </Viewbox>
+                            <Label Margin="8 0 0 0" Content="Thêm" Foreground="{StaticResource BackgroundColor}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="100" Margin="10 0 0 0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="DelBook">
+                                    <cal:Parameter Value="{Binding ElementName=books, Path=SelectedItem.SecondBookID}"/>
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Width="24" Height="24">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" Fill="{StaticResource BackgroundColor}"/>
+                                </Canvas>
+                            </Viewbox>
+                            <Label Margin="8 0 0 0" Content="Xóa" Foreground="{StaticResource BackgroundColor}"/>
+                        </StackPanel>
+                    </Button>
+                    <Label Content="Tổng gợi ý: " Margin="10 0 0 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding book.Recommend.Count}" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <dxg:GridControl Grid.Row="2" x:Name="books" ItemsSource="{Binding book.Recommend}">
+            <dxg:GridControl.View>
+                <dxg:TableView ShowGroupedColumns="True" ShowAutoFilterRow="True" ShowCriteriaInAutoFilterRow="True" x:Name="gridView" AllowEditing="False"/>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Header="Ảnh" Binding="{Binding Path=Book1.Image, Converter={StaticResource base64}}" Width="60" FixedWidth="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ImageEditSettings ShowMenu="True" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Binding="{Binding Path=Book1.ID}" Header="ID" MinWidth="20" Width="1*"/>
+                <dxg:GridColumn Binding="{Binding Path=Book1.Name}" Header="Tên" MinWidth="50" Width="4*"/>
+                <dxg:GridColumn Binding="{Binding Path=Book1.Author}" Header="Tác giả" MinWidth="50" Width="3*"/>
+                <dxg:GridColumn Binding="{Binding Path=Book1.Price}" Header="Giá" MinWidth="50" Width="1.5*">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:SpinEditSettings MaskType="Numeric" MaskUseAsDisplayFormat="True" Mask="c" MaskCulture="vi-VN" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
     </Grid>
 </UserControl>

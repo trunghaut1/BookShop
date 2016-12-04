@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace BookShop.Admin.ViewModels
 {
     [ImplementPropertyChanged]
-    public class TimeBasedViewModel : Screen
+    public class TimeViewModel : Screen
     {
 
     }

@@ -9,6 +9,8 @@ namespace Repository.ServerRepository
 {
     public interface IEFRecommendRepository : IEFGenericRepository<Recommend>
     {
-
+        IEnumerable<Recommend> GetListByID(int id);
+        int CountRecommend(int id);
+        bool UpdateList(int id, IEnumerable<Recommend> value);
     }
 }

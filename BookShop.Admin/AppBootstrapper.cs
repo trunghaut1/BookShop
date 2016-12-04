@@ -24,6 +24,7 @@ namespace BookShop.Admin
             container.PerRequest<BookViewModel>();
             container.PerRequest<OrderViewModel>();
             container.PerRequest<RecommendViewModel>();
+            container.PerRequest<TimeViewModel>();
         }
 
         protected override object GetInstance(Type service, string key) {

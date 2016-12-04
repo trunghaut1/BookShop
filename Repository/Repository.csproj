@@ -75,6 +75,7 @@
     <Compile Include="ClientRepository\OrderRepository.cs" />
     <Compile Include="ClientRepository\RecommendRepository.cs" />
     <Compile Include="ClientRepository\SubCatRepository.cs" />
+    <Compile Include="ClientRepository\TimeRepository.cs" />
     <Compile Include="ClientRepository\UserRepository.cs" />
     <Compile Include="Model\bookCatModel.cs" />
     <Compile Include="Model\BooksModel.cs" />
@@ -93,12 +94,14 @@
     <Compile Include="Helper\MessageHelper.cs" />
     <Compile Include="ServerRepository\EFOrderRepository.cs" />
     <Compile Include="ServerRepository\EFRecommendRepository.cs" />
+    <Compile Include="ServerRepository\EFTimeRepository.cs" />
     <Compile Include="ServerRepository\EFUserRepository.cs" />
     <Compile Include="ServerRepository\IEFBookRepository.cs" />
     <Compile Include="ServerRepository\IEFCatRepository.cs" />
     <Compile Include="ServerRepository\EFGenericRepository.cs" />
     <Compile Include="ServerRepository\IEFOrderRepository.cs" />
     <Compile Include="ServerRepository\IEFRecommendRepository.cs" />
+    <Compile Include="ServerRepository\IEFTimeRepository.cs" />
     <Compile Include="ServerRepository\IEFUserRepository.cs" />
     <Compile Include="ServerRepository\IEFGenericRepository.cs" />
     <Compile Include="ServerRepository\IEFSubCatRepository.cs" />

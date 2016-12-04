@@ -11,31 +11,26 @@ using Repository.Model;
 namespace BookShop.API.Controllers
 {
     [Route("api/[controller]")]
-    public class RecommendController : Controller
+    public class TimeController : Controller
     {
-        private IEFRecommendRepository recommendRepo;
+        private IEFTimeRepository timeRepo;
 
-        public RecommendController(IEFRecommendRepository recommendRepo)
+        public TimeController(IEFTimeRepository timeRepo)
         {
-            this.recommendRepo = recommendRepo;
+            this.timeRepo = timeRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<Recommend> Get()
+        public IEnumerable<string> Get()
         {
-            return null;
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IEnumerable<Recommend> Get(int id)
+        public string Get(int id)
         {
-            return recommendRepo.GetListByID(id).Select(o => new Recommend(o));
-        }
-        [HttpGet("count/{id}")]
-        public int GetCount(int id)
-        {
-            return recommendRepo.CountRecommend(id);
+            return "value";
         }
 
         // POST api/values
@@ -46,9 +41,8 @@ namespace BookShop.API.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public bool Put(int id, [FromBody]IEnumerable<Recommend> value)
+        public void Put(int id, [FromBody]string value)
         {
-            return recommendRepo.UpdateList(id, value);
         }
 
         // DELETE api/values/5

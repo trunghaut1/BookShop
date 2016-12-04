@@ -15,6 +15,12 @@ namespace Repository.Model
             FirstBookID = id1;
             SecondBookID = id2;
         }
+        public Recommend(int id1, int id2, Book book1)
+        {
+            FirstBookID = id1;
+            SecondBookID = id2;
+            Book1 = book1;
+        }
         public Recommend()
         {
 
@@ -23,6 +29,8 @@ namespace Repository.Model
         {
             FirstBookID = value.FirstBookID;
             SecondBookID = value.SecondBookID;
+
+            Book1 = new Book(value.Book1, true);
         }
     }
 }
