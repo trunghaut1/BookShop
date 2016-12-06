@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.ServerRepository
 {
-    public interface IEFOrderRepository : IEFGenericRepository<Order>
+    public interface IOrderRepository : IGenericRepository<Order>
     {
         ListPaging<Order> GetPage(int pageSize, int page);
     }

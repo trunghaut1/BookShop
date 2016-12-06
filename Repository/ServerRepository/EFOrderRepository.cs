@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.ServerRepository
 {
-    public class EFOrderRepository : EFGenericRepository<Order>, IEFOrderRepository
+    public class EFOrderRepository : EFGenericRepository<Order>, IOrderRepository
     {
         public EFOrderRepository(BookEntities db) : base(db) { }
 

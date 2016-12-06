@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.ServerRepository
 {
-    public interface IEFTimeRepository : IEFGenericRepository<TimeBased>
+    public interface ITimeRepository : IGenericRepository<TimeRule>
     {
 
     }

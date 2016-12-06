@@ -13,9 +13,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class CatController : Controller
     {
-        IEFCatRepository catRepo;
+        ICatRepository catRepo;
 
-        public CatController(IEFCatRepository catRepo)
+        public CatController(ICatRepository catRepo)
         {
             this.catRepo = catRepo;
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.ServerRepository
 {
-    public class EFRecommendRepository : EFGenericRepository<Recommend>, IEFRecommendRepository
+    public class EFRecommendRepository : EFGenericRepository<Recommend>, IRecommendRepository
     {
         public EFRecommendRepository(BookEntities db) : base(db)
         {

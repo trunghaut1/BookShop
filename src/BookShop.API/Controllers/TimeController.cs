@@ -13,42 +13,47 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class TimeController : Controller
     {
-        private IEFTimeRepository timeRepo;
+        private ITimeRepository timeRepo;
 
-        public TimeController(IEFTimeRepository timeRepo)
+        public TimeController(ITimeRepository timeRepo)
         {
             this.timeRepo = timeRepo;
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<TimeRule> Get()
         {
-            return new string[] { "value1", "value2" };
+            return timeRepo.GetAll().Select(o => new TimeRule(o));
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public TimeRule Get(int id)
         {
-            return "value";
+            TimeRule value = timeRepo.GetByID(id);
+            return value != null ? new TimeRule(value) : null;
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public int? Post([FromBody]TimeRule value)
         {
+            if (timeRepo.Add(value)) return value.ID;
+            return null;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public bool Put(int id, [FromBody]TimeRule value)
         {
+            return timeRepo.Update(value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return timeRepo.Delete(id);
         }
     }
 }

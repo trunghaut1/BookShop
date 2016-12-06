@@ -22,5 +22,14 @@ namespace Repository.ClientRepository
             }
             return null;
         }
+        public async Task<ListPaging<Book>> SearchPage(string name, int pageSize, int page)
+        {
+            string json = await APIHelper.Get($"{url}/name/{name}/page/{pageSize}/{page}");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2Object<ListPaging<Book>>(json);
+            }
+            return null;
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Data.Entity.Migrations;
 
 namespace Repository.ServerRepository
 {
-    public class EFGenericRepository<T> : IEFGenericRepository<T> where T : class
+    public class EFGenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected BookEntities db { get; set; }
         protected DbSet<T> table;

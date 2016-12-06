@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.ClientRepository
 {
-    public class TimeRepository : GenericRepository<TimeBased>
+    public class TimeRepository : GenericRepository<TimeRule>
     {
         public TimeRepository()
         {

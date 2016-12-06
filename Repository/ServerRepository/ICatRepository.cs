@@ -2,7 +2,7 @@
 
 namespace Repository.ServerRepository
 {
-    public interface IEFCatRepository : IEFGenericRepository<Cat>
+    public interface ICatRepository : IGenericRepository<Cat>
     {
     }
 }

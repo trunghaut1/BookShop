@@ -238,7 +238,7 @@
                     Grid.Row="1" Grid.Column="0" Name="bookSelect" VerticalAlignment="Center"
                     ShowSizeGrip="True" SelectedIndex="0" AutoPopulateColumns="False"
                     PopupContentTemplate="{StaticResource popupUserTemplate}" ItemsSource="{Binding books}" IsPopupAutoWidth="False"
-                    IsTextEditable="False" DisplayMember="Name" ValueMember="ID" PopupWidth="900"/>
+                    IsTextEditable="False" DisplayMember="Name" ValueMember="ID" PopupWidth="900" PopupHeight="450"/>
                     <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
                         <Label Content="Tìm thấy:" VerticalAlignment="Center" Margin="10 0 10 0"/>
                         <TextBlock Text="{Binding books.Count}" VerticalAlignment="Center"/>

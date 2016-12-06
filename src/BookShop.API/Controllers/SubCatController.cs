@@ -13,9 +13,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class SubCatController : Controller
     {
-        IEFSubCatRepository subCatRepo;
+        ISubCatRepository subCatRepo;
 
-        public SubCatController(IEFSubCatRepository subCatRepo)
+        public SubCatController(ISubCatRepository subCatRepo)
         {
             this.subCatRepo = subCatRepo;
         }

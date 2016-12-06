@@ -67,7 +67,7 @@ namespace BookShop.Admin.ViewModels
             loadView("đơn hàng");
             ActivateItem(new OrderViewModel());
         }
-        public void mnTimeBased()
+        public void mnTime()
         {
             loadView("thời gian");
             ActivateItem(new TimeViewModel());

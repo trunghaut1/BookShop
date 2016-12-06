@@ -31,13 +31,14 @@ namespace BookShop.API
         {
             // Add framework services.
             services.AddScoped<BookEntities>(s => new BookEntities(Configuration.GetConnectionString("BookEntities")));
-            services.AddSingleton(typeof(IEFGenericRepository<>), typeof(EFGenericRepository<>));
-            services.AddScoped<IEFUserRepository, EFUserRepository>();
-            services.AddScoped<IEFCatRepository, EFCatRepository>();
-            services.AddScoped<IEFSubCatRepository, EFSubCatRepository>();
-            services.AddScoped<IEFBookRepository, EFBookRepository>();
-            services.AddScoped<IEFOrderRepository, EFOrderRepository>();
-            services.AddScoped<IEFRecommendRepository, EFRecommendRepository>();
+            services.AddSingleton(typeof(IGenericRepository<>), typeof(EFGenericRepository<>));
+            services.AddScoped<IUserRepository, EFUserRepository>();
+            services.AddScoped<ICatRepository, EFCatRepository>();
+            services.AddScoped<ISubCatRepository, EFSubCatRepository>();
+            services.AddScoped<IBookRepository, EFBookRepository>();
+            services.AddScoped<IOrderRepository, EFOrderRepository>();
+            services.AddScoped<IRecommendRepository, EFRecommendRepository>();
+            services.AddScoped<ITimeRepository, EFTimeRepository>();
             services.AddMvc();
         }
 

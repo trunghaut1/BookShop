@@ -15,9 +15,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class OrderController : Controller
     {
-        IEFOrderRepository orderRepo;
+        IOrderRepository orderRepo;
 
-        public OrderController(IEFOrderRepository orderRepo)
+        public OrderController(IOrderRepository orderRepo)
         {
             this.orderRepo = orderRepo;
         }

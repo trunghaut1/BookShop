@@ -72,9 +72,9 @@
                         </Viewbox>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="mnTimeBased" Header="_Thời gian">
+                <MenuItem x:Name="mnTime" Header="_Thời gian">
                     <MenuItem.Icon>
-                        <Viewbox Width="18" Height="18">
+                        <Viewbox Width="17" Height="17">
                             <Canvas Width="24" Height="24">
                                 <Path Data="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z" Fill="{StaticResource MainColor}" />
                             </Canvas>

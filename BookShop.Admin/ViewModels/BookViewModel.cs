@@ -30,6 +30,8 @@ namespace BookShop.Admin.ViewModels
         private RecommendRepository recommendRepo;
         private ObservableCollection<Recommend> recommendList;
         public string message { get; set; }
+        public bool IsPaging { get; set; } = true;
+        public string txtSearchBook { get; set; }
         public int bookRecommend { get; set; }
         public Visibility IsUpdate { get; set; } = Visibility.Visible;
         public Visibility IsAdd { get; set; } = Visibility.Collapsed;
@@ -69,6 +71,49 @@ namespace BookShop.Admin.ViewModels
                     _pageList.Add(i);
                 }
                 pageList = _pageList;
+                IsPaging = true;
+            }
+        }
+        private async void SearchBook(int page)
+        {
+            if(!string.IsNullOrEmpty(txtSearchBook))
+            {
+                ListPaging<Book> bookPaging = await bookRepo.SearchPage(txtSearchBook, pageSize, page);
+                //await GetCat_SubCat();
+                if (bookPaging?.list != null)
+                {
+                    books = new ObservableCollection<Book>(bookPaging.list);
+                    paging = bookPaging.paging;
+                    ObservableCollection<int> _pageList = new ObservableCollection<int>();
+                    for (int i = 1; i <= paging.totalPage; i++)
+                    {
+                        _pageList.Add(i);
+                    }
+                    pageList = _pageList;
+                }
+            }
+        }
+        public async void btnSearchBook()
+        {
+            if (!string.IsNullOrEmpty(txtSearchBook))
+            {
+                int searchId;
+                if (int.TryParse(txtSearchBook, out searchId))
+                {
+                    if (searchId > 0)
+                    {
+                        IsPaging = false;
+                        books.Clear();
+                        Book book = await bookRepo.GetByID(searchId);
+                        if (book != null)
+                            books.Add(book);
+                    }
+                }
+                else
+                {
+                    IsPaging = true;
+                    SearchBook(1);
+                }
             }
         }
         private async Task GetCat_SubCat()
@@ -85,11 +130,18 @@ namespace BookShop.Admin.ViewModels
             }
         }
         public void ChangePage(int page)
-        {      
+        {
             if (page > 0)
             {
-                LoadData(page);
-            }         
+                if (!string.IsNullOrEmpty(txtSearchBook))
+                {
+                    SearchBook(page);
+                }
+                else
+                {
+                    LoadData(page);
+                }
+            }
         }
         public void ClearSelected(GridControl grid, ListBoxEdit catListBox, ListBoxEdit SubCatListBox)
         {
@@ -100,6 +152,11 @@ namespace BookShop.Admin.ViewModels
             catListBox.SelectedItem = null;
             SubCatListBox.SelectedItem = null;
             message = MessageHelper.Get("+");
+        }
+        public void btnClearSearch()
+        {
+            LoadData(1);
+            txtSearchBook = null;
         }
         private ObservableCollection<int> ToListInt(object list)
         {

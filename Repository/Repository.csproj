@@ -86,6 +86,8 @@
     <Compile Include="Model\RecommendModel.cs" />
     <Compile Include="Model\SubCatModel.cs" />
     <Compile Include="Model\CatModel.cs" />
+    <Compile Include="Model\TimeBasedModel.cs" />
+    <Compile Include="Model\TimeRuleModel.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="ServerRepository\EFBookRepository.cs" />
     <Compile Include="ServerRepository\EFCatRepository.cs" />
@@ -96,15 +98,15 @@
     <Compile Include="ServerRepository\EFRecommendRepository.cs" />
     <Compile Include="ServerRepository\EFTimeRepository.cs" />
     <Compile Include="ServerRepository\EFUserRepository.cs" />
-    <Compile Include="ServerRepository\IEFBookRepository.cs" />
-    <Compile Include="ServerRepository\IEFCatRepository.cs" />
+    <Compile Include="ServerRepository\IBookRepository.cs" />
+    <Compile Include="ServerRepository\ICatRepository.cs" />
     <Compile Include="ServerRepository\EFGenericRepository.cs" />
-    <Compile Include="ServerRepository\IEFOrderRepository.cs" />
-    <Compile Include="ServerRepository\IEFRecommendRepository.cs" />
-    <Compile Include="ServerRepository\IEFTimeRepository.cs" />
-    <Compile Include="ServerRepository\IEFUserRepository.cs" />
-    <Compile Include="ServerRepository\IEFGenericRepository.cs" />
-    <Compile Include="ServerRepository\IEFSubCatRepository.cs" />
+    <Compile Include="ServerRepository\IOrderRepository.cs" />
+    <Compile Include="ServerRepository\IRecommendRepository.cs" />
+    <Compile Include="ServerRepository\ITimeRepository.cs" />
+    <Compile Include="ServerRepository\IUserRepository.cs" />
+    <Compile Include="ServerRepository\IGenericRepository.cs" />
+    <Compile Include="ServerRepository\ISubCatRepository.cs" />
     <Compile Include="Model\Book.cs">
       <DependentUpon>BookModel.tt</DependentUpon>
     </Compile>

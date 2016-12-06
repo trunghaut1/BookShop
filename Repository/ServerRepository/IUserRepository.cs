@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Repository.ServerRepository
 {
-    public interface IEFUserRepository : IEFGenericRepository<User>
+    public interface IUserRepository : IGenericRepository<User>
     {
         User GetByEmail(string value);
         IEnumerable<User> GetByName(string name);

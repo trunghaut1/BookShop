@@ -13,9 +13,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        IEFUserRepository userRepo;
+        IUserRepository userRepo;
 
-        public UserController(IEFUserRepository userRepo)
+        public UserController(IUserRepository userRepo)
         {
             this.userRepo = userRepo;
         }

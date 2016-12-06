@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Repository.ServerRepository
 {
-    public interface IEFSubCatRepository : IEFGenericRepository<SubCat>
+    public interface ISubCatRepository : IGenericRepository<SubCat>
     {
     }
 }

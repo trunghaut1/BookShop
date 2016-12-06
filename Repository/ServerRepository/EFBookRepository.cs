@@ -7,12 +7,30 @@ using System.Data.Entity.Migrations;
 
 namespace Repository.ServerRepository
 {
-    public class EFBookRepository : EFGenericRepository<Book>, IEFBookRepository
+    public class EFBookRepository : EFGenericRepository<Book>, IBookRepository
     {
         public EFBookRepository(BookEntities db) : base(db) { }
         public IEnumerable<Book> GetByName(string name)
         {
             return GetBy(o => o.Name.Contains(name)).AsEnumerable();
+        }
+        public ListPaging<Book> SearchPage(string name,int pageSize, int page)
+        {
+            Paging paging = new Paging()
+            {
+                totalItem = 0,
+                pageSize = pageSize,
+                pageIndex = page
+            };
+            var book = GetByName(name).OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Book(o));
+            paging.totalItem = book.Count();
+            ListPaging<Book> bookPaging = new ListPaging<Book>()
+            {
+                list = book,
+                paging = paging
+            };
+            return bookPaging;
         }
         public ListPaging<Book> GetPage(int pageSize, int page)
         {

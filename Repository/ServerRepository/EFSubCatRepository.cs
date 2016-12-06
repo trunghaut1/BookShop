@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Repository.ServerRepository
 {
-    public class EFSubCatRepository : EFGenericRepository<SubCat>, IEFSubCatRepository
+    public class EFSubCatRepository : EFGenericRepository<SubCat>, ISubCatRepository
     {
         public EFSubCatRepository(BookEntities db) : base(db) { }
     }

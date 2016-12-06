@@ -13,9 +13,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class RecommendController : Controller
     {
-        private IEFRecommendRepository recommendRepo;
+        private IRecommendRepository recommendRepo;
 
-        public RecommendController(IEFRecommendRepository recommendRepo)
+        public RecommendController(IRecommendRepository recommendRepo)
         {
             this.recommendRepo = recommendRepo;
         }

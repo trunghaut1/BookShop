@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Repository.ServerRepository
 {
-    public class EFUserRepository : EFGenericRepository<User>, IEFUserRepository
+    public class EFUserRepository : EFGenericRepository<User>, IUserRepository
     {
         public EFUserRepository(BookEntities db) : base(db) { }
 

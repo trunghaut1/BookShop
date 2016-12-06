@@ -2,7 +2,7 @@
 
 namespace Repository.ServerRepository
 {
-    public class EFCatRepository: EFGenericRepository<Cat>, IEFCatRepository
+    public class EFCatRepository: EFGenericRepository<Cat>, ICatRepository
     {
         public EFCatRepository(BookEntities db) : base(db) { }
     }

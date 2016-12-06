@@ -14,9 +14,9 @@ namespace BookShop.API.Controllers
     [Route("api/[controller]")]
     public class BookController : Controller
     {
-        IEFBookRepository bookRepo;
+        IBookRepository bookRepo;
 
-        public BookController(IEFBookRepository bookRepo)
+        public BookController(IBookRepository bookRepo)
         {
             this.bookRepo = bookRepo;
         }
@@ -36,6 +36,13 @@ namespace BookShop.API.Controllers
         {
             if(pageSize != 0 && page != 0)
                 return bookRepo.GetPage(pageSize, page);
+            return null;
+        }
+        [HttpGet("name/{name}/page/{pageSize}/{page}")]
+        public ListPaging<Book> GetSearchPage(string name, int pageSize, int page)
+        {
+            if (pageSize != 0 && page != 0)
+                return bookRepo.SearchPage(name, pageSize, page);
             return null;
         }
 

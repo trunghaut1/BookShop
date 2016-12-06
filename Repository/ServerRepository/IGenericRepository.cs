@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Repository.ServerRepository
 {
-    public interface IEFGenericRepository<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         IQueryable<T> GetBy(Expression<Func<T, bool>> predicate);

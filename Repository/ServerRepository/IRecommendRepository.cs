@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.ServerRepository
 {
-    public interface IEFRecommendRepository : IEFGenericRepository<Recommend>
+    public interface IRecommendRepository : IGenericRepository<Recommend>
     {
         IEnumerable<Recommend> GetListByID(int id);
         int CountRecommend(int id);
