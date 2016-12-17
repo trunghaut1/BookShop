@@ -75,5 +75,17 @@ namespace BookShop.API.Controllers
         {
             return bookRepo.Delete(id);
         }
+        // Time
+        [HttpGet("time/getbynumber/{number}")]
+        public dynamic tGetByNumber(int number)
+        {
+            return bookRepo.tGetByNumber(number).Select(o => new { o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity });
+        }
+        [HttpGet("time/getbyid/{id}")]
+        public Book tGetByID(int id)
+        {
+            Book value = bookRepo.tGetByID(id);
+            return value != null ? new Book(value) : null;
+        }
     }
 }

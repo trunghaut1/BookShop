@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository.Model;
 using System.Net;
+using Repository.ServerRepository;
 
 namespace Test
 {
@@ -12,7 +13,9 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            BookEntities db = new BookEntities();
+            BookEntities _db = new BookEntities();
+            EFBookRepository db = new EFBookRepository(_db);
+            var n = db.tGetByNumber(4);
         }
     }
 }

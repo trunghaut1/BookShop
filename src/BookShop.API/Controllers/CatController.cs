@@ -25,6 +25,11 @@ namespace BookShop.API.Controllers
         {
             return catRepo.GetAll().Select(o => new { o.ID, o.Name });
         }
+        [HttpGet("catsub")]
+        public IEnumerable<Cat> GetCatSub()
+        {
+            return catRepo.GetAll().Select(o => new Cat(o, true));
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]

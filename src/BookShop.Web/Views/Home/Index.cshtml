@@ -1,0 +1,175 @@
+﻿@model IEnumerable<Book>
+
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+<!-- BEGIN: LAYOUT/SLIDERS/REVO-SLIDER-1 -->
+<!-- START REVOLUTION SLIDER 5.0 -->
+<section class="c-layout-revo-slider c-layout-revo-slider-1">
+    <div class="tp-banner-container tp-fullscreen tp-fullscreen-mobile">
+        <div class="tp-banner rev_slider" data-version="5.0">
+            <ul>
+                <!-- SLIDE #1 -->
+                <li data-transition="fade">
+                    <!-- MAIN IMAGE -->
+                    <img src="~/img/content/backgrounds/bg-18.jpg" alt="">
+                    <!-- LAYER NR. 1 -->
+                    <div class="tp-caption customin customout" data-x="center" data-y="center" data-hoffset="" data-voffset="-30" data-start="1500" data-transform_in="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Power2.easeInOut;"
+                         data-transform_out="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Power2.easeInOut;" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="600">
+                        <h3 class="c-main-title c-font-55 c-font-bold c-font-center c-font-uppercase c-font-white c-block">
+                            Khám phá thế giới
+                            <br> Qua những quyển sách
+                        </h3>
+                    </div>
+                    <!-- LAYER NR. 2 -->
+                    <div class="tp-caption randomrotateout" data-x="center" data-y="center" data-hoffset="" data-voffset="120" data-transform_in="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Power2.easeInOut;"
+                         data-transform_out="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Power2.easeInOut;" data-start="2000" data-easing="Back.easeOut">
+                        <a asp-action="Cat" asp-controller="Home" asp-route-id="1" asp-route-page="1" class="c-action-btn btn btn-lg c-btn-square c-btn-border-2x c-btn-white c-btn-bold c-btn-uppercase">Xem</a>
+                    </div>
+                </li>
+                <!-- END SLIDE #1 -->
+                <!-- SLIDE #2 -->
+                <li data-transition="fade">
+                    <!-- MAIN IMAGE -->
+                    <img src="~/img/content/backgrounds/bg-32.jpg" alt="">
+                    <!-- LAYER NR. 1 -->
+                    <div class="tp-caption customin customout" data-x="center" data-y="center" data-hoffset="" data-voffset="-30" data-start="1500" data-transform_in="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Power2.easeInOut;"
+                         data-transform_out="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Back.easeOut;" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="600">
+                        <h3 class="c-main-title c-font-55 c-font-bold c-font-center c-font-uppercase c-font-white c-block">
+                            Nâng cao
+                            <br> khả năng tự học
+                        </h3>
+                    </div>
+                    <!-- LAYER NR. 2 -->
+                    <div class="tp-caption randomrotateout" data-x="center" data-y="center" data-hoffset="" data-voffset="120" data-transform_in="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Power2.easeInOut;"
+                         data-transform_out="x:0;y:0;z:0;rX:0.5;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;s:600;e:Back.easeOut;" data-start="2000" data-easing="Back.easeOut">
+                        <a asp-action="Cat" asp-controller="Home" asp-route-id="2" asp-route-page="1" class="c-action-btn btn btn-lg c-btn-square c-btn-border-2x c-btn-white c-btn-bold c-btn-uppercase">Xem</a>
+                    </div>
+                </li>
+                <!-- END SLIDE #2 -->
+            </ul>
+        </div>
+        <!-- END REVOLUTION SLIDER -->
+    </div>
+    <!-- END OF SLIDER WRAPPER -->
+</section>
+<!-- END: LAYOUT/SLIDERS/REVO-SLIDER-1 -->
+<div class="c-content-box c-size-md c-bg-parallax" style="background-image: url(/img/content/shop-backgrounds/127.jpg)">
+    <div class="container">
+        <div class="c-content-tab-5 c-bs-grid-reset-space">
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills c-nav-tab c-arrow" role="tablist">
+                <li role="presentation" class="active">
+                    <a class="c-font-uppercase" href="#watches4" aria-controls="watches" role="tab" data-toggle="tab">Nổi bật</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="watches4">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="c-content c-content-overlay">
+                                <div class="c-overlay-wrapper c-overlay-padding">
+                                    <div class="c-overlay-content">
+                                        <a asp-action="Cat" asp-controller="Home" asp-route-id="1" asp-route-page="1" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Văn học</a>
+                                    </div>
+                                </div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 270px; background-image: url(/img/content/shop2/67.jpg);"></div>
+                                <div class="c-overlay-border"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="c-content c-content-overlay">
+                                <div class="c-overlay-wrapper c-overlay-padding">
+                                    <div class="c-overlay-content">
+                                        <a asp-action="Cat" asp-controller="Home" asp-route-id="2" asp-route-page="1" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Kinh tế</a>
+                                    </div>
+                                </div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 270px; background-image: url(/img/content/shop2/85.jpg);"></div>
+                                <div class="c-overlay-border"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="c-content c-content-overlay">
+                                <div class="c-overlay-wrapper c-overlay-padding">
+                                    <div class="c-overlay-content">
+                                        <a asp-action="Cat" asp-controller="Home" asp-route-id="3" asp-route-page="1" class="btn btn-md c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Thiếu Nhi</a>
+                                    </div>
+                                </div>
+                                <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 270px; background-image: url(/img/content/shop2/63.jpg);"></div>
+                                <div class="c-overlay-border"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="c-content-box c-size-md c-overflow-hide c-bs-grid-small-space" style="background-image: url(/img/content/shop-backgrounds/139.jpg)">
+    <div class="container">
+        <div class="c-content-title-1">
+            <h3 class="c-font-uppercase c-center c-font-bold">Sách mới</h3>
+            <div class="c-line-center c-theme-bg"></div>
+        </div>
+        <div class="row">
+            @Html.Partial("ProductListPartial", Model)
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+            $(document).ready(function()
+            {
+                var slider = $('.c-layout-revo-slider .tp-banner');
+                var cont = $('.c-layout-revo-slider .tp-banner-container');
+                var api = slider.show().revolution(
+                {
+                    sliderType: "standard",
+                    sliderLayout: "fullscreen",
+                    responsiveLevels: [2048, 1024, 778, 480],
+                    gridwidth: [1170, 1024, 778, 480],
+                    gridheight: [868, 768, 960, 720],
+                    delay: 15000,
+                    navigation:
+                    {
+                        keyboardNavigation: "off",
+                        keyboard_direction: "horizontal",
+                        mouseScrollNavigation: "off",
+                        onHoverStop: "on",
+                        arrows:
+                        {
+                            style: "circle",
+                            enable: true,
+                            hide_onmobile: false,
+                            hide_onleave: false,
+                            tmp: '',
+                            left:
+                            {
+                                h_align: "left",
+                                v_align: "center",
+                                h_offset: 30,
+                                v_offset: 0
+                            },
+                            right:
+                            {
+                                h_align: "right",
+                                v_align: "center",
+                                h_offset: 30,
+                                v_offset: 0
+                            }
+                        }
+                    },
+                    touchenabled: "on",
+                    spinner: "spinner2",
+                    shadow: 0,
+                    disableProgressBar: "on",
+                    hideThumbsOnMobile: "on",
+                    hideNavDelayOnMobile: 1500,
+                    hideBulletsOnMobile: "on",
+                    hideArrowsOnMobile: "on",
+                    hideThumbsUnderResolution: 0
+                });
+            }); //ready
+    </script>
+}

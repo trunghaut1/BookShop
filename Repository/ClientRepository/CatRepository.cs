@@ -1,4 +1,7 @@
-﻿using Repository.Model;
+﻿using Repository.Helper;
+using Repository.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repository.ClientRepository
 {
@@ -7,6 +10,15 @@ namespace Repository.ClientRepository
         public CatRepository()
         {
             url = "cat";
+        }
+        public async Task<IEnumerable<Cat>> GetCatSub()
+        {
+            string json = await APIHelper.Get($"{url}/catsub");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2List<Cat>(json);
+            }
+            return null;
         }
     }
 }

@@ -48,6 +48,8 @@ namespace BookShop.API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseStaticFiles();
+
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseMvcWithDefaultRoute();

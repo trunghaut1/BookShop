@@ -4,6 +4,7 @@ using Repository.Model;
 using System.Data.Entity;
 using Repository.ViewModel;
 using System.Data.Entity.Migrations;
+using System;
 
 namespace Repository.ServerRepository
 {
@@ -82,6 +83,37 @@ namespace Repository.ServerRepository
             {
                 return false;
             }
+        }
+        private List<int> GetTimeBased()
+        {
+            DateTime now = DateTime.Now;
+            string week = ((int)now.DayOfWeek).ToString();
+            var hide = db.TimeRule.Where(o => o.Status == false && now.Date >= o.FromDate && now.Date <= o.ToDate)
+            .Where(o => now.TimeOfDay >= o.FromHour && now.TimeOfDay <= o.ToHour)
+            .Where(o => o.Week.Contains(week)).Select(o => o.ID).ToList();
+            var itemHide = db.TimeBased.Where(o => hide.Contains(o.RuleID)).Select(o => o.BookID).ToList();
+            var hide2 = db.TimeRule.Where(o => o.Status == true)
+                .Where(o => !(now.Date >= o.FromDate && now.Date <= o.ToDate))
+                .Where(o => !(now.TimeOfDay >= o.FromHour && now.TimeOfDay <= o.ToHour))
+                .Where(o => !o.Week.Contains(week)).Select(o => o.ID).ToList();
+            var itemHide2 = db.TimeBased.Where(o => hide2.Contains(o.RuleID)).Select(o => o.BookID).ToList();
+            return itemHide.Union(itemHide2).ToList();
+        }
+        public IEnumerable<Book> tGetByNumber(int number)
+        {
+            List<int> itemHide = GetTimeBased();
+            IEnumerable<Book> books = table.Where(o => !itemHide.Contains(o.ID)).Take(number)
+                .OrderByDescending(o => o.ID).Take(number);
+            return books;
+        }
+        public Book tGetByID(int id)
+        {
+            List<int> itemHide = GetTimeBased();
+            Book book = table.Find(id);
+            if (!itemHide.Contains(book.ID))
+                return book;
+            else
+                return null;
         }
     }
 }
