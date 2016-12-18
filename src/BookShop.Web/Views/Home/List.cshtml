@@ -1,0 +1,31 @@
+﻿@model ListPaging<Book>
+
+@Html.Partial("Header", (string)ViewBag.Title)
+<div class="container">
+    <div class="c-margin-t-30"></div>
+    @Html.Partial("BookTreePartial", Model.list)
+</div>
+@if (ViewBag.CatID != null)
+{
+    <div class="container c-margin-b-40 c-center">
+        <ul page-model="@Model.paging" page-action="Cat" page-classes-enabled="true"
+            page-class-selected="c-active" page-url-id="@ViewBag.CatID"
+            class="c-content-pagination c-theme"></ul>
+    </div>
+}
+@if (ViewBag.SubCatID != null)
+{
+    <div class="container c-margin-b-40 c-center">
+        <ul page-model="@Model.paging" page-action="SubCat" page-classes-enabled="true"
+            page-class-selected="c-active" page-url-id="@ViewBag.SubCatID"
+            class="c-content-pagination c-theme"></ul>
+    </div>
+}
+@if (ViewBag.List != null)
+{
+    <div class="container c-margin-b-40 c-center">
+        <ul page-model="@Model.paging" page-action="List" page-classes-enabled="true"
+            page-class-selected="c-active"
+            class="c-content-pagination c-theme"></ul>
+    </div>
+}

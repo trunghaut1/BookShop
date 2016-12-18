@@ -1,5 +1,5 @@
 ﻿// Write your Javascript code.
-function AddToCart(id, quantity)
+function AddToCart(id, quantity, related)
 {
     $.ajax({
         type: 'get',
@@ -17,28 +17,29 @@ function AddToCart(id, quantity)
                     },
                     success: function (response) {
                         if (response) {
-                            $.notify({
-                                // options
-                                message: 'Đã thêm vào giỏ'
-                            }, {
-                                // settings
-                                type: 'success',
-                                placement: {
-                                    from: "bottom",
-                                    align: "center"
-                                },
-                                animate: {
-                                    enter: 'animated fadeInUp',
-                                    exit: 'animated fadeOutDown'
-                                },
-                                delay: 2000,
-                                mouse_over: "pause"
-                            });
                             var url = window.location.href.toLowerCase().indexOf("cart");
                             if (url > 0) {
                                 location.reload();
                             }
                             else {
+                                if (related)
+                                {
+                                    $("#relatedProModal").modal('hide');
+                                    $.ajax({
+                                        type: 'get',
+                                        url: '/home/relatedpartial',
+                                        data: {
+                                            id: id
+                                        },
+                                        success: function (relhtml) {
+                                            if (relhtml != null)
+                                            {
+                                                $("#relModalBody").html(relhtml);
+                                                $("#relatedProModal").modal('show');
+                                            }
+                                        }
+                                    });
+                                }
                                 $.ajax({
                                     type: 'get',
                                     url: '/cart/refreshcart',

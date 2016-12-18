@@ -115,5 +115,69 @@ namespace Repository.ServerRepository
             else
                 return null;
         }
+        public IEnumerable<Book> tGetRelated(int id)
+        {
+            List<int> itemHide = GetTimeBased();
+            var related = db.Recommend.Where(o => o.FirstBookID == id).Select(o => o.SecondBookID);
+            var book = table.Where(o => related.Contains(o.ID) && !itemHide.Contains(o.ID));
+            return book.Count() > 4 ? book.Take(4) : book;
+        }
+        public ListPaging<Book> tGetByCatPage(int id, int pageSize, int page)
+        {
+            List<int> itemHide = GetTimeBased();
+            var value = table.Where(o => !itemHide.Contains(o.ID) && o.bookCat.Select(a => a.CatID).Contains(id));
+            var book = value.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Book(o,true));
+            Paging paging = new Paging()
+            {
+                totalItem = value.Count(),
+                pageSize = pageSize,
+                pageIndex = page
+            };
+            ListPaging<Book> bookPaging = new ListPaging<Book>()
+            {
+                list = book,
+                paging = paging
+            };
+            return bookPaging;
+        }
+        public ListPaging<Book> tGetBySubCatPage(int id, int pageSize, int page)
+        {
+            List<int> itemHide = GetTimeBased();
+            var value = table.Where(o => !itemHide.Contains(o.ID) && o.bookSubCat.Select(a => a.SubCatID).Contains(id));
+            var book = value.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Book(o, true));
+            Paging paging = new Paging()
+            {
+                totalItem = value.Count(),
+                pageSize = pageSize,
+                pageIndex = page
+            };
+            ListPaging<Book> bookPaging = new ListPaging<Book>()
+            {
+                list = book,
+                paging = paging
+            };
+            return bookPaging;
+        }
+        public ListPaging<Book> tGetPage(int pageSize, int page)
+        {
+            List<int> itemHide = GetTimeBased();
+            var value = table.Where(o => !itemHide.Contains(o.ID));
+            var book = value.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Book(o, true));
+            Paging paging = new Paging()
+            {
+                totalItem = value.Count(),
+                pageSize = pageSize,
+                pageIndex = page
+            };
+            ListPaging<Book> bookPaging = new ListPaging<Book>()
+            {
+                list = book,
+                paging = paging
+            };
+            return bookPaging;
+        }
     }
 }

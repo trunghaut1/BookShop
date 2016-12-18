@@ -87,5 +87,31 @@ namespace BookShop.API.Controllers
             Book value = bookRepo.tGetByID(id);
             return value != null ? new Book(value) : null;
         }
+        [HttpGet("time/getrelated/{id}")]
+        public dynamic tGetRelated(int id)
+        {
+            return bookRepo.tGetRelated(id).Select(o => new { o.ID, o.Name, o.Author, o.Summary, o.Image, o.Price, o.Quantity });
+        }
+        [HttpGet("time/cat/{id}/page/{pageSize}/{page}")]
+        public ListPaging<Book> tGetByCatPage(int id, int pageSize, int page)
+        {
+            if (pageSize != 0 && page != 0)
+                return bookRepo.tGetByCatPage(id, pageSize, page);
+            return null;
+        }
+        [HttpGet("time/subcat/{id}/page/{pageSize}/{page}")]
+        public ListPaging<Book> tGetBySubCatPage(int id, int pageSize, int page)
+        {
+            if (pageSize != 0 && page != 0)
+                return bookRepo.tGetBySubCatPage(id, pageSize, page);
+            return null;
+        }
+        [HttpGet("time/page/{pageSize}/{page}")]
+        public ListPaging<Book> tGetPage(int pageSize, int page)
+        {
+            if (pageSize != 0 && page != 0)
+                return bookRepo.tGetPage(pageSize, page);
+            return null;
+        }
     }
 }

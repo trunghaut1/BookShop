@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Book>
+
+<div class="row">
+    @foreach (Book i in Model)
+    {
+        <div class="col-md-3 col-sm-6 c-margin-b-20">
+            <div class="c-content-product-2 c-bg-white">
+                <div class="c-content-overlay">
+                    <div class="c-overlay-wrapper">
+                        <div class="c-overlay-content">
+                            @if (i.Quantity > 0)
+                            {
+                                <a onclick="AddToCart(@i.ID,1,false)" class="btn btn-sm c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Thêm vào giỏ</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm c-btn-grey-1 c-btn-uppercase c-btn-bold c-btn-border-1x c-btn-square">Hết hàng</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="c-bg-img-top-center c-overlay-object" data-height="height" style="height: 125px; background-image: url(data:image/jpg;base64,@i.Image);"></div>
+                </div>
+                <div class="c-info">
+                    <p class="c-title c-font-17 c-font-slim"><a asp-action="Book" asp-controller="Home" asp-route-id="@i.ID">@i.Name</a></p>
+                    <p class="c-price c-font-14 c-font-slim c-font-red">
+                        @(((int)i.Price).ToString("c"))
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

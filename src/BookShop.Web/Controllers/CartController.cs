@@ -45,6 +45,18 @@ namespace BookShop.Web.Controllers
             }
             return false;
         }
+        public async Task<bool> RemoveFromCart(int id)
+        {
+            Book book = await bookRepo.GetByID(id);
+            if (book != null)
+            {
+                Cart cart = GetCart();
+                cart.RemoveLine(book);
+                SaveCart(cart);
+                return true;
+            }
+            return false;
+        }
 
         private Cart GetCart()
         {

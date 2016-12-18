@@ -11,5 +11,9 @@ namespace Repository.ServerRepository
         ListPaging<Book> GetPage(int pageSize, int page);
         IEnumerable<Book> tGetByNumber(int number);
         Book tGetByID(int id);
+        IEnumerable<Book> tGetRelated(int id);
+        ListPaging<Book> tGetByCatPage(int id, int pageSize, int page);
+        ListPaging<Book> tGetBySubCatPage(int id, int pageSize, int page);
+        ListPaging<Book> tGetPage(int pageSize, int page);
     }
 }
