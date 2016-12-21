@@ -29,3 +29,11 @@
             class="c-content-pagination c-theme"></ul>
     </div>
 }
+@if (ViewBag.Search != null)
+{
+    <div class="container c-margin-b-40 c-center">
+        <ul page-model="@Model.paging" page-action="Search" page-classes-enabled="true"
+            page-class-selected="c-active" page-url-search="@ViewBag.Search"
+            class="c-content-pagination c-theme"></ul>
+    </div>
+}

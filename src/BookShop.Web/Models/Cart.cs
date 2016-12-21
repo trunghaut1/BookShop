@@ -34,6 +34,10 @@ namespace BookShop.Web.Models
                 line.Quantity += quantity;
             }
         }
+        public virtual int GetBookQuantity(int id)
+        {
+            return lineCollection.Where(o => o.Book.ID == id).FirstOrDefault()?.Quantity ?? 0;
+        }
 
         public virtual void RemoveLine(Book book) =>
             lineCollection.RemoveAll(l => l.Book.ID == book.ID);

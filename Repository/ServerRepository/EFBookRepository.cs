@@ -110,10 +110,14 @@ namespace Repository.ServerRepository
         {
             List<int> itemHide = GetTimeBased();
             Book book = table.Find(id);
-            if (!itemHide.Contains(book.ID))
-                return book;
-            else
-                return null;
+            if(book != null)
+            {
+                if (!itemHide.Contains(book.ID))
+                    return book;
+                else
+                    return null;
+            }
+            return null;
         }
         public IEnumerable<Book> tGetRelated(int id)
         {
@@ -178,6 +182,43 @@ namespace Repository.ServerRepository
                 paging = paging
             };
             return bookPaging;
+        }
+        public ListPaging<Book> tGetByNamePage(string name, int pageSize, int page)
+        {
+            List<int> itemHide = GetTimeBased();
+            var value = table.Where(o => !itemHide.Contains(o.ID) && o.Name.Contains(name));
+            var book = value.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Book(o, true));
+            Paging paging = new Paging()
+            {
+                totalItem = value.Count(),
+                pageSize = pageSize,
+                pageIndex = page
+            };
+            ListPaging<Book> bookPaging = new ListPaging<Book>()
+            {
+                list = book,
+                paging = paging
+            };
+            return bookPaging;
+        }
+        public void SetQuantity(int id, int quantity)
+        {
+            try
+            {
+                Book value = db.Book.Find(id);
+                if (value.Quantity > 0)
+                {
+                    value.Quantity -= quantity;
+                    if (value.Quantity < 0)
+                        value.Quantity = 0;
+                }
+                db.SaveChanges();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

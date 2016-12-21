@@ -20,5 +20,14 @@ namespace Repository.ClientRepository
             }
             return null;
         }
+        public async Task<IEnumerable<Cat>> GetByBook(int id)
+        {
+            string json = await APIHelper.Get($"{url}/book/{id}");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2List<Cat>(json);
+            }
+            return null;
+        }
     }
 }

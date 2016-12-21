@@ -5,5 +5,6 @@ namespace Repository.ServerRepository
 {
     public interface ISubCatRepository : IGenericRepository<SubCat>
     {
+        IEnumerable<SubCat> GetByBook(int id);
     }
 }

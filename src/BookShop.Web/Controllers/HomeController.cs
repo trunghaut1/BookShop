@@ -37,7 +37,7 @@ namespace BookShop.Web.Controllers
             if (book.Count() > 0)
                 return PartialView("RelatedPartial", book);
             else
-                return null;
+                return NoContent();
         }
         public async Task<IActionResult> Cat(int id, int page = 1)
         {
@@ -60,6 +60,27 @@ namespace BookShop.Web.Controllers
             ViewBag.Title = $"Sách";
             ViewBag.List = true;
             ListPaging<Book> value = await bookRepo.tGetPage(pageSize, page);
+            return View(value);
+        }
+        public async Task<IActionResult> Search(string search, int page = 1)
+        {
+            ViewBag.Title = $"Kết quả tìm kiếm: {search}";
+            ViewBag.Search = search;
+            ListPaging<Book> value = await bookRepo.tGetByNamePage(search, pageSize, page);
+            return View("List", value);
+        }
+        public async Task<IActionResult> Book(int id)
+        {
+            Book value = await bookRepo.tGetByID(id);
+            if (value != null)
+            {
+                IEnumerable<Cat> cat = await catRepo.GetByBook(id);
+                IEnumerable<SubCat> subCat = await subCatRepo.GetByBook(id);
+                IEnumerable<Book> relPro = await bookRepo.tGetRelated(id);
+                ViewBag.Cat = cat;
+                ViewBag.SubCat = subCat;
+                ViewBag.RelatedPro = relPro;
+            }
             return View(value);
         }
     }

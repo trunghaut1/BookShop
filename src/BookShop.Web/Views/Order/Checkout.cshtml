@@ -1,0 +1,94 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Thanh toán";
+    Cart cart = (Cart)ViewBag.cart;
+    User u = Context.Session.GetJson<User>("User");
+}
+@Html.Partial("Header", "Thanh toán")
+<!-- BEGIN: PAGE CONTENT -->
+<div class="c-content-box c-size-lg">
+    <div class="container">
+        <form class="c-shop-form-1" asp-action="Checkout" asp-controller="Order" method="post">
+            <div class="row">
+                <!-- BEGIN: ADDRESS FORM -->
+                <div class="col-md-7 c-padding-20">
+                    <!-- BEGIN: BILLING ADDRESS -->
+                    <h3 class="c-font-bold c-font-uppercase c-font-24">Thông tin đơn hàng</h3>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Khách hàng:</label>
+                            <span>@u.Name</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Email: </label>
+                            <span>@u.Email</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Điện thoại</label>
+                            <span>@u.Phone</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Address" class="control-label">Địa chỉ nhận hàng</label>
+                            <input asp-for="Address" type="text" class="form-control c-square c-theme" placeholder="Địa chỉ">
+                        </div>
+                    </div>
+                    <!-- BILLING ADDRESS -->
+                </div>
+                <!-- END: ADDRESS FORM -->
+                <!-- BEGIN: ORDER FORM -->
+                <div class="col-md-5">
+                    <div class="c-content-bar-1 c-align-left c-bordered c-theme-border c-shadow">
+                        <h1 class="c-font-bold c-font-uppercase c-font-24">Chi tiết đơn hàng</h1>
+                        <ul class="c-order list-unstyled">
+                            <li class="row c-margin-b-15">
+                                <div class="col-md-6 c-font-20">
+                                    <h2>Sản phẩm</h2>
+                                </div>
+                                <div class="col-md-6 c-font-20">
+                                    <h2>Tổng cộng</h2>
+                                </div>
+                            </li>
+                            <li class="row c-border-bottom"></li>
+                            @foreach (var item in cart.Lines)
+                            {
+                                <li class="row c-margin-b-15 c-margin-t-15">
+                                    <div class="col-md-6 c-font-20">
+                                        <a asp-action="Product" asp-controller="Home" asp-route-id="@item.Book.ID" class="c-theme-link">@item.Book.Name x @item.Quantity</a>
+                                    </div>
+                                    <div class="col-md-6 c-font-20">
+                                        <p class="">@(((int)(item.Quantity * item.Book.Price)).ToString("c"))</p>
+                                    </div>
+                                </li>
+                            }
+                            <li class="row c-border-top c-margin-b-15"></li>
+                            <li class="row c-margin-b-15 c-margin-t-15">
+                                <div class="col-md-6 c-font-20">
+                                    <p class="c-font-30">Tổng</p>
+                                </div>
+                                <div class="col-md-6 c-font-20">
+                                    <p class="c-font-bold c-font-30">
+                                        <span class="c-shipping-total">@cart.ComputeTotalValue().ToString("c")</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="form-group col-md-12" role="group">
+                                    <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">Đặt hàng</button>
+                                    <a asp-action="Index" asp-controller="Cart" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Hủy</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- END: ORDER FORM -->
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: PAGE CONTENT -->

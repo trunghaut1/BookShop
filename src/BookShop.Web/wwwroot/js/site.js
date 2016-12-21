@@ -52,6 +52,26 @@ function AddToCart(id, quantity, related)
                                 });
                             }
                         }
+                        else
+                        {
+                            $.notify({
+                                // options
+                                message: 'Lượng hàng trong kho của sản phẩm hiện không đủ'
+                            }, {
+                                // settings
+                                type: 'danger',
+                                placement: {
+                                    from: "bottom",
+                                    align: "center"
+                                },
+                                animate: {
+                                    enter: 'animated fadeInUp',
+                                    exit: 'animated fadeOutDown'
+                                },
+                                delay: 2000,
+                                mouse_over: "pause"
+                            });
+                        }
                     }
                 });
             }
@@ -124,6 +144,43 @@ function DownCart(id)
         }
     });
 }
+function CartChange(id, quantity) {
+    if (quantity < 1) return;
+    $.ajax({
+        type: 'get',
+        url: '/cart/cartchange',
+        data: {
+            id: id,
+            quantity, quantity
+            },
+                success: function (response) {
+                    if (response) {
+                        location.reload();
+                    }
+                    else
+                    {
+                        $.notify({
+                            // options
+                            message: 'Lượng hàng trong kho của sản phẩm hiện không đủ'
+                        }, {
+                            // settings
+                            type: 'danger',
+                            placement: {
+                                from: "bottom",
+                                align: "center"
+                            },
+                            animate: {
+                                enter: 'animated fadeInUp',
+                                exit: 'animated fadeOutDown'
+                            },
+                            delay: 2000,
+                            mouse_over: "pause"
+                        });
+                    }
+                }
+    });
+}
+
 function ShowOrder(order)
 {
     $("#order-id").html(order.id);

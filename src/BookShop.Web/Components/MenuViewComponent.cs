@@ -1,4 +1,4 @@
-﻿using AspNetCore.Infrastructure;
+﻿using BookShop.Web.Infrastructure;
 using BookShop.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Repository.ClientRepository;

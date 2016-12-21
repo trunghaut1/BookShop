@@ -113,5 +113,19 @@ namespace BookShop.API.Controllers
                 return bookRepo.tGetPage(pageSize, page);
             return null;
         }
+        [HttpGet("time/name/{name}/page/{pageSize}/{page}")]
+        public ListPaging<Book> tGetByNamePage(string name, int pageSize, int page)
+        {
+            if (pageSize != 0 && page != 0)
+                return bookRepo.tGetByNamePage(name, pageSize, page);
+            return null;
+        }
+        [HttpGet("{id}/quantity/{quantity}")]
+        public bool SetQuantity(int id, int quantity)
+        {
+            bookRepo.SetQuantity(id, quantity);
+            return true;
+        }
+
     }
 }

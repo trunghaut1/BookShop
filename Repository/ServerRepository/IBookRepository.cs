@@ -15,5 +15,7 @@ namespace Repository.ServerRepository
         ListPaging<Book> tGetByCatPage(int id, int pageSize, int page);
         ListPaging<Book> tGetBySubCatPage(int id, int pageSize, int page);
         ListPaging<Book> tGetPage(int pageSize, int page);
+        ListPaging<Book> tGetByNamePage(string name, int pageSize, int page);
+        void SetQuantity(int id, int quantity);
     }
 }

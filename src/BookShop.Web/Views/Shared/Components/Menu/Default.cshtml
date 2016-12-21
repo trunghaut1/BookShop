@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<Cat>
+@{ 
+    User u = Context.Session.GetJson<User>("User");
+}
 
 <header class="c-layout-header c-layout-header-2 c-layout-header-dark-mobile c-header-transparent-dark" data-minimize-offset="80">
     <div class="c-navbar">
@@ -29,7 +32,7 @@
                 </div>
                 <!-- END: BRAND -->
                 <!-- BEGIN: QUICK SEARCH -->
-                <form class="c-quick-search" asp-action="Search" asp-controller="Home" asp-route-page="1">
+                <form class="c-quick-search" method="get" asp-action="Search" asp-controller="Home" asp-route-page="1">
                     <input type="text" name="search" placeholder="Nhập tên sách cần tìm..." value="" class="form-control" autocomplete="off">
                     <span class="c-theme-link">&times;</span>
                 </form>
@@ -86,7 +89,7 @@
                                 <span id="cartNumber" class="c-cart-number c-theme-bg">@ViewBag.cartNumber</span>
                             </a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (u != null)
                         {
                             <li>
                                 <a asp-action="Index" asp-controller="Account" asp-route-page="1" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold">
@@ -94,7 +97,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@Url.RouteUrl(ViewContext.RouteData.Values)" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold">
+                                <a asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold">
                                     Đăng xuất
                                 </a>
                             </li>
@@ -104,14 +107,6 @@
                             <li>
                                 <a href="javascript:;" data-toggle="modal" data-target="#login-form" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold">
                                     <i class="icon-user"></i> Đăng nhập
-                                </a>
-                            </li>
-                        }
-                        @if (User.IsInRole("admin"))
-                        {
-                            <li>
-                                <a asp-action="Index" asp-controller="Admin" asp-route-page="1" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-white c-btn-circle c-btn-uppercase c-btn-sbold">
-                                    Quản trị
                                 </a>
                             </li>
                         }
