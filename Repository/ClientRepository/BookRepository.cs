@@ -98,5 +98,15 @@ namespace Repository.ClientRepository
         {
             string json = await APIHelper.Get($"{url}/{id}/quantity/{quantity}");
         }
+        public async Task<bool> CheckConnect()
+        {
+            string json = await APIHelper.Get($"{url}/check");
+            bool result = false;
+            if (!string.IsNullOrEmpty(json))
+            {
+                return bool.TryParse(json, out result);
+            }
+            return false;
+        }
     }
 }

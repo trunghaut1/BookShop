@@ -53,12 +53,13 @@ namespace BookShop.Web
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                //app.UseDeveloperExceptionPage();
+                //app.UseBrowserLink();
+                app.UseExceptionHandler("/Error");
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseStaticFiles();

@@ -126,6 +126,11 @@ namespace BookShop.API.Controllers
             bookRepo.SetQuantity(id, quantity);
             return true;
         }
+        [HttpGet("check")]
+        public bool CheckConnect()
+        {
+            return true;
+        }
 
     }
 }

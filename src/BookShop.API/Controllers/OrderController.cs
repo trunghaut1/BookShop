@@ -65,5 +65,12 @@ namespace BookShop.API.Controllers
         {
             return orderRepo.Delete(id);
         }
+        [HttpGet("user/{id}/page/{pageSize}/{page}")]
+        public ListPaging<Order> GetByUserPage(int id, int pageSize, int page)
+        {
+            if (pageSize != 0 && page != 0)
+                return orderRepo.GetByUserPage(id, pageSize, page);
+            return null;
+        }
     }
 }

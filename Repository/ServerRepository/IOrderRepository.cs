@@ -11,5 +11,6 @@ namespace Repository.ServerRepository
     public interface IOrderRepository : IGenericRepository<Order>
     {
         ListPaging<Order> GetPage(int pageSize, int page);
+        ListPaging<Order> GetByUserPage(int id, int pageSize, int page);
     }
 }

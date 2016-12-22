@@ -3,4 +3,72 @@
     ViewData["Title"] = "Tài khoản";
 }
 
-@Html.Partial("Header", "Tài khoản")
+@Html.Partial("Header", "Tài khoản: Thông tin đơn hàng")
+<div class="container">
+    @Html.Partial("AccountMenuPartial")
+    <div class="c-layout-sidebar-content ">
+        <!-- BEGIN: PAGE CONTENT -->
+        <!-- BEGIN: CONTENT/SHOPS/SHOP-ORDER-HISTORY-2 -->
+        <div class="c-content-title-1">
+            <h3 class="c-font-uppercase c-font-bold">Lịch sử đơn hàng</h3>
+        </div>
+        <div class="row c-margin-b-40 c-order-history-2 margin-right-10">
+            <div class="row c-cart-table-title">
+                <div class="col-md-2 c-cart-image">
+                    <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Mã</h3>
+                </div>
+                <div class="col-md-6 c-cart-ref">
+                    <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Địa chỉ</h3>
+                </div>
+                <div class="col-md-2 c-cart-desc">
+                    <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Ngày</h3>
+                </div>
+                <div class="col-md-2 c-cart-price">
+                    <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Trạng thái</h3>
+                </div>
+            </div>
+            <!-- BEGIN: ORDER HISTORY ITEM ROW -->
+            @foreach (var item in Model.list)
+            {
+                <div class="row c-cart-table-row">
+                    <h2 class="c-font-uppercase c-font-bold c-theme-bg c-font-white c-cart-item-title c-cart-item-first">@item.ID</h2>
+                    <div class="col-md-2 col-sm-3 col-xs-5 c-cart-image">
+                        #@item.ID
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 c-cart-desc">
+                        <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Địa chỉ</p>
+                        <p>
+                            @item.Address
+                        </p>
+                    </div>
+                    <div class="clearfix col-md-2 col-sm-3 col-xs-6 c-cart-price">
+                        <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Ngày</p>
+                        <p>@item.Time</p>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6 c-cart-qty">
+                        <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Trạng thái</p>
+                        <p>@if (item.Status == true)
+                        {
+                            <a class="btn c-btn-green-2 c-btn-uppercase c-btn-bold c-btn-border-2x">Đã giao</a>
+                        }
+                        else
+                        {
+                            <a class="btn c-btn-grey-2 c-btn-uppercase c-btn-bold c-btn-border-2x">Chưa giao</a>
+                        }
+                        </p>
+                    </div>
+                </div>
+                @Html.Partial("OrderDetailPartial", item.OrderDetail)
+            }
+            <!-- END: ORDER HISTORY ITEM ROW -->
+        </div>
+        <!-- END: CONTENT/SHOPS/SHOP-ORDER-HISTORY-2 -->
+        <!-- END: PAGE CONTENT -->
+    </div>
+</div>
+<!-- END: PAGE CONTAINER -->
+<div class="container c-margin-b-40 c-center">
+    <ul page-model="@Model.paging" page-action="Index" page-classes-enabled="true"
+        page-class-selected="c-active"
+        class="c-content-pagination c-theme"></ul>
+</div>

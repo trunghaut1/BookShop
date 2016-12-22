@@ -130,11 +130,12 @@ namespace Repository.ServerRepository
         {
             List<int> itemHide = GetTimeBased();
             var value = table.Where(o => !itemHide.Contains(o.ID) && o.bookCat.Select(a => a.CatID).Contains(id));
-            var book = value.OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+            var value2 = table.Where(o => !itemHide.Contains(o.ID) && o.bookSubCat.Select(a => a.SubCat.CatID).Contains(id));
+            var book = value.Union(value2).OrderBy(o => o.ID).Skip(pageSize * (page - 1)).Take(pageSize).ToList()
                 .Select(o => new Book(o,true));
             Paging paging = new Paging()
             {
-                totalItem = value.Count(),
+                totalItem = value.Union(value2).Count(),
                 pageSize = pageSize,
                 pageIndex = page
             };

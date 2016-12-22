@@ -26,7 +26,7 @@ namespace BookShop.Web.Controllers
             IEnumerable<Book> book = await bookRepo.tGetByNumber(8);
             return View(book);
         }
-
+        [Route("/Error")]
         public IActionResult Error()
         {
             return View();

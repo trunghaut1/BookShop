@@ -25,5 +25,14 @@ namespace Repository.ClientRepository
             }
             return null;
         }
+        public async Task<ListPaging<Order>> GetByUserPage(int id, int pageSize, int page)
+        {
+            string json = await APIHelper.Get($"{url}/user/{id}/page/{pageSize}/{page}");
+            if (!string.IsNullOrEmpty(json))
+            {
+                return JsonHelper.Json2Object<ListPaging<Order>>(json);
+            }
+            return null;
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository.Model;
 using System.Net;
-using Repository.ServerRepository;
+using Repository.ClientRepository;
 
 namespace Test
 {
@@ -13,9 +13,12 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            BookEntities _db = new BookEntities();
-            EFBookRepository db = new EFBookRepository(_db);
-            var n = db.tGetByNumber(4);
+            t();
+        }
+        private static async void t()
+        {
+            BookRepository db = new BookRepository();
+            bool r = await db.CheckConnect();
         }
     }
 }

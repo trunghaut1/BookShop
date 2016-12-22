@@ -1,7 +1,11 @@
 ﻿using Caliburn.Micro;
+using DevExpress.Xpf.Core;
+using DevExpress.Xpf.WindowsUI;
 using PropertyChanged;
+using Repository.ClientRepository;
 using Repository.Model;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace BookShop.Admin.ViewModels
@@ -26,7 +30,20 @@ namespace BookShop.Admin.ViewModels
             else
             {
                 windowState = WindowState.Maximized;
+                CheckConnect();
             } 
+        }
+        private async void CheckConnect()
+        {
+            BookRepository repo = new BookRepository();
+            bool result = await repo.CheckConnect();
+            if(!result)
+            {
+                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                WinUIMessageBox.Show(window,
+                "Không thể kết nối đến máy chủ!", "Lỗi",
+                MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.None, MessageBoxOptions.None, FloatingMode.Window);
+            }
         }
         public MainViewModel(Book book)
         {

@@ -151,7 +151,7 @@ function CartChange(id, quantity) {
         url: '/cart/cartchange',
         data: {
             id: id,
-            quantity, quantity
+            quantity: quantity
             },
                 success: function (response) {
                     if (response) {

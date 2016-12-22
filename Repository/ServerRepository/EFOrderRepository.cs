@@ -29,5 +29,23 @@ namespace Repository.ServerRepository
             };
             return bookPaging;
         }
+        public ListPaging<Order> GetByUserPage(int id, int pageSize, int page)
+        {
+            var order = table.Where(o => o.UserID == id).OrderBy(o => o.ID)
+                .Skip(pageSize * (page - 1)).Take(pageSize).ToList()
+                .Select(o => new Order(o, true));
+            Paging paging = new Paging()
+            {
+                totalItem = table.Where(o => o.UserID == id).Count(),
+                pageSize = pageSize,
+                pageIndex = page
+            };
+            ListPaging<Order> bookPaging = new ListPaging<Order>()
+            {
+                list = order,
+                paging = paging
+            };
+            return bookPaging;
+        }
     }
 }

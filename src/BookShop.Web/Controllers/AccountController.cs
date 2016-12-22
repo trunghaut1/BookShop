@@ -7,6 +7,7 @@ using Repository.ClientRepository;
 using BookShop.Web.Models.ViewModels;
 using Repository.Model;
 using BookShop.Web.Infrastructure;
+using Repository.ViewModel;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,15 +16,27 @@ namespace BookShop.Web.Controllers
     public class AccountController : Controller
     {
         private UserRepository uRepo;
+        private OrderRepository orderRepo;
         int pageSize = 5;
-        public AccountController(UserRepository uRepo)
+        public AccountController(UserRepository uRepo, OrderRepository orderRepo)
         {
             this.uRepo = uRepo;
+            this.orderRepo = orderRepo;
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View();
+            User u = HttpContext.Session.GetJson<User>("User");
+            if (u != null)
+            {
+                ListPaging<Order> order = await orderRepo.GetByUserPage(u.ID, pageSize, page);
+                return View(order);
+            }
+            else
+            {
+                TempData["Message"] = new[] { "danger", "Vui lòng đăng nhập" };
+                return Redirect("/");
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
@@ -77,6 +90,18 @@ namespace BookShop.Web.Controllers
                 TempData["Message"] = new[] { "danger", "Tài khoản đã tồn tại" };
             }
             return Redirect(url);
+        }
+        public IActionResult Info()
+        {
+            User u = HttpContext.Session.GetJson<User>("User");
+            if(u != null)
+            {
+                return View(u);
+            }
+            else
+            {
+                return View(new User());
+            }
         }
     }
 }

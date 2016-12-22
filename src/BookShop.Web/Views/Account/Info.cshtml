@@ -1,0 +1,44 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Tài khoản";
+}
+@Html.Partial("Header", "Tài khoản: Thông tin")
+
+<div class="container">
+    @Html.Partial("AccountMenuPartial")
+    <div class="c-layout-sidebar-content ">
+        <!-- BEGIN: PAGE CONTENT -->
+        <!-- BEGIN: CONTENT/SHOPS/SHOP-ORDER-HISTORY-2 -->
+        <div class="c-content-title-1">
+            <h3 class="c-font-uppercase c-font-bold">Thông tin tài khoản</h3>
+        </div>
+        <div class="row c-margin-b-40 c-order-history-2">
+            <div class="row c-margin-b-10">
+                <div class="col-md-3">
+                    Tên tài khoản:
+                </div>
+                <div class="col-md-8">
+                    @Model.Name
+                </div>
+            </div>
+            <div class="row c-margin-b-10">
+                <div class="col-md-3">
+                    Email:
+                </div>
+                <div class="col-md-8">
+                    @Model.Email
+                </div>
+            </div>
+            <div class="row c-margin-b-10">
+                <div class="col-md-3">
+                    Điện thoại:
+                </div>
+                <div class="col-md-8">
+                    @Model.Phone
+                </div>
+            </div>
+        </div>
+        <!-- END: CONTENT/SHOPS/SHOP-ORDER-HISTORY-2 -->
+        <!-- END: PAGE CONTENT -->
+    </div>
+</div>
